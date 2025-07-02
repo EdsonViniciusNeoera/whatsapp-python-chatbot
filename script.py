@@ -60,7 +60,6 @@ try:
     wasender_client = create_sync_wasender(
         api_key=CONFIG["WASENDER_API_TOKEN"],
         webhook_secret=CONFIG["WEBHOOK_SECRET"],
-        base_url='http://127.0.0.1:8000/api',
         retry_options=retry_config
     )
     logger.info("WaSenderAPI client initialized successfully with retry support")
