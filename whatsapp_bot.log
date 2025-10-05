@@ -1,0 +1,88 @@
+2025-10-05 17:31:33,021 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-05 17:31:33,022 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-05 17:31:33,023 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-05 17:31:33,023 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-05 17:31:33,023 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-05 17:31:33,025 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:31:33,031 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-05 17:31:33,031 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:31:33,031 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-05 17:31:33,031 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-05 17:31:33,032 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-05 17:31:33,032 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-05 17:31:33,032 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-05 17:31:33,032 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-05 17:31:33,032 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:31:33,058 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-05 17:31:33,058 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-05 17:34:51,348 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-05 17:34:51,449 - INFO - werkzeug - 127.0.0.1 - - [05/Oct/2025 17:34:51] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-10-05 17:34:51,542 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-05 17:34:51,545 - INFO - werkzeug - 127.0.0.1 - - [05/Oct/2025 17:34:51] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-10-05 17:35:08,693 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-05 17:35:08,699 - INFO - werkzeug - 192.168.1.107 - - [05/Oct/2025 17:35:08] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-10-05 17:35:08,826 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-05 17:35:08,829 - INFO - werkzeug - 192.168.1.107 - - [05/Oct/2025 17:35:08] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
