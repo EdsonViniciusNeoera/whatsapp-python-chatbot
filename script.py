@@ -80,6 +80,23 @@ def handle_global_exception(e):
     logger.error(f"Unhandled Exception: {e}", exc_info=True)
     return jsonify(status='error', message='An internal server error occurred.'), 500
 
+@app.route('/', methods=['GET'])
+def index():
+    """Main page showing bot status and available endpoints."""
+    return jsonify({
+        'message': 'WhatsApp Gemini AI Chatbot is running!',
+        'status': 'active',
+        'endpoints': {
+            '/': 'This page - Bot status',
+            '/health': 'Health check endpoint',
+            '/status': 'Detailed bot status',
+            '/webhook': 'Webhook endpoint for WhatsApp messages (POST only)',
+            '/clear_history/<user_id>': 'Clear conversation history for a user (POST only)'
+        },
+        'documentation': 'Send POST requests to /webhook for WhatsApp integration',
+        'version': '1.0.0'
+    })
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint for monitoring."""
@@ -423,63 +440,93 @@ def send_whatsapp_message(recipient_number, message_content, message_type='text'
 def webhook():
     """Handles incoming WhatsApp messages via webhook using the WaSenderAPI SDK."""
     try:        
+        logger.info("=== WEBHOOK CALLED ===")
+        
         if not wasender_client:
             logger.error("WaSender API client is not initialized. Cannot process webhook.")
             return jsonify({'status': 'error', 'message': 'WaSender client not initialized'}), 500
 
         data = request.json
+        logger.info(f"Received webhook data: {data}")
+        
         if data.get('event') == 'messages.upsert' and data.get('data') and data['data'].get('messages'):
-                message_info = data['data']['messages']
-                
-                # Check if it's a message sent by the bot itself
-                if message_info.get('key', {}).get('fromMe'):
-                    logger.info(f"Ignoring self-sent message: {message_info.get('key', {}).get('id')}")
-                    return jsonify({'status': 'success', 'message': 'Self-sent message ignored'}), 200
-
-                sender_number = message_info.get('key', {}).get('remoteJid')
-                
-                incoming_message_text = None
-                message_type = 'unknown'
-
-                # Extract message content based on message structure
-                if message_info.get('message'):
-                    msg_content_obj = message_info['message']
-                    if 'conversation' in msg_content_obj:
-                        incoming_message_text = msg_content_obj['conversation']
-                        message_type = 'text'
-                    elif 'extendedTextMessage' in msg_content_obj and 'text' in msg_content_obj['extendedTextMessage']:
-                        incoming_message_text = msg_content_obj['extendedTextMessage']['text']
-                        message_type = 'text'
-
-                if not sender_number:
-                    logger.warning("Webhook received message without sender information.")
-                    return jsonify({'status': 'error', 'message': 'Incomplete sender data'}), 400
-
-                safe_sender_id = "".join(c if c.isalnum() else '_' for c in sender_number)
-                
-                # we should do this in queue in production if we take too long to respond the request will timeout
-                if message_type == 'text' and incoming_message_text:
-                    conversation_history = load_conversation_history(safe_sender_id)
-                    gemini_reply = get_gemini_response(incoming_message_text, conversation_history)
-                    
-                    if gemini_reply:
-                        message_chunks = split_message(gemini_reply)
-                        print(f"Sending {len(message_chunks)} message chunks to {sender_number}")
-                        for i, chunk in enumerate(message_chunks):
-                            if not send_whatsapp_message(sender_number, chunk, message_type='text'):
-                                logger.error(f"Failed to send message chunk to {sender_number}")
-                                break
-                            # Delay between messages
-                            import random
-                            import time
-                            if i < len(message_chunks) - 1:
-                                delay = random.uniform(5, 7)
-                                time.sleep(delay)
-                        
-                        # Save conversation history
-                        conversation_manager.add_exchange(safe_sender_id, incoming_message_text, gemini_reply)
+            message_info = data['data']['messages']
+            logger.info(f"Processing message info: {message_info}")
             
-                return jsonify({'status': 'success'}), 200
+            # Check if it's a message sent by the bot itself
+            if message_info.get('key', {}).get('fromMe'):
+                logger.info(f"Ignoring self-sent message: {message_info.get('key', {}).get('id')}")
+                return jsonify({'status': 'success', 'message': 'Self-sent message ignored'}), 200
+
+            sender_number = message_info.get('key', {}).get('remoteJid')
+            logger.info(f"Sender number: {sender_number}")
+            
+            incoming_message_text = None
+            message_type = 'unknown'
+
+            # Extract message content based on message structure
+            if message_info.get('message'):
+                msg_content_obj = message_info['message']
+                logger.info(f"Message content object: {msg_content_obj}")
+                
+                if 'conversation' in msg_content_obj:
+                    incoming_message_text = msg_content_obj['conversation']
+                    message_type = 'text'
+                    logger.info(f"Found conversation text: {incoming_message_text}")
+                elif 'extendedTextMessage' in msg_content_obj and 'text' in msg_content_obj['extendedTextMessage']:
+                    incoming_message_text = msg_content_obj['extendedTextMessage']['text']
+                    message_type = 'text'
+                    logger.info(f"Found extended text: {incoming_message_text}")
+
+            if not sender_number:
+                logger.warning("Webhook received message without sender information.")
+                return jsonify({'status': 'error', 'message': 'Incomplete sender data'}), 400
+
+            safe_sender_id = "".join(c if c.isalnum() else '_' for c in sender_number)
+            logger.info(f"Safe sender ID: {safe_sender_id}")
+            
+            # we should do this in queue in production if we take too long to respond the request will timeout
+            if message_type == 'text' and incoming_message_text:
+                logger.info(f"Processing text message: '{incoming_message_text}' from {sender_number}")
+                
+                conversation_history = load_conversation_history(safe_sender_id)
+                logger.info(f"Loaded conversation history for {safe_sender_id}")
+                
+                gemini_reply = get_gemini_response(incoming_message_text, conversation_history)
+                logger.info(f"Gemini reply: {gemini_reply}")
+                
+                if gemini_reply:
+                    message_chunks = split_message(gemini_reply)
+                    logger.info(f"Sending {len(message_chunks)} message chunks to {sender_number}")
+                    for i, chunk in enumerate(message_chunks):
+                        logger.info(f"Sending chunk {i+1}/{len(message_chunks)}: {chunk[:50]}...")
+                        send_result = send_whatsapp_message(sender_number, chunk, message_type='text')
+                        if not send_result:
+                            logger.error(f"Failed to send message chunk {i+1} to {sender_number}")
+                            break
+                        else:
+                            logger.info(f"Successfully sent chunk {i+1} to {sender_number}")
+                        
+                        # Delay between messages
+                        import random
+                        import time
+                        if i < len(message_chunks) - 1:
+                            delay = random.uniform(5, 7)
+                            logger.info(f"Waiting {delay:.1f} seconds before next chunk...")
+                            time.sleep(delay)
+                    
+                    # Save conversation history
+                    conversation_manager.add_exchange(safe_sender_id, incoming_message_text, gemini_reply)
+                    logger.info(f"Saved conversation history for {safe_sender_id}")
+                else:
+                    logger.error("No reply generated by Gemini")
+            else:
+                logger.warning(f"Message type '{message_type}' not supported or no text content")
+        else:
+            logger.warning(f"Webhook data doesn't match expected format. Event: {data.get('event')}")
+        
+        logger.info("=== WEBHOOK PROCESSING COMPLETE ===")
+        return jsonify({'status': 'success'}), 200
             
     except Exception as e:
         logger.error(f"Error processing webhook: {e}")

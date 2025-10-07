@@ -86,3 +86,771 @@ Traceback (most recent call last):
     raise NotFound() from None
 werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
 2025-10-05 17:35:08,829 - INFO - werkzeug - 192.168.1.107 - - [05/Oct/2025 17:35:08] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-10-05 17:49:23,363 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-05 17:49:23,363 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-05 17:49:23,364 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-05 17:49:23,364 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-05 17:49:23,365 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-05 17:49:23,366 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:49:23,366 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-05 17:49:23,367 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:49:23,367 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-05 17:49:23,367 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-05 17:49:23,367 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-05 17:49:23,367 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-05 17:49:23,367 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-05 17:49:23,368 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-05 17:49:23,368 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:49:23,382 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-05 17:49:23,383 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-05 17:49:31,495 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-05 17:49:31,500 - INFO - werkzeug - 127.0.0.1 - - [05/Oct/2025 17:49:31] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-10-05 17:49:31,587 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-05 17:49:31,590 - INFO - werkzeug - 127.0.0.1 - - [05/Oct/2025 17:49:31] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-10-05 17:51:16,810 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-05 17:51:16,811 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-05 17:51:16,812 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-05 17:51:16,813 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-05 17:51:16,813 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-05 17:51:16,814 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:51:16,815 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-05 17:51:16,815 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:51:16,815 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-05 17:51:16,815 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-05 17:51:16,815 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-05 17:51:16,815 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-05 17:51:16,816 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-05 17:51:16,816 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-05 17:51:16,816 - INFO - whatsapp_bot - ======================================================
+2025-10-05 17:51:16,830 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-05 17:51:16,830 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-05 17:51:36,431 - INFO - werkzeug - 127.0.0.1 - - [05/Oct/2025 17:51:36] "GET / HTTP/1.1" 200 -
+2025-10-05 17:51:36,510 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-05 17:51:36,515 - INFO - werkzeug - 127.0.0.1 - - [05/Oct/2025 17:51:36] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-10-06 17:10:53,985 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:10:53,986 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:10:53,987 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:10:53,987 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:10:53,987 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:10:53,989 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:10:53,989 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:10:53,989 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:10:53,990 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:10:53,990 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:10:53,990 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:10:53,990 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:10:53,990 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:10:53,990 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:10:53,990 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:10:54,023 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:10:54,024 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 17:14:46,300 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:14:46,300 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:14:46,301 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:14:46,301 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:14:46,301 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:14:46,303 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:14:46,303 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:14:46,303 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:14:46,304 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:14:46,304 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:14:46,304 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:14:46,304 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:14:46,304 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:14:46,304 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:14:46,304 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:14:46,316 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:14:46,317 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 17:16:03,169 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:16:03,194 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:16:03,196 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:16:03] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:19:01,593 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:19:01,594 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:19:01,595 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:19:01] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:19:08,855 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:19:08,857 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:19:08,858 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:19:08] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:20:24,412 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:24,414 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:24,417 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:20:24] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:20:26,657 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:26,659 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:26,662 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:20:26] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:20:28,156 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:28,158 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:28,161 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:20:28] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:20:32,588 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:32,591 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:32,593 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:20:32] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:20:44,010 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:44,012 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:20:44,017 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:20:44] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:22:35,380 - ERROR - script - Exception on /webhook [POST]
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:22:35,382 - ERROR - whatsapp_bot - Unhandled Exception: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'webhook' did not return a valid response. The function either returned None or ended without a return statement.
+2025-10-06 17:22:35,384 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:22:35] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-10-06 17:25:55,135 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:25:55,136 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:25:55,137 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:25:55,137 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:25:55,138 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:25:55,139 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:25:55,140 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:25:55,140 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:25:55,140 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:25:55,140 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:25:55,141 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:25:55,141 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:25:55,141 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:25:55,141 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:25:55,141 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:25:55,157 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:25:55,158 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 17:28:26,523 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:28:26,524 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:28:26,525 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:28:26,526 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:28:26,526 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:28:26,528 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:28:26,528 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:28:26,529 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:28:26,530 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:28:26,530 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:28:26,530 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:28:26,530 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:28:26,530 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:28:26,530 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:28:26,530 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:28:26,544 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:28:26,544 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 17:30:05,487 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:30:05,487 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:30:05,489 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:30:05,489 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:30:05,489 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:30:05,491 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:30:05,491 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:30:05,491 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:30:05,491 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:30:05,492 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:30:05,492 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:30:05,492 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:30:05,492 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:30:05,492 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:30:05,493 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:30:05,511 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:30:05,511 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 17:30:54,454 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:30:54] "GET / HTTP/1.1" 200 -
+2025-10-06 17:30:54,587 - ERROR - whatsapp_bot - Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Edson Vinicius\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-10-06 17:30:54,667 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:30:54] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-10-06 17:52:33,870 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:52:33,871 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:52:33,872 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:52:33,872 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:52:33,872 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:52:33,874 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:52:33,874 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:52:33,874 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:52:33,875 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:52:33,875 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:52:33,875 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:52:33,875 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:52:33,875 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:52:33,875 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:52:33,876 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:52:33,888 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:52:33,889 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 17:53:16,163 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:53:16,163 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:53:16,165 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:53:16,165 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:53:16,165 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:53:16,167 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:53:16,167 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:53:16,167 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:53:16,168 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:53:16,168 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:53:16,168 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:53:16,168 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:53:16,168 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:53:16,168 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:53:16,168 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:53:16,181 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:53:16,181 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 17:53:41,274 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:53:41] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 17:54:55,950 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 17:54:55] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 17:58:22,344 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 17:58:22,345 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 17:58:22,347 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 17:58:22,347 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 17:58:22,348 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 17:58:22,350 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:58:22,350 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 17:58:22,350 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:58:22,351 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 17:58:22,351 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 17:58:22,351 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 17:58:22,351 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 17:58:22,351 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 17:58:22,351 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 17:58:22,352 - INFO - whatsapp_bot - ======================================================
+2025-10-06 17:58:22,374 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 17:58:22,375 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 18:29:43,285 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 18:29:43,286 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 18:29:43,288 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 18:29:43,288 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 18:29:43,288 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 18:29:43,290 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:29:43,290 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 18:29:43,290 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:29:43,291 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 18:29:43,291 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 18:29:43,291 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 18:29:43,291 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 18:29:43,291 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 18:29:43,291 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 18:29:43,292 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:29:43,326 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 18:29:43,327 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 18:36:04,077 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 18:36:04,078 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 18:36:04,080 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 18:36:04,080 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 18:36:04,080 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 18:36:04,082 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:36:04,082 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 18:36:04,083 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:36:04,083 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 18:36:04,083 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 18:36:04,083 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 18:36:04,083 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 18:36:04,083 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 18:36:04,083 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 18:36:04,084 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:36:04,098 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 18:36:04,098 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 18:36:12,590 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 18:36:12,591 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 18:36:12,592 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 18:36:12,593 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 18:36:12,593 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 18:36:12,595 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:36:12,595 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 18:36:12,596 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:36:12,596 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 18:36:12,596 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 18:36:12,597 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 18:36:12,597 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 18:36:12,597 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 18:36:12,598 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 18:36:12,598 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:36:12,616 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 18:36:12,617 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 18:36:30,717 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:36:30,718 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB03FBFFAC15668B14BE9', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759786590, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 's', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'dnma5/3kUPQJ3KgvujX71bN4bujwpHSgEQZueq7q0C8=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB03FBFFAC15668B14BE9'}}, 'timestamp': 1759786590528}
+2025-10-06 18:36:30,719 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:36:30,719 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:36:30,720 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:36:30] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:36:33,182 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:36:33,183 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB072E8B16268938A8D79', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759786593, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'CW4mVKBf8lA94usDLc3tuSw0UKD74qeM/aLQm+HWjS0=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB072E8B16268938A8D79'}}, 'timestamp': 1759786593086}
+2025-10-06 18:36:33,184 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:36:33,185 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:36:33,185 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:36:33] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:53:06,257 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-06 18:53:06,257 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-06 18:53:06,258 - WARNING - whatsapp_bot - Persona file not found at persona.json. Using default persona.
+2025-10-06 18:53:06,258 - INFO - whatsapp_bot - Using persona 'Assistant'
+2025-10-06 18:53:06,259 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-06 18:53:06,260 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:53:06,261 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-06 18:53:06,261 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:53:06,261 - INFO - whatsapp_bot - Persona: Assistant
+2025-10-06 18:53:06,261 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-06 18:53:06,261 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-06 18:53:06,262 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-06 18:53:06,262 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-06 18:53:06,262 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-06 18:53:06,262 - INFO - whatsapp_bot - ======================================================
+2025-10-06 18:53:06,274 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-06 18:53:06,275 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-06 18:53:19,910 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:53:19,910 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0CD51D53BE05CE49B71', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787599, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rBdk2f2MK7fIEe7TzF005RC/yC3vUFsMMuzPy4vrY5w=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0CD51D53BE05CE49B71'}}, 'timestamp': 1759787599747}
+2025-10-06 18:53:19,911 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:53:19,911 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:53:19,911 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0CD51D53BE05CE49B71', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787599, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rBdk2f2MK7fIEe7TzF005RC/yC3vUFsMMuzPy4vrY5w=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0CD51D53BE05CE49B71'}}, 'timestamp': 1759787599750}
+2025-10-06 18:53:19,911 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:53:19,911 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0CD51D53BE05CE49B71', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787599, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rBdk2f2MK7fIEe7TzF005RC/yC3vUFsMMuzPy4vrY5w=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0CD51D53BE05CE49B71'}
+2025-10-06 18:53:19,912 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:53:19] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:53:19,913 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-06 18:53:19,913 - INFO - whatsapp_bot - Message content object: {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rBdk2f2MK7fIEe7TzF005RC/yC3vUFsMMuzPy4vrY5w=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}
+2025-10-06 18:53:19,914 - INFO - whatsapp_bot - Found extended text: hello
+2025-10-06 18:53:19,914 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-06 18:53:19,914 - INFO - whatsapp_bot - Processing text message: 'hello' from 558186732159@s.whatsapp.net
+2025-10-06 18:53:19,914 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:53:19,915 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): hello...
+2025-10-06 18:53:21,767 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-06 18:53:23,151 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-06 18:53:23,151 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-06 18:53:23,153 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:53:23,153 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:53:23,154 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:53:23] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:53:25,537 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:53:25,543 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-06 18:53:25,544 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:53:25,544 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:53:25] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:53:25,820 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:53:25,831 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB016680A9C2EA960C62D
+2025-10-06 18:53:25,832 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:53:25] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:53:43,130 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:53:43,131 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB081736F00789D122D65', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787622, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'cVzfVeWRy0XE60okxX27CXyLyCyRV3uIf5tbQ/nsURU=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB081736F00789D122D65'}}, 'timestamp': 1759787623008}
+2025-10-06 18:53:43,131 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:53:43,132 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:53:43,132 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:53:43] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:53:43,174 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:53:43,176 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB081736F00789D122D65', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787622, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'cVzfVeWRy0XE60okxX27CXyLyCyRV3uIf5tbQ/nsURU=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB081736F00789D122D65'}}, 'timestamp': 1759787623010}
+2025-10-06 18:53:43,177 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB081736F00789D122D65', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787622, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'cVzfVeWRy0XE60okxX27CXyLyCyRV3uIf5tbQ/nsURU=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB081736F00789D122D65'}
+2025-10-06 18:53:43,177 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-06 18:53:43,178 - INFO - whatsapp_bot - Message content object: {'extendedTextMessage': {'text': 'hello', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'cVzfVeWRy0XE60okxX27CXyLyCyRV3uIf5tbQ/nsURU=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}
+2025-10-06 18:53:43,178 - INFO - whatsapp_bot - Found extended text: hello
+2025-10-06 18:53:43,178 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-06 18:53:43,179 - INFO - whatsapp_bot - Processing text message: 'hello' from 558186732159@s.whatsapp.net
+2025-10-06 18:53:43,191 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:53:43,191 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): hello...
+2025-10-06 18:53:43,845 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-06 18:54:23,311 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-06 18:54:23,312 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-06 18:54:23,313 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:54:23,313 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:54:23,314 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:54:23] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:54:24,608 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:54:24,613 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-06 18:54:24,613 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:54:24,614 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:54:24] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:54:24,853 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:54:24,864 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0A2B29EFBE682BC0FF4
+2025-10-06 18:54:24,865 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:54:24] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:54:59,217 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:54:59,218 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0CD0BFF68365FB4B6FC', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787698, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello, how are you?', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6QTuo4I/E7b42ZFrq2yVRVFxQQpx/aD584iRNq0wwok=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0CD0BFF68365FB4B6FC'}}, 'timestamp': 1759787699086}
+2025-10-06 18:54:59,218 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:54:59,219 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0CD0BFF68365FB4B6FC', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787698, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello, how are you?', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6QTuo4I/E7b42ZFrq2yVRVFxQQpx/aD584iRNq0wwok=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0CD0BFF68365FB4B6FC'}
+2025-10-06 18:54:59,219 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0CD0BFF68365FB4B6FC', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787698, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'hello, how are you?', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6QTuo4I/E7b42ZFrq2yVRVFxQQpx/aD584iRNq0wwok=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0CD0BFF68365FB4B6FC'}}, 'timestamp': 1759787699084}
+2025-10-06 18:54:59,219 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-06 18:54:59,220 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:54:59,220 - INFO - whatsapp_bot - Message content object: {'extendedTextMessage': {'text': 'hello, how are you?', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6QTuo4I/E7b42ZFrq2yVRVFxQQpx/aD584iRNq0wwok=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}
+2025-10-06 18:54:59,220 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:54:59,220 - INFO - whatsapp_bot - Found extended text: hello, how are you?
+2025-10-06 18:54:59,221 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:54:59] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:54:59,221 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-06 18:54:59,222 - INFO - whatsapp_bot - Processing text message: 'hello, how are you?' from 558186732159@s.whatsapp.net
+2025-10-06 18:54:59,232 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:54:59,232 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): hello, how are you?...
+2025-10-06 18:55:00,040 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-06 18:55:24,496 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-06 18:55:24,496 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-06 18:55:24,498 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:55:24,498 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:55:24,498 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:55:24] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:55:25,914 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:55:25,920 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-06 18:55:25,920 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:55:25,921 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:55:25] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:55:26,154 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:55:26,165 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0071C85C7C45FFFDFB7
+2025-10-06 18:55:26,165 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:55:26] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:55:42,906 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:55:42,907 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:55:42,912 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:55:42,912 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:55:42,918 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:55:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:55:42,924 - INFO - whatsapp_bot - Sender number: 558199745545-1586862732@g.us
+2025-10-06 18:55:42,931 - INFO - whatsapp_bot - Safe sender ID: 558199745545_1586862732_g_us
+2025-10-06 18:55:42,931 - WARNING - whatsapp_bot - Message type 'unknown' not supported or no text content
+2025-10-06 18:55:42,931 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:55:42,932 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:55:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:55:43,553 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:55:43,554 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0FAD498A7BE4E3E1986', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787743, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'Im fine, thank you', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XNTm5e+IYZ0lK8fxYteaUM6zxexLyMufMZn3hk6vOcQ=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0FAD498A7BE4E3E1986'}}, 'timestamp': 1759787743491}
+2025-10-06 18:55:43,554 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:55:43,554 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0FAD498A7BE4E3E1986', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787743, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'Im fine, thank you', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XNTm5e+IYZ0lK8fxYteaUM6zxexLyMufMZn3hk6vOcQ=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0FAD498A7BE4E3E1986'}
+2025-10-06 18:55:43,554 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0FAD498A7BE4E3E1986', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787743, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'Im fine, thank you', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XNTm5e+IYZ0lK8fxYteaUM6zxexLyMufMZn3hk6vOcQ=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0FAD498A7BE4E3E1986'}}, 'timestamp': 1759787743490}
+2025-10-06 18:55:43,555 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-06 18:55:43,555 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:55:43,555 - INFO - whatsapp_bot - Message content object: {'extendedTextMessage': {'text': 'Im fine, thank you', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XNTm5e+IYZ0lK8fxYteaUM6zxexLyMufMZn3hk6vOcQ=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}
+2025-10-06 18:55:43,556 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:55:43,556 - INFO - whatsapp_bot - Found extended text: Im fine, thank you
+2025-10-06 18:55:43,557 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:55:43] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:55:43,557 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-06 18:55:43,557 - INFO - whatsapp_bot - Processing text message: 'Im fine, thank you' from 558186732159@s.whatsapp.net
+2025-10-06 18:55:43,569 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:55:43,570 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): Im fine, thank you...
+2025-10-06 18:55:44,252 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-06 18:56:24,682 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-06 18:56:24,682 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-06 18:56:24,685 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:56:24,685 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:56:24,686 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:56:24] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:56:26,303 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:56:26,309 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-06 18:56:26,309 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:56:26,309 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:56:26] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:56:26,552 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:56:26,562 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0F4EDF6990083E571FB
+2025-10-06 18:56:26,562 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:56:26] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:56:42,989 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:56:42,990 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0710C192F48A2B9F779', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787802, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'Sim, tem uma coisa que eu estou em dúvida', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '0qoLZEXkjAEcWp63PYKCLrRxZI9Up7wrl2E7RdVO3YA=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0710C192F48A2B9F779'}}, 'timestamp': 1759787802867}
+2025-10-06 18:56:42,991 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0710C192F48A2B9F779', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787802, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'Sim, tem uma coisa que eu estou em dúvida', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '0qoLZEXkjAEcWp63PYKCLrRxZI9Up7wrl2E7RdVO3YA=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0710C192F48A2B9F779'}
+2025-10-06 18:56:42,991 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-06 18:56:42,991 - INFO - whatsapp_bot - Message content object: {'extendedTextMessage': {'text': 'Sim, tem uma coisa que eu estou em dúvida', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '0qoLZEXkjAEcWp63PYKCLrRxZI9Up7wrl2E7RdVO3YA=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}
+2025-10-06 18:56:42,992 - INFO - whatsapp_bot - Found extended text: Sim, tem uma coisa que eu estou em dúvida
+2025-10-06 18:56:42,993 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-06 18:56:42,993 - INFO - whatsapp_bot - Processing text message: 'Sim, tem uma coisa que eu estou em dúvida' from 558186732159@s.whatsapp.net
+2025-10-06 18:56:42,996 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-06 18:56:42,996 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': 'ec60833c987a921f4d33f360968db1f7a7f79bd15b2b82c3904f62d52642fc07', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0710C192F48A2B9F779', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1759787802, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'extendedTextMessage': {'text': 'Sim, tem uma coisa que eu estou em dúvida', 'contextInfo': {'ephemeralSettingTimestamp': '1759696911', 'disappearingMode': {'initiator': 'CHANGED_IN_CHAT', 'trigger': 'CHAT_SETTING', 'initiatedByMe': False}}, 'inviteLinkGroupTypeV2': 'DEFAULT'}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '7yydDzR4QCXTVg==', 'senderTimestamp': '1759693137', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': '/DoA8ECtFAcnNg==', 'recipientTimestamp': '1759694939'}, 'deviceListMetadataVersion': 2, 'messageSecret': '0qoLZEXkjAEcWp63PYKCLrRxZI9Up7wrl2E7RdVO3YA=', 'limitSharingV2': {'trigger': 'UNKNOWN', 'initiatedByMe': False}}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0710C192F48A2B9F779'}}, 'timestamp': 1759787802865}
+2025-10-06 18:56:42,997 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-06 18:56:42,997 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:56:42,997 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:56:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-06 18:56:43,006 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:56:43,007 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): Sim, tem uma coisa que eu estou em dúvida...
+2025-10-06 18:56:43,777 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-06 18:56:43,777 - INFO - whatsapp_bot - Sending chunk 1/1: Tranquilo! Pode mandar sua dúvida! 
+ Ficarei feliz...
+2025-10-06 18:58:08,539 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-06 18:58:08,540 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-06 18:58:08,541 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-06 18:58:08,542 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-06 18:58:08,542 - INFO - werkzeug - 127.0.0.1 - - [06/Oct/2025 18:58:08] "POST /webhook HTTP/1.1" 200 -

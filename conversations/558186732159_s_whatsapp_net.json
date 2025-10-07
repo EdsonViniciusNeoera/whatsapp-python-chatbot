@@ -1,0 +1,62 @@
+[
+  {
+    "role": "user",
+    "parts": [
+      "hello"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hey there! How can I help you today? \ud83d\ude0a"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "hello"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hey! What can I do for you? \ud83d\ude0a"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "hello, how are you?"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Hey! I'm doing well, thanks for asking! \ud83d\ude0a How are you?"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Im fine, thank you"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Great to hear! \ud83d\udc4d Is there anything I can help you with?"
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "Sim, tem uma coisa que eu estou em d\u00favida"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Tranquilo! Pode mandar sua d\u00favida! \n Ficarei feliz em ajudar. \ud83d\ude0a"
+    ]
+  }
+]
