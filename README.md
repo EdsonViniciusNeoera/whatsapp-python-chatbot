@@ -136,6 +136,129 @@ The chatbot includes a customizable base prompt that defines the AI's persona an
 }
 ```
 
+## 🎓 Training Your Bot with Few-Shot Learning
+
+**NEW!** This chatbot now supports **Few-Shot Learning**, allowing the AI to learn from examples of how you want it to respond.
+
+### How It Works
+
+The bot automatically loads conversation examples from `persona.json` and uses them to understand:
+- The style and tone of responses
+- How to handle specific types of questions
+- When to escalate to human agents
+- The format and structure of ideal answers
+
+### Adding Training Examples
+
+Simply add examples to the `responses` array in `persona.json`:
+
+```json
+{
+  "responses": [
+    {
+      "input": "What are your hours?",
+      "output": "We're open Monday-Friday 9am-6pm, and Saturday 9am-12pm. We're closed on Sundays 😊"
+    },
+    {
+      "input": "Do you deliver?",
+      "output": "Unfortunately no! Most clients pick up in-store for potential adjustments. For alternatives like bike courier, please consult our specialists."
+    }
+  ]
+}
+```
+
+### Quick Start Guide
+
+1. **Add examples**: Edit `persona.json` → add to `responses` array
+2. **Restart bot**: The new examples are loaded automatically
+3. **Test**: Send similar messages to see improved responses
+
+For detailed training instructions, see:
+- 📖 **[GUIA_TREINAMENTO.md](GUIA_TREINAMENTO.md)** - Quick training guide (Portuguese)
+- 📚 **[FEW_SHOT_LEARNING.md](FEW_SHOT_LEARNING.md)** - Technical documentation
+
+### Testing Your Training
+
+Run the test script to validate your examples:
+
+```bash
+python test_few_shot.py
+```
+
+This will verify:
+- ✅ Examples are loading correctly
+- ✅ Format is compatible with Gemini API
+- ✅ Few-shot learning is active
+
+### Benefits
+
+- ✓ **More consistent responses** - Bot learns from your examples
+- ✓ **Easy to update** - Just edit JSON, no coding required
+- ✓ **Immediate effect** - Restart bot and changes apply
+- ✓ **No retraining needed** - Uses Gemini's in-context learning
+
+---
+
+## 📱 Interactive Menu System
+
+**NEW!** The bot now includes an **Interactive Menu** that presents pre-defined options when users start a conversation.
+
+### Features
+
+- 🎯 **Auto-detection** - Recognizes greetings like "hi", "hello", "menu"
+- 📋 **7 Pre-defined Options** - Organized menu with common queries
+- ⚡ **Instant Responses** - No AI delay for menu selections
+- 🔄 **Hybrid Mode** - Menu for simple queries, AI for complex ones
+- 🎨 **Customizable** - Easy to modify in `persona.json`
+
+### How It Works
+
+```
+User: "Hi"
+Bot: [Shows menu with 7 options]
+
+User: "1" 
+Bot: [Instant response with address and hours]
+
+User: "Can you work with progressive lenses?"
+Bot: [AI generates contextual response]
+```
+
+### Menu Configuration
+
+Enable/disable in `persona.json`:
+
+```json
+{
+  "menu_enabled": true,
+  "welcome_message": "Hello! Choose an option:\n1️⃣ Address\n2️⃣ Schedule...",
+  "menu_options": {
+    "1": {
+      "title": "Address and hours",
+      "response": "We're located at..."
+    }
+  },
+  "greeting_keywords": ["hi", "hello", "menu", "options"]
+}
+```
+
+### Testing the Menu
+
+```bash
+python test_menu_interativo.py
+```
+
+For complete documentation:
+- 📱 **[MENU_INTERATIVO.md](MENU_INTERATIVO.md)** - Complete menu guide (Portuguese)
+
+### Benefits
+
+- ✓ **Faster responses** - No API calls for common questions
+- ✓ **100% accurate** - Pre-defined responses, no errors
+- ✓ **Better UX** - Clear options for users
+- ✓ **Cost effective** - Reduces API usage
+- ✓ **Easy to maintain** - Update responses in JSON
+
 ## 📊 Logging and Error Handling
 
 - The application uses Python's built-in `logging` module.

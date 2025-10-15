@@ -127,7 +127,7 @@ def health_check():
 def load_persona(file_path='persona.json'):
     """
     Load persona configuration from a JSON file.
-    Returns a tuple of (persona_description, persona_name).
+    Returns a tuple of (persona_description, persona_name, few_shot_examples, menu_config).
     """
     default_name = "Assistant"
     default_description = "You are a helpful assistant."
@@ -137,36 +137,153 @@ def load_persona(file_path='persona.json'):
         "Split long answers every 3 lines using a real newline character Use \n to break the message."
         "Each \n means a new WhatsApp message. Avoid long paragraphs or unnecessary explanations."
     )
+    default_menu_config = {
+        "enabled": False,
+        "welcome_message": "",
+        "menu_options": {},
+        "greeting_keywords": []
+    }
 
     try:
         if not os.path.exists(file_path):
             logger.warning(f"Persona file not found at {file_path}. Using default persona.")
-            return f"{default_base_prompt}\n\n{default_description}", default_name
+            return f"{default_base_prompt}\n\n{default_description}", default_name, [], default_menu_config
             
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             persona_data = json.load(f)
             
         custom_description = persona_data.get('description', default_description)
         base_prompt = persona_data.get('base_prompt', default_base_prompt)
         persona_name = persona_data.get('name', default_name)
+        few_shot_examples = persona_data.get('responses', [])
+        
+        # Load menu configuration
+        menu_config = {
+            "enabled": persona_data.get('menu_enabled', False),
+            "welcome_message": persona_data.get('welcome_message', ''),
+            "menu_options": persona_data.get('menu_options', {}),
+            "greeting_keywords": persona_data.get('greeting_keywords', [])
+        }
         
         full_persona = f"{base_prompt}\n\n{custom_description}"
         logger.info(f"Successfully loaded persona: {persona_name}")
+        logger.info(f"Loaded {len(few_shot_examples)} few-shot examples")
+        logger.info(f"Interactive menu: {'Enabled' if menu_config['enabled'] else 'Disabled'}")
         
-        return full_persona, persona_name
+        return full_persona, persona_name, few_shot_examples, menu_config
         
     except json.JSONDecodeError:
         logger.error(f"Error decoding JSON from {file_path}. Using default persona.")
-        return f"{default_base_prompt}\n\n{default_description}", default_name
+        return f"{default_base_prompt}\n\n{default_description}", default_name, [], default_menu_config
     except Exception as e:
         logger.error(f"An unexpected error occurred while loading persona: {e}. Using default persona.")
-        return f"{default_base_prompt}\n\n{default_description}", default_name
+        return f"{default_base_prompt}\n\n{default_description}", default_name, [], default_menu_config
 
 # Load persona configuration
 PERSONA_FILE_PATH = os.getenv('PERSONA_FILE_PATH', 'persona.json')
-PERSONA_DESCRIPTION, PERSONA_NAME = load_persona(PERSONA_FILE_PATH)
-logger.info(f"Using persona '{PERSONA_NAME}'")
+PERSONA_DESCRIPTION, PERSONA_NAME, FEW_SHOT_EXAMPLES, MENU_CONFIG = load_persona(PERSONA_FILE_PATH)
+logger.info(f"Using persona '{PERSONA_NAME}' with {len(FEW_SHOT_EXAMPLES)} training examples")
 # --- End Load Persona ---
+
+def build_few_shot_history(examples):
+    """
+    Converts few-shot examples from persona.json into Gemini chat history format.
+    
+    Args:
+        examples: List of dicts with 'input' and 'output' keys
+        
+    Returns:
+        List of message dicts in Gemini format (alternating user/model roles)
+    """
+    history = []
+    for example in examples:
+        if 'input' in example and 'output' in example:
+            # Add user message
+            history.append({
+                'role': 'user',
+                'parts': [example['input']]
+            })
+            # Add model response
+            history.append({
+                'role': 'model',
+                'parts': [example['output']]
+            })
+    
+    logger.debug(f"Built few-shot history with {len(history)} messages ({len(history)//2} examples)")
+    return history
+
+def is_greeting(message_text, greeting_keywords):
+    """
+    Check if the message is a greeting or initial interaction.
+    
+    Args:
+        message_text: The message to check
+        greeting_keywords: List of greeting keywords
+        
+    Returns:
+        True if message is a greeting, False otherwise
+    """
+    if not message_text:
+        return False
+    
+    message_lower = message_text.lower().strip()
+    
+    # Check if message matches any greeting keyword
+    for keyword in greeting_keywords:
+        if keyword.lower() in message_lower:
+            return True
+    
+    return False
+
+def is_menu_option(message_text, menu_options):
+    """
+    Check if the message is a menu option selection.
+    
+    Args:
+        message_text: The message to check
+        menu_options: Dict of menu options
+        
+    Returns:
+        The option key if valid, None otherwise
+    """
+    if not message_text:
+        return None
+    
+    message_stripped = message_text.strip()
+    
+    # Check if it's a number or emoji number
+    if message_stripped in menu_options:
+        return message_stripped
+    
+    # Check for emoji numbers like "1️⃣"
+    emoji_to_number = {
+        "1️⃣": "1", "2️⃣": "2", "3️⃣": "3", "4️⃣": "4",
+        "5️⃣": "5", "6️⃣": "6", "7️⃣": "7", "8️⃣": "8", "9️⃣": "9"
+    }
+    
+    if message_stripped in emoji_to_number:
+        option_key = emoji_to_number[message_stripped]
+        if option_key in menu_options:
+            return option_key
+    
+    return None
+
+def get_menu_response(option_key, menu_options):
+    """
+    Get the response for a selected menu option.
+    
+    Args:
+        option_key: The selected option key
+        menu_options: Dict of menu options
+        
+    Returns:
+        The response text for the option
+    """
+    option = menu_options.get(option_key)
+    if option and 'response' in option:
+        return option['response']
+    
+    return None
 
 class ConversationManager:
     """Manages conversation history with context window management."""
@@ -279,7 +396,7 @@ def save_conversation_history(user_id, history):
 class GeminiClient:
     """Client for interacting with the Gemini AI API."""
     
-    def __init__(self, api_key, model_name, system_instruction):
+    def __init__(self, api_key, model_name, system_instruction, few_shot_examples=None):
         """
         Initialize the Gemini client.
         
@@ -287,10 +404,12 @@ class GeminiClient:
             api_key: The Gemini API key
             model_name: The model to use (e.g., 'gemini-2.0-flash')
             system_instruction: System instruction for persona
+            few_shot_examples: List of example conversations for few-shot learning
         """
         self.api_key = api_key
         self.model_name = model_name
         self.system_instruction = system_instruction
+        self.few_shot_examples = few_shot_examples or []
         
         if not api_key:
             logger.error("Gemini API key is not configured.")
@@ -298,6 +417,7 @@ class GeminiClient:
             
         genai.configure(api_key=api_key)
         logger.info(f"Gemini client initialized with model: {model_name}")
+        logger.info(f"Few-shot learning: {'Enabled' if self.few_shot_examples else 'Disabled'} ({len(self.few_shot_examples)} examples)")
         
     def generate_response(self, message_text, conversation_history=None):
         """
@@ -323,12 +443,23 @@ class GeminiClient:
             
             logger.info(f"Sending prompt to Gemini (system persona active): {message_text[:200]}...")
 
-            if conversation_history:
-                # Use chat history if available
-                chat = model.start_chat(history=conversation_history)
+            # Build complete history with few-shot examples
+            if conversation_history or self.few_shot_examples:
+                # Convert few-shot examples to history format
+                few_shot_history = build_few_shot_history(self.few_shot_examples)
+                
+                # Combine few-shot examples with actual conversation history
+                complete_history = few_shot_history.copy()
+                if conversation_history:
+                    complete_history.extend(conversation_history)
+                
+                logger.debug(f"Using history with {len(complete_history)} messages (few-shot: {len(few_shot_history)}, conversation: {len(conversation_history) if conversation_history else 0})")
+                
+                # Start chat with combined history
+                chat = model.start_chat(history=complete_history)
                 response = chat.send_message(message_text)
             else:
-                # For first message with no history
+                # For first message with no history and no examples
                 response = model.generate_content(message_text)
 
             # Extract the text from the response
@@ -356,7 +487,8 @@ if CONFIG["GEMINI_API_KEY"]:
         gemini_client = GeminiClient(
             api_key=CONFIG["GEMINI_API_KEY"],
             model_name=CONFIG["GEMINI_MODEL"],
-            system_instruction=PERSONA_DESCRIPTION
+            system_instruction=PERSONA_DESCRIPTION,
+            few_shot_examples=FEW_SHOT_EXAMPLES
         )
     except Exception as e:
         logger.error(f"Failed to initialize Gemini client: {e}", exc_info=True)
@@ -492,11 +624,29 @@ def webhook():
                 conversation_history = load_conversation_history(safe_sender_id)
                 logger.info(f"Loaded conversation history for {safe_sender_id}")
                 
-                gemini_reply = get_gemini_response(incoming_message_text, conversation_history)
-                logger.info(f"Gemini reply: {gemini_reply}")
+                response_text = None
                 
-                if gemini_reply:
-                    message_chunks = split_message(gemini_reply)
+                # Check if interactive menu is enabled
+                if MENU_CONFIG.get('enabled', False):
+                    # Check if it's a greeting (first interaction)
+                    if is_greeting(incoming_message_text, MENU_CONFIG.get('greeting_keywords', [])):
+                        logger.info(f"Greeting detected, showing menu to {sender_number}")
+                        response_text = MENU_CONFIG.get('welcome_message', '')
+                    
+                    # Check if it's a menu option selection
+                    elif is_menu_option(incoming_message_text, MENU_CONFIG.get('menu_options', {})):
+                        option_key = is_menu_option(incoming_message_text, MENU_CONFIG.get('menu_options', {}))
+                        logger.info(f"Menu option {option_key} selected by {sender_number}")
+                        response_text = get_menu_response(option_key, MENU_CONFIG.get('menu_options', {}))
+                
+                # If no menu response, use Gemini AI
+                if not response_text:
+                    logger.info(f"Using Gemini AI for response")
+                    response_text = get_gemini_response(incoming_message_text, conversation_history)
+                    logger.info(f"Gemini reply: {response_text}")
+                
+                if response_text:
+                    message_chunks = split_message(response_text)
                     logger.info(f"Sending {len(message_chunks)} message chunks to {sender_number}")
                     for i, chunk in enumerate(message_chunks):
                         logger.info(f"Sending chunk {i+1}/{len(message_chunks)}: {chunk[:50]}...")
@@ -516,10 +666,10 @@ def webhook():
                             time.sleep(delay)
                     
                     # Save conversation history
-                    conversation_manager.add_exchange(safe_sender_id, incoming_message_text, gemini_reply)
+                    conversation_manager.add_exchange(safe_sender_id, incoming_message_text, response_text)
                     logger.info(f"Saved conversation history for {safe_sender_id}")
                 else:
-                    logger.error("No reply generated by Gemini")
+                    logger.error("No reply generated")
             else:
                 logger.warning(f"Message type '{message_type}' not supported or no text content")
         else:
