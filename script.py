@@ -42,6 +42,7 @@ CONFIG = {
     "MESSAGE_CHUNK_MAX_CHARS": int(os.getenv('MESSAGE_CHUNK_MAX_CHARS', '100')),
     "MESSAGE_DELAY_MIN": float(os.getenv('MESSAGE_DELAY_MIN', '0.55')),
     "MESSAGE_DELAY_MAX": float(os.getenv('MESSAGE_DELAY_MAX', '1.5')),
+    "NOTIFICATION_GROUP_ID": os.getenv('NOTIFICATION_GROUP_ID'),
 }
 
 # Directory for storing conversations
@@ -504,15 +505,73 @@ def get_gemini_response(message_text, conversation_history=None):
     
     return gemini_client.generate_response(message_text, conversation_history)
 
+def send_notification_to_group(customer_number, customer_message, menu_option=None):
+    """
+    Sends notification to the notification group when customer requests assistance.
+    
+    Args:
+        customer_number: The customer's phone number
+        customer_message: The message from the customer
+        menu_option: Optional menu option selected by customer
+    """
+    if not CONFIG["NOTIFICATION_GROUP_ID"]:
+        logger.warning("NOTIFICATION_GROUP_ID not configured. Skipping group notification.")
+        return False
+    
+    # Format customer number for display (remove @s.whatsapp.net)
+    display_number = customer_number.replace('@s.whatsapp.net', '').replace('@g.us', '')
+    
+    # Build notification message
+    from datetime import datetime
+    timestamp = datetime.now().strftime('%d/%m/%Y às %H:%M')
+    
+    notification_parts = [
+        "🔔 *NOVA SOLICITAÇÃO DE ATENDIMENTO*",
+        "",
+        f"👤 *Cliente:* {display_number}",
+        f"⏰ *Horário:* {timestamp}",
+        ""
+    ]
+    
+    if menu_option:
+        notification_parts.append(f"📋 *Opção do menu:* {menu_option}")
+        notification_parts.append("")
+    
+    notification_parts.extend([
+        "📝 *Mensagem:*",
+        customer_message,
+        "",
+        "---",
+        "_Atender o cliente iniciando conversa com o número dele_"
+    ])
+    
+    notification_message = "\n".join(notification_parts)
+    
+    try:
+        result = send_whatsapp_message(
+            CONFIG["NOTIFICATION_GROUP_ID"],
+            notification_message,
+            message_type='text'
+        )
+        if result:
+            logger.info(f"✅ Notification sent to group for customer {display_number}")
+        return result
+    except Exception as e:
+        logger.error(f"❌ Error sending notification to group: {e}")
+        return False
+
 def send_whatsapp_message(recipient_number, message_content, message_type='text', media_url=None):
     """Sends a message via WaSenderAPI SDK. Supports text and media messages."""
     if not wasender_client:
         logger.error("WaSender API client is not initialized. Please check .env file.")
         return False
     
-    # Sanitize recipient_number to remove "@s.whatsapp.net"
+    # Sanitize recipient_number to remove "@s.whatsapp.net" (but keep @g.us for groups)
     if recipient_number and "@s.whatsapp.net" in recipient_number:
         formatted_recipient_number = recipient_number.split('@')[0]
+    elif recipient_number and "@g.us" in recipient_number:
+        # Keep group ID as is
+        formatted_recipient_number = recipient_number
     else:
         formatted_recipient_number = recipient_number
     
@@ -625,6 +684,8 @@ def webhook():
                 logger.info(f"Loaded conversation history for {safe_sender_id}")
                 
                 response_text = None
+                should_notify_group = False
+                selected_menu_option = None
                 
                 # Check if interactive menu is enabled
                 if MENU_CONFIG.get('enabled', False):
@@ -638,12 +699,23 @@ def webhook():
                         option_key = is_menu_option(incoming_message_text, MENU_CONFIG.get('menu_options', {}))
                         logger.info(f"Menu option {option_key} selected by {sender_number}")
                         response_text = get_menu_response(option_key, MENU_CONFIG.get('menu_options', {}))
+                        
+                        # Check if this option requires notification (options 2-6 need specialist)
+                        if option_key in ['2', '3', '4', '6']:
+                            should_notify_group = True
+                            option_title = MENU_CONFIG.get('menu_options', {}).get(option_key, {}).get('title', f'Opção {option_key}')
+                            selected_menu_option = f"{option_key} - {option_title}"
                 
                 # If no menu response, use Gemini AI
                 if not response_text:
                     logger.info(f"Using Gemini AI for response")
                     response_text = get_gemini_response(incoming_message_text, conversation_history)
                     logger.info(f"Gemini reply: {response_text}")
+                    
+                    # Check if AI response suggests contacting specialist
+                    keywords_for_notification = ['jailson', 'josimar', 'consultor', 'especialista', 'atendimento']
+                    if any(keyword in response_text.lower() for keyword in keywords_for_notification):
+                        should_notify_group = True
                 
                 if response_text:
                     message_chunks = split_message(response_text)
@@ -664,6 +736,15 @@ def webhook():
                             delay = random.uniform(5, 7)
                             logger.info(f"Waiting {delay:.1f} seconds before next chunk...")
                             time.sleep(delay)
+                    
+                    # Send notification to group if needed
+                    if should_notify_group:
+                        logger.info(f"Sending notification to group for {sender_number}")
+                        send_notification_to_group(
+                            sender_number,
+                            incoming_message_text,
+                            menu_option=selected_menu_option
+                        )
                     
                     # Save conversation history
                     conversation_manager.add_exchange(safe_sender_id, incoming_message_text, response_text)
