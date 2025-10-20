@@ -396,6 +396,11 @@ PROCESSED_MESSAGE_TTL = 300  # Keep message IDs for 5 minutes (300 seconds)
 active_sending_sessions = {}  # {safe_sender_id: {'cancel': False, 'timestamp': time}}
 SENDING_SESSION_TTL = 60  # Keep session info for 1 minute
 
+# Customer form data collection
+# Stores customer information being collected before notifying attendants
+customer_forms = {}  # {safe_sender_id: {'step': str, 'data': {}, 'timestamp': time, 'reason': str}}
+CUSTOMER_FORM_TTL = 600  # Keep form data for 10 minutes
+
 def cleanup_processed_messages():
     """Remove old message IDs from the processed messages cache."""
     current_time = time.time()
@@ -479,6 +484,289 @@ def end_sending_session(safe_sender_id):
     if safe_sender_id in active_sending_sessions:
         del active_sending_sessions[safe_sender_id]
         logger.info(f"Ended sending session for {safe_sender_id}")
+
+def start_customer_form(safe_sender_id, reason):
+    """
+    Start collecting customer information before notifying attendants.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+        reason: The reason for the form (menu option or description)
+    """
+    customer_forms[safe_sender_id] = {
+        'step': 'name',  # Possible steps: name, phone, cpf, prescription, confirm
+        'data': {},
+        'timestamp': time.time(),
+        'reason': reason
+    }
+    logger.info(f"Started customer form for {safe_sender_id} - reason: {reason}")
+
+def get_customer_form(safe_sender_id):
+    """
+    Get current customer form state.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+        
+    Returns:
+        Form data dict or None if no form active
+    """
+    cleanup_customer_forms()
+    return customer_forms.get(safe_sender_id)
+
+def update_customer_form(safe_sender_id, step, data_key=None, data_value=None):
+    """
+    Update customer form with new data and move to next step.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+        step: The next step to move to
+        data_key: Optional key to store data
+        data_value: Optional value to store
+    """
+    if safe_sender_id in customer_forms:
+        if data_key and data_value is not None:
+            customer_forms[safe_sender_id]['data'][data_key] = data_value
+        customer_forms[safe_sender_id]['step'] = step
+        customer_forms[safe_sender_id]['timestamp'] = time.time()
+        logger.info(f"Updated customer form for {safe_sender_id} - step: {step}")
+
+def cancel_customer_form(safe_sender_id):
+    """
+    Cancel customer form collection.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+    """
+    if safe_sender_id in customer_forms:
+        del customer_forms[safe_sender_id]
+        logger.info(f"Cancelled customer form for {safe_sender_id}")
+
+def cleanup_customer_forms():
+    """Remove expired customer forms from the cache."""
+    current_time = time.time()
+    expired_ids = [user_id for user_id, form in customer_forms.items() 
+                   if current_time - form['timestamp'] > CUSTOMER_FORM_TTL]
+    for user_id in expired_ids:
+        del customer_forms[user_id]
+        logger.info(f"Expired customer form for {user_id}")
+
+def process_customer_form_step(safe_sender_id, sender_number, message_text, message_info):
+    """
+    Process one step of the customer form collection.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+        sender_number: The sender's phone number
+        message_text: The message text
+        message_info: The full message info for media detection
+        
+    Returns:
+        Response text to send to customer, or None if form is complete
+    """
+    form = get_customer_form(safe_sender_id)
+    if not form:
+        return None
+    
+    current_step = form['step']
+    form_data = form['data']
+    
+    # Step 1: Collect name
+    if current_step == 'name':
+        if len(message_text.strip()) < 2:
+            return "Por favor, digite seu nome completo:"
+        
+        form_data['name'] = message_text.strip()
+        update_customer_form(safe_sender_id, 'phone', 'name', message_text.strip())
+        return "Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_"
+    
+    # Step 2: Collect phone
+    elif current_step == 'phone':
+        # Remove non-digits
+        phone = ''.join(filter(str.isdigit, message_text))
+        if len(phone) < 10:
+            return "Por favor, digite um telefone válido com DDD:\n_(Exemplo: 81999887766)_"
+        
+        form_data['phone'] = phone
+        update_customer_form(safe_sender_id, 'cpf', 'phone', phone)
+        return "Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_"
+    
+    # Step 3: Collect CPF
+    elif current_step == 'cpf':
+        # Remove non-digits
+        cpf = ''.join(filter(str.isdigit, message_text))
+        if len(cpf) != 11:
+            return "Por favor, digite um CPF válido com 11 dígitos:\n_(Apenas números)_"
+        
+        # Format CPF for display
+        cpf_formatted = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+        form_data['cpf'] = cpf_formatted
+        
+        # Check if this is for budget (opção 2) - only ask for prescription in this case
+        form_reason = form.get('reason', '')
+        is_budget = '2 -' in form_reason or 'orçamento' in form_reason.lower()
+        
+        if is_budget:
+            # Only ask for prescription if it's a budget request
+            update_customer_form(safe_sender_id, 'prescription', 'cpf', cpf_formatted)
+            return "Ótimo! Você possui *receita médica*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
+        else:
+            # For other options, skip prescription and go to confirmation
+            form_data['prescription'] = "Não solicitado (apenas para orçamentos)"
+            form_data['has_prescription'] = False
+            update_customer_form(safe_sender_id, 'confirm', 'cpf', cpf_formatted)
+            update_customer_form(safe_sender_id, 'confirm', 'prescription', "Não solicitado")
+            
+            # Show summary for confirmation
+            summary = f"""
+📋 *Confirmação dos Dados*
+
+👤 *Nome:* {form_data.get('name')}
+📱 *Telefone:* {form_data.get('phone')}
+🆔 *CPF:* {form_data.get('cpf')}
+
+*Motivo do contato:* {form['reason']}
+
+_Seus dados estão corretos?_
+
+✅ Digite *SIM* para confirmar
+❌ Digite *NÃO* para recomeçar
+"""
+            return summary.strip()
+    
+    # Step 4: Collect prescription
+    elif current_step == 'prescription':
+        has_prescription = False
+        prescription_info = "Não possui receita"
+        
+        # Check if message has image
+        if message_info.get('message', {}).get('imageMessage'):
+            has_prescription = True
+            image_url = message_info['message']['imageMessage'].get('url', 'Imagem recebida')
+            prescription_info = f"📷 Receita enviada (imagem)\nURL: {image_url}"
+        
+        # Check if message has document/PDF
+        elif message_info.get('message', {}).get('documentMessage'):
+            has_prescription = True
+            doc_name = message_info['message']['documentMessage'].get('fileName', 'documento.pdf')
+            doc_url = message_info['message']['documentMessage'].get('url', 'Documento recebido')
+            prescription_info = f"📄 Receita enviada ({doc_name})\nURL: {doc_url}"
+        
+        # Check for text response
+        elif message_text.lower().strip() in ['não', 'nao', 'n', 'sem receita', 'não tenho', 'nao tenho']:
+            prescription_info = "Cliente informou que não possui receita"
+        
+        elif message_text.lower().strip() in ['sim', 's', 'tenho', 'possuo']:
+            return "Por favor, *envie a foto ou PDF* da sua receita médica 📸"
+        
+        form_data['prescription'] = prescription_info
+        form_data['has_prescription'] = has_prescription
+        update_customer_form(safe_sender_id, 'confirm', 'prescription', prescription_info)
+        
+        # Show summary for confirmation
+        summary = f"""
+📋 *Confirmação dos Dados*
+
+👤 *Nome:* {form_data.get('name')}
+📱 *Telefone:* {form_data.get('phone')}
+🆔 *CPF:* {form_data.get('cpf')}
+💊 *Receita:* {prescription_info}
+
+*Motivo do contato:* {form['reason']}
+
+_Seus dados estão corretos?_
+
+✅ Digite *SIM* para confirmar
+❌ Digite *NÃO* para recomeçar
+"""
+        return summary.strip()
+    
+    # Step 5: Confirm and send to group
+    elif current_step == 'confirm':
+        if message_text.lower().strip() in ['sim', 's', 'confirmo', 'correto', 'ok']:
+            # Send notification to group with all collected data
+            send_customer_form_to_group(sender_number, form)
+            cancel_customer_form(safe_sender_id)
+            return "✅ Perfeito! Suas informações foram enviadas para nossos consultores.\n\nEles entrarão em contato com você em breve! 😊\n\n_Posso ajudar com mais alguma coisa?_"
+        
+        elif message_text.lower().strip() in ['não', 'nao', 'n', 'cancelar', 'recomeçar', 'recomecar']:
+            cancel_customer_form(safe_sender_id)
+            return "❌ Formulário cancelado. Vamos recomeçar!\n\n_Como posso ajudar você?_"
+        
+        else:
+            return "Por favor, digite *SIM* para confirmar ou *NÃO* para recomeçar:"
+    
+    return None
+
+def send_customer_form_to_group(customer_number, form):
+    """
+    Send complete customer form data to the notification group.
+    
+    Args:
+        customer_number: The customer's phone number
+        form: The form data with customer information
+    """
+    if not CONFIG["NOTIFICATION_GROUP_ID"]:
+        logger.warning("NOTIFICATION_GROUP_ID not configured. Skipping group notification.")
+        return False
+    
+    form_data = form['data']
+    
+    # Format customer number for display
+    display_number = customer_number.replace('@s.whatsapp.net', '').replace('@g.us', '')
+    
+    # Build notification message
+    from datetime import datetime
+    timestamp = datetime.now().strftime('%d/%m/%Y às %H:%M')
+    
+    notification_parts = [
+        "🔔 *NOVA SOLICITAÇÃO DE ATENDIMENTO*",
+        "",
+        f"⏰ *Horário:* {timestamp}",
+        f"📋 *Motivo:* {form['reason']}",
+        "",
+        "👤 *DADOS DO CLIENTE*",
+        f"• *Nome:* {form_data.get('name', 'Não informado')}",
+        f"• *Telefone:* {form_data.get('phone', 'Não informado')}",
+        f"• *WhatsApp:* {display_number}",
+        f"• *CPF:* {form_data.get('cpf', 'Não informado')}",
+        "",
+    ]
+    
+    # Add prescription info (only if it was collected - budget requests)
+    prescription_info = form_data.get('prescription', 'Não solicitado')
+    
+    # Check if prescription was actually collected (not skipped)
+    if form_data.get('has_prescription', False):
+        notification_parts.append("💊 *RECEITA MÉDICA*")
+        notification_parts.append(prescription_info)
+        notification_parts.append("")
+        notification_parts.append("⚠️ _Verifique a receita antes de confirmar o atendimento_")
+    elif prescription_info and prescription_info != "Não solicitado (apenas para orçamentos)":
+        # Prescription was asked but customer doesn't have one
+        notification_parts.append(f"💊 *Receita:* {prescription_info}")
+    # If prescription_info contains "Não solicitado", don't show it at all
+    
+    notification_parts.extend([
+        "",
+        "---",
+        "_Atender o cliente iniciando conversa com o WhatsApp dele_"
+    ])
+    
+    notification_message = "\n".join(notification_parts)
+    
+    try:
+        result = send_whatsapp_message(
+            CONFIG["NOTIFICATION_GROUP_ID"],
+            notification_message,
+            message_type='text'
+        )
+        if result:
+            logger.info(f"✅ Customer form sent to group for {display_number}")
+        return result
+    except Exception as e:
+        logger.error(f"❌ Error sending customer form to group: {e}")
+        return False
 
 def load_conversation_history(user_id):
     """Loads conversation history for a given user_id."""
@@ -801,11 +1089,24 @@ def webhook():
             if message_type == 'text' and incoming_message_text:
                 logger.info(f"Processing text message: '{incoming_message_text}' from {sender_number}")
                 
+                # Check if user is in the middle of filling a customer form
+                active_form = get_customer_form(safe_sender_id)
+                if active_form:
+                    logger.info(f"Processing customer form step for {safe_sender_id}")
+                    form_response = process_customer_form_step(safe_sender_id, sender_number, incoming_message_text, message_info)
+                    
+                    if form_response:
+                        send_whatsapp_message(sender_number, form_response, message_type='text')
+                        end_sending_session(safe_sender_id)
+                        logger.info("=== WEBHOOK PROCESSING COMPLETE ===")
+                        return jsonify({'status': 'success'}), 200
+                
                 conversation_history = load_conversation_history(safe_sender_id)
                 logger.info(f"Loaded conversation history for {safe_sender_id}")
                 
                 response_text = None
                 should_notify_group = False
+                should_start_form = False
                 selected_menu_option = None
                 
                 # Check if interactive menu is enabled
@@ -821,11 +1122,18 @@ def webhook():
                         logger.info(f"Menu option {option_key} selected by {sender_number}")
                         response_text = get_menu_response(option_key, MENU_CONFIG.get('menu_options', {}))
                         
-                        # Check if this option requires notification (options 2-6 need specialist)
+                        # Check if this option requires collecting customer data (options 2-6 need specialist)
                         if option_key in ['2', '3', '4', '6']:
-                            should_notify_group = True
+                            should_start_form = True
                             option_title = MENU_CONFIG.get('menu_options', {}).get(option_key, {}).get('title', f'Opção {option_key}')
                             selected_menu_option = f"{option_key} - {option_title}"
+                            
+                            # Start collecting customer information
+                            start_customer_form(safe_sender_id, selected_menu_option)
+                            logger.info(f"Started customer form for menu option {option_key}")
+                            
+                            # Add prompt to start form
+                            response_text += "\n\n📋 Para que nossos consultores possam te atender melhor, preciso de algumas informações.\n\n👤 Por favor, me diga seu *nome completo*:"
                 
                 # If no menu response, use Gemini AI
                 if not response_text:
@@ -836,7 +1144,15 @@ def webhook():
                     # Check if AI response suggests contacting specialist
                     keywords_for_notification = ['jailson', 'josimar', 'consultor', 'especialista', 'atendimento']
                     if any(keyword in response_text.lower() for keyword in keywords_for_notification):
-                        should_notify_group = True
+                        should_start_form = True
+                        selected_menu_option = "Solicitação via IA"
+                        
+                        # Start collecting customer information
+                        start_customer_form(safe_sender_id, "Cliente solicitou contato com consultor")
+                        logger.info(f"Started customer form based on AI response")
+                        
+                        # Add prompt to start form
+                        response_text += "\n\n📋 Para facilitar o atendimento, preciso de algumas informações.\n\n👤 Por favor, me diga seu *nome completo*:"
                 
                 if response_text:
                     message_chunks = split_message(response_text)
@@ -884,14 +1200,8 @@ def webhook():
                     
                     # Only save history and send notifications if we completed successfully
                     if chunks_sent == len(message_chunks):
-                        # Send notification to group if needed
-                        if should_notify_group:
-                            logger.info(f"Sending notification to group for {sender_number}")
-                            send_notification_to_group(
-                                sender_number,
-                                incoming_message_text,
-                                menu_option=selected_menu_option
-                            )
+                        # NOTE: We no longer send notifications here - the form will handle that
+                        # when the customer completes the data collection
                         
                         # Save conversation history
                         conversation_manager.add_exchange(safe_sender_id, incoming_message_text, response_text)
