@@ -1141,15 +1141,35 @@ def webhook():
                     response_text = get_gemini_response(incoming_message_text, conversation_history)
                     logger.info(f"Gemini reply: {response_text}")
                     
+                    # Detect intent from user's original message to determine form reason
+                    user_message_lower = incoming_message_text.lower()
+                    form_reason = None
+                    
+                    # Check for budget/quote request (should ask for prescription)
+                    budget_keywords = ['orçamento', 'orcamento', 'orçar', 'preço', 'preco', 'valor', 'quanto custa', 'comprar óculos', 'fazer óculos']
+                    if any(keyword in user_message_lower for keyword in budget_keywords):
+                        form_reason = "2 - Fazer orçamento de óculos (solicitação via conversa)"
+                        logger.info(f"Detected BUDGET request from user message")
+                    
+                    # Check for repair/adjustment request (no prescription needed)
+                    elif any(keyword in user_message_lower for keyword in ['ajuste', 'ajustar', 'reparo', 'reparar', 'consertar', 'conserto', 'quebrou', 'quebrado']):
+                        form_reason = "3 - Ajustes e reparos (solicitação via conversa)"
+                        logger.info(f"Detected REPAIR request from user message")
+                    
                     # Check if AI response suggests contacting specialist
-                    keywords_for_notification = ['jailson', 'josimar', 'consultor', 'especialista', 'atendimento']
-                    if any(keyword in response_text.lower() for keyword in keywords_for_notification):
+                    ai_keywords = ['jailson', 'josimar', 'consultor', 'especialista', 'atendimento']
+                    if any(keyword in response_text.lower() for keyword in ai_keywords):
                         should_start_form = True
-                        selected_menu_option = "Solicitação via IA"
+                        
+                        # If no specific reason detected yet, use generic
+                        if not form_reason:
+                            form_reason = "Cliente solicitou contato com consultor"
+                        
+                        selected_menu_option = form_reason
                         
                         # Start collecting customer information
-                        start_customer_form(safe_sender_id, "Cliente solicitou contato com consultor")
-                        logger.info(f"Started customer form based on AI response")
+                        start_customer_form(safe_sender_id, form_reason)
+                        logger.info(f"Started customer form based on AI response - reason: {form_reason}")
                         
                         # Add prompt to start form
                         response_text += "\n\n📋 Para facilitar o atendimento, preciso de algumas informações.\n\n👤 Por favor, me diga seu *nome completo*:"
