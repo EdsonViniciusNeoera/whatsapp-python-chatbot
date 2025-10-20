@@ -4,14 +4,19 @@ import re
 message_splitter.py - Implementation of the message splitting functionality
 """
 
-def split_message(text, max_lines=3, max_chars_per_line=100):
+def split_message(text, max_lines=5, max_chars_per_line=200):
     """
     The main message splitting function, used throughout the application.
-    This is just an alias to keep backwards compatibility.
+    Improved with larger limits to reduce unnecessary message fragmentation.
+    
+    Args:
+        text: The text to split
+        max_lines: Maximum lines per message chunk (default: 5, increased from 3)
+        max_chars_per_line: Maximum characters per line (default: 200, increased from 100)
     """
     return split_message_impl(text, max_lines, max_chars_per_line)
 
-def split_message_impl(text, max_lines=3, max_chars_per_line=100):
+def split_message_impl(text, max_lines=5, max_chars_per_line=200):
     """
     Split a long message into smaller chunks for better WhatsApp readability.
     This improved implementation properly handles long lines without newlines.
@@ -34,6 +39,14 @@ def split_message_impl(text, max_lines=3, max_chars_per_line=100):
     normalized_text = re.sub(r'\n\s*\\\s*\n', '\n', normalized_text)
     normalized_text = re.sub(r'^\s*\\\s*\n', '', normalized_text)
     normalized_text = re.sub(r'\n\s*\\\s*$', '', normalized_text)
+    
+    # For short messages, return as-is without splitting
+    line_count = len(normalized_text.split('\n'))
+    max_line_length = max(len(line) for line in normalized_text.split('\n')) if normalized_text else 0
+    
+    if line_count <= max_lines and max_line_length <= max_chars_per_line * 1.5:
+        # Message is short enough, no need to split
+        return [normalized_text]
     
     # Split by existing newlines
     paragraphs = normalized_text.split('\n')

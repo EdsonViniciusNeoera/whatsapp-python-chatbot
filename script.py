@@ -386,6 +386,100 @@ class ConversationManager:
 # Initialize the conversation manager
 conversation_manager = ConversationManager(CONFIG["CONVERSATIONS_DIR"], max_history=20)
 
+# Message deduplication cache
+# Stores message IDs that have been processed recently to avoid duplicates
+processed_messages = {}
+PROCESSED_MESSAGE_TTL = 300  # Keep message IDs for 5 minutes (300 seconds)
+
+# Active message sending tracking
+# Stores active message sending sessions per user to allow cancellation
+active_sending_sessions = {}  # {safe_sender_id: {'cancel': False, 'timestamp': time}}
+SENDING_SESSION_TTL = 60  # Keep session info for 1 minute
+
+def cleanup_processed_messages():
+    """Remove old message IDs from the processed messages cache."""
+    current_time = time.time()
+    expired_ids = [msg_id for msg_id, timestamp in processed_messages.items() 
+                   if current_time - timestamp > PROCESSED_MESSAGE_TTL]
+    for msg_id in expired_ids:
+        del processed_messages[msg_id]
+
+def is_message_processed(message_id):
+    """
+    Check if a message has already been processed.
+    
+    Args:
+        message_id: The unique message ID
+        
+    Returns:
+        True if the message was already processed, False otherwise
+    """
+    cleanup_processed_messages()
+    return message_id in processed_messages
+
+def mark_message_processed(message_id):
+    """
+    Mark a message as processed by storing its ID with a timestamp.
+    
+    Args:
+        message_id: The unique message ID
+    """
+    processed_messages[message_id] = time.time()
+
+def start_sending_session(safe_sender_id):
+    """
+    Start a new message sending session for a user.
+    If there's an active session, it will be cancelled.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+    """
+    # Cancel any existing session for this user
+    if safe_sender_id in active_sending_sessions:
+        logger.info(f"Cancelling previous sending session for {safe_sender_id}")
+        active_sending_sessions[safe_sender_id]['cancel'] = True
+    
+    # Create new session
+    active_sending_sessions[safe_sender_id] = {
+        'cancel': False,
+        'timestamp': time.time()
+    }
+    logger.info(f"Started new sending session for {safe_sender_id}")
+
+def should_cancel_sending(safe_sender_id):
+    """
+    Check if the current sending session should be cancelled.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+        
+    Returns:
+        True if sending should be cancelled, False otherwise
+    """
+    if safe_sender_id not in active_sending_sessions:
+        return False
+    
+    return active_sending_sessions[safe_sender_id].get('cancel', False)
+
+def cleanup_sending_sessions():
+    """Remove old sending sessions from the cache."""
+    current_time = time.time()
+    expired_ids = [user_id for user_id, session in active_sending_sessions.items() 
+                   if current_time - session['timestamp'] > SENDING_SESSION_TTL]
+    for user_id in expired_ids:
+        del active_sending_sessions[user_id]
+
+def end_sending_session(safe_sender_id):
+    """
+    End a message sending session for a user.
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+    """
+    if safe_sender_id in active_sending_sessions:
+        del active_sending_sessions[safe_sender_id]
+        logger.info(f"Ended sending session for {safe_sender_id}")
+
 def load_conversation_history(user_id):
     """Loads conversation history for a given user_id."""
     return conversation_manager.load(user_id)
@@ -577,6 +671,16 @@ def send_whatsapp_message(recipient_number, message_content, message_type='text'
     
     try:
         if message_type == 'text':
+            # Send typing indicator first for better UX
+            try:
+                wasender_client.send_presence(
+                    to=formatted_recipient_number,
+                    state='composing'
+                )
+                logger.info(f"Typing indicator sent to {recipient_number}")
+            except Exception as e:
+                logger.warning(f"Could not send typing indicator: {e}")
+            
             response = wasender_client.send_text(
                 to=formatted_recipient_number,
                 text_body=message_content
@@ -644,6 +748,18 @@ def webhook():
             message_info = data['data']['messages']
             logger.info(f"Processing message info: {message_info}")
             
+            # Get message ID for deduplication
+            message_id = message_info.get('key', {}).get('id')
+            
+            # Check if this message was already processed
+            if message_id and is_message_processed(message_id):
+                logger.info(f"Skipping duplicate message: {message_id}")
+                return jsonify({'status': 'success', 'message': 'Duplicate message ignored'}), 200
+            
+            # Mark this message as processed
+            if message_id:
+                mark_message_processed(message_id)
+            
             # Check if it's a message sent by the bot itself
             if message_info.get('key', {}).get('fromMe'):
                 logger.info(f"Ignoring self-sent message: {message_info.get('key', {}).get('id')}")
@@ -675,6 +791,11 @@ def webhook():
 
             safe_sender_id = "".join(c if c.isalnum() else '_' for c in sender_number)
             logger.info(f"Safe sender ID: {safe_sender_id}")
+            
+            # Cancel any active sending session for this user
+            # This ensures we stop sending old chunks if user sends a new message
+            start_sending_session(safe_sender_id)
+            cleanup_sending_sessions()
             
             # we should do this in queue in production if we take too long to respond the request will timeout
             if message_type == 'text' and incoming_message_text:
@@ -720,35 +841,63 @@ def webhook():
                 if response_text:
                     message_chunks = split_message(response_text)
                     logger.info(f"Sending {len(message_chunks)} message chunks to {sender_number}")
+                    
+                    chunks_sent = 0
                     for i, chunk in enumerate(message_chunks):
+                        # Check if sending was cancelled by a new incoming message
+                        if should_cancel_sending(safe_sender_id):
+                            logger.warning(f"Sending cancelled for {sender_number} - user sent new message")
+                            break
+                        
                         logger.info(f"Sending chunk {i+1}/{len(message_chunks)}: {chunk[:50]}...")
                         send_result = send_whatsapp_message(sender_number, chunk, message_type='text')
                         if not send_result:
                             logger.error(f"Failed to send message chunk {i+1} to {sender_number}")
                             break
                         else:
+                            chunks_sent += 1
                             logger.info(f"Successfully sent chunk {i+1} to {sender_number}")
                         
-                        # Delay between messages
-                        import random
-                        import time
+                        # Delay between messages (only if there are more chunks)
                         if i < len(message_chunks) - 1:
-                            delay = random.uniform(5, 7)
+                            import random
+                            import time
+                            # Reduced delay for better responsiveness (1-2 seconds instead of 5-7)
+                            delay = random.uniform(1.0, 2.0)
                             logger.info(f"Waiting {delay:.1f} seconds before next chunk...")
-                            time.sleep(delay)
+                            
+                            # Check for cancellation during delay (check every 0.5 seconds)
+                            delay_steps = int(delay / 0.5)
+                            for _ in range(delay_steps):
+                                if should_cancel_sending(safe_sender_id):
+                                    logger.warning(f"Sending cancelled during delay for {sender_number}")
+                                    break
+                                time.sleep(0.5)
+                            
+                            # Final check after delay
+                            if should_cancel_sending(safe_sender_id):
+                                logger.warning(f"Sending cancelled for {sender_number}")
+                                break
                     
-                    # Send notification to group if needed
-                    if should_notify_group:
-                        logger.info(f"Sending notification to group for {sender_number}")
-                        send_notification_to_group(
-                            sender_number,
-                            incoming_message_text,
-                            menu_option=selected_menu_option
-                        )
+                    # End the sending session
+                    end_sending_session(safe_sender_id)
                     
-                    # Save conversation history
-                    conversation_manager.add_exchange(safe_sender_id, incoming_message_text, response_text)
-                    logger.info(f"Saved conversation history for {safe_sender_id}")
+                    # Only save history and send notifications if we completed successfully
+                    if chunks_sent == len(message_chunks):
+                        # Send notification to group if needed
+                        if should_notify_group:
+                            logger.info(f"Sending notification to group for {sender_number}")
+                            send_notification_to_group(
+                                sender_number,
+                                incoming_message_text,
+                                menu_option=selected_menu_option
+                            )
+                        
+                        # Save conversation history
+                        conversation_manager.add_exchange(safe_sender_id, incoming_message_text, response_text)
+                        logger.info(f"Saved conversation history for {safe_sender_id}")
+                    else:
+                        logger.warning(f"Message sending incomplete for {sender_number} - only {chunks_sent}/{len(message_chunks)} chunks sent")
                 else:
                     logger.error("No reply generated")
             else:
