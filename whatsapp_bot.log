@@ -2612,3 +2612,974 @@ Posso ajudar com mais alguma coisa? Digite o núme...
 2025-10-18 16:27:55,871 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
 2025-10-18 16:27:55,878 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB093BAA4DA8507FA8513
 2025-10-18 16:27:55,878 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:27:55] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:16,552 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-18 16:36:16,553 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-18 16:36:16,553 - INFO - whatsapp_bot - Successfully loaded persona: Pedro
+2025-10-18 16:36:16,554 - INFO - whatsapp_bot - Loaded 17 few-shot examples
+2025-10-18 16:36:16,554 - INFO - whatsapp_bot - Interactive menu: Enabled
+2025-10-18 16:36:16,554 - INFO - whatsapp_bot - Using persona 'Pedro' with 17 training examples
+2025-10-18 16:36:16,554 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-18 16:36:16,554 - INFO - whatsapp_bot - Few-shot learning: Enabled (17 examples)
+2025-10-18 16:36:16,555 - INFO - whatsapp_bot - ======================================================
+2025-10-18 16:36:16,555 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-18 16:36:16,555 - INFO - whatsapp_bot - ======================================================
+2025-10-18 16:36:16,555 - INFO - whatsapp_bot - Persona: Pedro
+2025-10-18 16:36:16,556 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-18 16:36:16,556 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-18 16:36:16,556 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-18 16:36:16,556 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-18 16:36:16,556 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-18 16:36:16,556 - INFO - whatsapp_bot - ======================================================
+2025-10-18 16:36:16,563 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.68.119:5001
+2025-10-18 16:36:16,564 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-18 16:36:33,669 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:33,670 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0D0839C7DC9F60A0E8B', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816168, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'oi', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'VDUCFN0wjT+Hl0zWc3pkK5oPxbY7mj+yrt56E/6aPS0='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0D0839C7DC9F60A0E8B'}}, 'timestamp': 1760816168765}
+2025-10-18 16:36:33,670 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:33,670 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-18 16:36:33,671 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0D0839C7DC9F60A0E8B', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816168, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'oi', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'VDUCFN0wjT+Hl0zWc3pkK5oPxbY7mj+yrt56E/6aPS0='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0D0839C7DC9F60A0E8B'}}, 'timestamp': 1760816168766}
+2025-10-18 16:36:33,671 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:36:33,671 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0D0839C7DC9F60A0E8B', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816168, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'oi', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'VDUCFN0wjT+Hl0zWc3pkK5oPxbY7mj+yrt56E/6aPS0='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0D0839C7DC9F60A0E8B'}
+2025-10-18 16:36:33,671 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:33] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:33,672 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-18 16:36:33,672 - INFO - whatsapp_bot - Message content object: {'conversation': 'oi', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'VDUCFN0wjT+Hl0zWc3pkK5oPxbY7mj+yrt56E/6aPS0='}}
+2025-10-18 16:36:33,672 - INFO - whatsapp_bot - Found conversation text: oi
+2025-10-18 16:36:33,672 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-18 16:36:33,672 - INFO - whatsapp_bot - Processing text message: 'oi' from 558186732159@s.whatsapp.net
+2025-10-18 16:36:33,673 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-18 16:36:33,673 - INFO - whatsapp_bot - Greeting detected, showing menu to 558186732159@s.whatsapp.net
+2025-10-18 16:36:33,673 - INFO - whatsapp_bot - Sending 5 message chunks to 558186732159@s.whatsapp.net
+2025-10-18 16:36:34,579 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:36:34,579 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-18 16:36:34,579 - INFO - whatsapp_bot - Waiting 6.6 seconds before next chunk...
+2025-10-18 16:36:36,426 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:36,429 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:36:36,429 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:36:36,430 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:36,777 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:36,784 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB00B9FBE3251C6FBC6F3
+2025-10-18 16:36:36,784 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:41,205 - INFO - whatsapp_bot - Sending chunk 2/5: 
+*Escolha uma opção:*
+...
+2025-10-18 16:36:41,786 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:36:41,787 - INFO - whatsapp_bot - Successfully sent chunk 2 to 558186732159@s.whatsapp.net
+2025-10-18 16:36:41,787 - INFO - whatsapp_bot - Waiting 5.9 seconds before next chunk...
+2025-10-18 16:36:43,698 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:43,699 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558186732159@s.whatsapp.net', 'msgId': 7508092, 'success': True, 'result': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB021A214A091CD1BB906'}, 'message': {'extendedTextMessage': {'text': '*Escolha uma opção:*'}}, 'messageTimestamp': '1760816178', 'status': 'PENDING'}}, 'timestamp': 1760816178726}
+2025-10-18 16:36:43,699 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:36:43,699 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:36:43,699 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:43] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:43,956 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:43,956 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB021A214A091CD1BB906', 'msgId': 7508092}, 'message': {'extendedTextMessage': {'text': '*Escolha uma opção:*'}}, 'messageTimestamp': {'low': 1760816178, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB021A214A091CD1BB906'}}, 'timestamp': 1760816179062}
+2025-10-18 16:36:43,957 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB021A214A091CD1BB906', 'msgId': 7508092}, 'message': {'extendedTextMessage': {'text': '*Escolha uma opção:*'}}, 'messageTimestamp': {'low': 1760816178, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB021A214A091CD1BB906'}
+2025-10-18 16:36:43,957 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB021A214A091CD1BB906
+2025-10-18 16:36:43,957 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:43] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:48,303 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:36:48,303 - INFO - whatsapp_bot - Successfully sent chunk 3 to 558186732159@s.whatsapp.net
+2025-10-18 16:36:48,303 - INFO - whatsapp_bot - Waiting 5.8 seconds before next chunk...
+2025-10-18 16:36:50,161 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:50,164 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:36:50,164 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:36:50,164 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:50] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:50,493 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:50,500 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB05D77025C5D22CCF9B9
+2025-10-18 16:36:50,500 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:50] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:54,198 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:54,198 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB08FED650E58FA2BF4BA', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816189, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6mb2lg8fsUJgTA9zMXiRpEXHSpI+iourDIoWANRHEX4='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB08FED650E58FA2BF4BA'}}, 'timestamp': 1760816189359}
+2025-10-18 16:36:54,198 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-18 16:36:54,198 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:36:54,199 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:54] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:54,202 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:54,202 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB08FED650E58FA2BF4BA', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816189, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6mb2lg8fsUJgTA9zMXiRpEXHSpI+iourDIoWANRHEX4='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB08FED650E58FA2BF4BA'}}, 'timestamp': 1760816189360}
+2025-10-18 16:36:54,202 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB08FED650E58FA2BF4BA', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816189, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6mb2lg8fsUJgTA9zMXiRpEXHSpI+iourDIoWANRHEX4='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB08FED650E58FA2BF4BA'}
+2025-10-18 16:36:54,202 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-18 16:36:54,203 - INFO - whatsapp_bot - Message content object: {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6mb2lg8fsUJgTA9zMXiRpEXHSpI+iourDIoWANRHEX4='}}
+2025-10-18 16:36:54,203 - INFO - whatsapp_bot - Found conversation text: 2
+2025-10-18 16:36:54,203 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-18 16:36:54,203 - INFO - whatsapp_bot - Processing text message: '2' from 558186732159@s.whatsapp.net
+2025-10-18 16:36:54,203 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-18 16:36:54,204 - INFO - whatsapp_bot - Menu option 2 selected by 558186732159@s.whatsapp.net
+2025-10-18 16:36:54,205 - INFO - whatsapp_bot - Sending 3 message chunks to 558186732159@s.whatsapp.net
+2025-10-18 16:36:54,834 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:36:54,834 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-18 16:36:54,834 - INFO - whatsapp_bot - Waiting 5.2 seconds before next chunk...
+2025-10-18 16:36:56,360 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:56,364 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:36:56,364 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:36:56,364 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:56] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:36:56,750 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:36:56,757 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0FB2612E58EB6820177
+2025-10-18 16:36:56,757 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:36:56] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:00,040 - INFO - whatsapp_bot - Sending chunk 2/3: Você prefere falar com:
+• *Jailson* - (81) 99750-7...
+2025-10-18 16:37:00,667 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:37:00,668 - INFO - whatsapp_bot - Successfully sent chunk 2 to 558186732159@s.whatsapp.net
+2025-10-18 16:37:00,668 - INFO - whatsapp_bot - Waiting 5.9 seconds before next chunk...
+2025-10-18 16:37:01,757 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:01,757 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558186732159@s.whatsapp.net', 'msgId': 7508114, 'success': True, 'result': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB012695790BA720A00BB'}, 'message': {'extendedTextMessage': {'text': 'Você prefere falar com:\n• *Jailson* - (81) 99750-7161\n• *Josimar* - (81) 99974-5545'}}, 'messageTimestamp': '1760816196', 'status': 'PENDING'}}, 'timestamp': 1760816196917}
+2025-10-18 16:37:01,757 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:37:01,757 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:01,757 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:01] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:02,145 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:02,146 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB012695790BA720A00BB', 'msgId': 7508114}, 'message': {'extendedTextMessage': {'text': 'Você prefere falar com:\n• *Jailson* - (81) 99750-7161\n• *Josimar* - (81) 99974-5545'}}, 'messageTimestamp': {'low': 1760816196, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB012695790BA720A00BB'}}, 'timestamp': 1760816197256}
+2025-10-18 16:37:02,146 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB012695790BA720A00BB', 'msgId': 7508114}, 'message': {'extendedTextMessage': {'text': 'Você prefere falar com:\n• *Jailson* - (81) 99750-7161\n• *Josimar* - (81) 99974-5545'}}, 'messageTimestamp': {'low': 1760816196, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB012695790BA720A00BB'}
+2025-10-18 16:37:02,146 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB012695790BA720A00BB
+2025-10-18 16:37:02,147 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:02] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:06,592 - INFO - whatsapp_bot - Sending chunk 3/3: 
+Digite o nome do consultor ou ligue diretamente! ...
+2025-10-18 16:37:07,019 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:37:07,020 - INFO - whatsapp_bot - Successfully sent chunk 4 to 558186732159@s.whatsapp.net
+2025-10-18 16:37:07,020 - INFO - whatsapp_bot - Waiting 6.2 seconds before next chunk...
+2025-10-18 16:37:08,117 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:08,121 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:37:08,121 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:08,121 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:08] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:08,464 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:08,470 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0B1DFF0C73F1B2E6F44
+2025-10-18 16:37:08,471 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:08] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:11,377 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:11,378 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB009D5FE15E22207C53C', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816206, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'já sou cliente do Jailson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'WfjMfE5p8Z6bmjbuG4NyTY6joEmwvedhhI/SNeOnY1k='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB009D5FE15E22207C53C'}}, 'timestamp': 1760816206527}
+2025-10-18 16:37:11,378 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:11,378 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-18 16:37:11,378 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB009D5FE15E22207C53C', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816206, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'já sou cliente do Jailson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'WfjMfE5p8Z6bmjbuG4NyTY6joEmwvedhhI/SNeOnY1k='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB009D5FE15E22207C53C'}}, 'timestamp': 1760816206527}
+2025-10-18 16:37:11,378 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:11,378 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB009D5FE15E22207C53C', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1760816206, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'já sou cliente do Jailson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'WfjMfE5p8Z6bmjbuG4NyTY6joEmwvedhhI/SNeOnY1k='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB009D5FE15E22207C53C'}
+2025-10-18 16:37:11,379 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:11] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:11,379 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-18 16:37:11,380 - INFO - whatsapp_bot - Message content object: {'conversation': 'já sou cliente do Jailson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760468038'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'WfjMfE5p8Z6bmjbuG4NyTY6joEmwvedhhI/SNeOnY1k='}}
+2025-10-18 16:37:11,380 - INFO - whatsapp_bot - Found conversation text: já sou cliente do Jailson
+2025-10-18 16:37:11,380 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-18 16:37:11,380 - INFO - whatsapp_bot - Processing text message: 'já sou cliente do Jailson' from 558186732159@s.whatsapp.net
+2025-10-18 16:37:11,380 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-18 16:37:11,381 - INFO - whatsapp_bot - Using Gemini AI for response
+2025-10-18 16:37:11,381 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): já sou cliente do Jailson...
+2025-10-18 16:37:13,049 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:37:13,050 - INFO - whatsapp_bot - Successfully sent chunk 3 to 558186732159@s.whatsapp.net
+2025-10-18 16:37:13,050 - INFO - whatsapp_bot - Sending notification to group for 558186732159@s.whatsapp.net
+2025-10-18 16:37:13,351 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-18 16:37:13,352 - INFO - whatsapp_bot - Sending chunk 1/1: Que bom que já conhece o Jailson! Para falar diret...
+2025-10-18 16:37:14,821 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:14,825 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:37:14,825 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:14,825 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:14] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:15,227 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:15,234 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0198C8B88C842E902EB
+2025-10-18 16:37:15,235 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:15] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:18,470 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:37:18,470 - INFO - whatsapp_bot - Successfully sent chunk 5 to 558186732159@s.whatsapp.net
+2025-10-18 16:37:18,472 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-18 16:37:18,472 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:18,472 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:18] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:20,208 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:20,212 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:37:20,212 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:20,213 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:20] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:20,535 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:20,541 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB08C0225AF7E470D13C1
+2025-10-18 16:37:20,542 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:20] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:23,813 - INFO - whatsapp_bot - Text message sent to 120363404721021632@g.us.
+2025-10-18 16:37:23,827 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-18 16:37:23,827 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:23,827 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:23] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:25,495 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:25,498 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:37:25,498 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:25,499 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:25] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:26,004 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:26,011 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB05A89D7F40D479048C8
+2025-10-18 16:37:26,011 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:26] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:29,800 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-18 16:37:29,801 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-18 16:37:29,801 - INFO - whatsapp_bot - Sending notification to group for 558186732159@s.whatsapp.net
+2025-10-18 16:37:31,775 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:31,779 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:37:31,779 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:31,779 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:31] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:32,095 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:32,101 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0ACE772208D829A8ACC
+2025-10-18 16:37:32,102 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:32] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:35,959 - INFO - whatsapp_bot - Text message sent to 120363404721021632@g.us.
+2025-10-18 16:37:35,971 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-18 16:37:35,972 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:35,972 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:35] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:36,766 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:36,769 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-18 16:37:36,769 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-18 16:37:36,770 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-18 16:37:37,279 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-18 16:37:37,287 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB076DB68CE186DCD0294
+2025-10-18 16:37:37,287 - INFO - werkzeug - 127.0.0.1 - - [18/Oct/2025 16:37:37] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:13:46,566 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-20 20:13:46,566 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-20 20:13:46,579 - INFO - whatsapp_bot - Successfully loaded persona: Pedro
+2025-10-20 20:13:46,579 - INFO - whatsapp_bot - Loaded 17 few-shot examples
+2025-10-20 20:13:46,579 - INFO - whatsapp_bot - Interactive menu: Enabled
+2025-10-20 20:13:46,579 - INFO - whatsapp_bot - Using persona 'Pedro' with 17 training examples
+2025-10-20 20:13:46,579 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-20 20:13:46,579 - INFO - whatsapp_bot - Few-shot learning: Enabled (17 examples)
+2025-10-20 20:13:46,580 - INFO - whatsapp_bot - ======================================================
+2025-10-20 20:13:46,580 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-20 20:13:46,580 - INFO - whatsapp_bot - ======================================================
+2025-10-20 20:13:46,580 - INFO - whatsapp_bot - Persona: Pedro
+2025-10-20 20:13:46,581 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-20 20:13:46,581 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-20 20:13:46,581 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-20 20:13:46,581 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-20 20:13:46,581 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-20 20:13:46,581 - INFO - whatsapp_bot - ======================================================
+2025-10-20 20:13:46,604 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.68.119:5001
+2025-10-20 20:13:46,604 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-20 20:14:13,810 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:14:13,810 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB033B3AC585F6CF75B0C', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761002023, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '59GE54TGbkugGjTv2jFsefQ4T17hXXvTkNr7SobgbfU='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB033B3AC585F6CF75B0C'}}, 'timestamp': 1761002023189}
+2025-10-20 20:14:13,811 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:14:13,811 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:14:13,811 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:14:13] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:14:13,818 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:14:13,819 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB033B3AC585F6CF75B0C', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761002023, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '59GE54TGbkugGjTv2jFsefQ4T17hXXvTkNr7SobgbfU='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB033B3AC585F6CF75B0C'}}, 'timestamp': 1761002023190}
+2025-10-20 20:14:13,819 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB033B3AC585F6CF75B0C', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761002023, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '59GE54TGbkugGjTv2jFsefQ4T17hXXvTkNr7SobgbfU='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB033B3AC585F6CF75B0C'}
+2025-10-20 20:14:13,820 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:14:13,820 - INFO - whatsapp_bot - Message content object: {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '59GE54TGbkugGjTv2jFsefQ4T17hXXvTkNr7SobgbfU='}}
+2025-10-20 20:14:13,820 - INFO - whatsapp_bot - Found conversation text: gostaria de fazer um orçamento
+2025-10-20 20:14:13,820 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:14:13,820 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:14:13,820 - INFO - whatsapp_bot - Processing text message: 'gostaria de fazer um orçamento' from 558186732159@s.whatsapp.net
+2025-10-20 20:14:13,829 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-20 20:14:13,830 - INFO - whatsapp_bot - Using Gemini AI for response
+2025-10-20 20:14:13,830 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): gostaria de fazer um orçamento...
+2025-10-20 20:14:13,946 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:14:13,946 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': 'A5A4E283A6EA78B00A6B29F1E97E68CD'}, 'messageTimestamp': 1761002023, 'pushName': 'GGDISK Ótica', 'broadcast': False, 'status': 2, 'message': {'conversation': 'A GGDISK Ótica agradece sua mensagem. Não estamos em horário de atendimento , mas responderemos assim que possível.\nAté mais!'}, 'verifiedBizName': 'GGDISK Ótica', 'remoteJid': '558186732159@s.whatsapp.net', 'id': 'A5A4E283A6EA78B00A6B29F1E97E68CD'}}, 'timestamp': 1761002023338}
+2025-10-20 20:14:13,946 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': 'A5A4E283A6EA78B00A6B29F1E97E68CD'}, 'messageTimestamp': 1761002023, 'pushName': 'GGDISK Ótica', 'broadcast': False, 'status': 2, 'message': {'conversation': 'A GGDISK Ótica agradece sua mensagem. Não estamos em horário de atendimento , mas responderemos assim que possível.\nAté mais!'}, 'verifiedBizName': 'GGDISK Ótica', 'remoteJid': '558186732159@s.whatsapp.net', 'id': 'A5A4E283A6EA78B00A6B29F1E97E68CD'}
+2025-10-20 20:14:13,946 - INFO - whatsapp_bot - Ignoring self-sent message: A5A4E283A6EA78B00A6B29F1E97E68CD
+2025-10-20 20:14:13,946 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:14:13] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:14:15,981 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-20 20:14:15,984 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:14:17,133 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:14:17,133 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-20 20:14:17,133 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:14:17,133 - INFO - whatsapp_bot - Sending notification to group for 558186732159@s.whatsapp.net
+2025-10-20 20:14:17,133 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:14:18,968 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:14:18,972 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:14:18,972 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:14:18,972 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:14:18] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:14:19,301 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:14:19,308 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0F44F2A2F14660E4E52
+2025-10-20 20:14:19,308 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:14:19] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:14:22,284 - INFO - whatsapp_bot - Text message sent to 120363404721021632@g.us.
+2025-10-20 20:14:22,292 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-20 20:14:22,293 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:14:22,293 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:14:22] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:14:24,117 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:14:24,121 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:14:24,122 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:14:24,122 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:14:24] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:14:24,379 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:14:24,387 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0B806E1E452CEED5724
+2025-10-20 20:14:24,387 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:14:24] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:38:18,619 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-20 20:38:18,619 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-20 20:38:18,620 - INFO - whatsapp_bot - Successfully loaded persona: Pedro
+2025-10-20 20:38:18,620 - INFO - whatsapp_bot - Loaded 17 few-shot examples
+2025-10-20 20:38:18,620 - INFO - whatsapp_bot - Interactive menu: Enabled
+2025-10-20 20:38:18,620 - INFO - whatsapp_bot - Using persona 'Pedro' with 17 training examples
+2025-10-20 20:38:18,620 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-20 20:38:18,620 - INFO - whatsapp_bot - Few-shot learning: Enabled (17 examples)
+2025-10-20 20:38:18,621 - INFO - whatsapp_bot - ======================================================
+2025-10-20 20:38:18,621 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-20 20:38:18,621 - INFO - whatsapp_bot - ======================================================
+2025-10-20 20:38:18,621 - INFO - whatsapp_bot - Persona: Pedro
+2025-10-20 20:38:18,622 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-20 20:38:18,622 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-20 20:38:18,622 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-20 20:38:18,622 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-20 20:38:18,622 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-20 20:38:18,622 - INFO - whatsapp_bot - ======================================================
+2025-10-20 20:38:18,629 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.68.119:5001
+2025-10-20 20:38:18,629 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-10-20 20:38:34,691 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:38:34,691 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB057CEA3A867049D64D0', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003484, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'x6sJ/ugNo166k8cTv8HXe5FdXS22eH3uacJrqAqqEag='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB057CEA3A867049D64D0'}}, 'timestamp': 1761003484096}
+2025-10-20 20:38:34,692 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:38:34,692 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:38:34,692 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:38:34] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:38:34,693 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:38:34,693 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB057CEA3A867049D64D0', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003484, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'x6sJ/ugNo166k8cTv8HXe5FdXS22eH3uacJrqAqqEag='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB057CEA3A867049D64D0'}}, 'timestamp': 1761003484097}
+2025-10-20 20:38:34,693 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB057CEA3A867049D64D0', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003484, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'x6sJ/ugNo166k8cTv8HXe5FdXS22eH3uacJrqAqqEag='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB057CEA3A867049D64D0'}
+2025-10-20 20:38:34,694 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:38:34,694 - INFO - whatsapp_bot - Message content object: {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'x6sJ/ugNo166k8cTv8HXe5FdXS22eH3uacJrqAqqEag='}}
+2025-10-20 20:38:34,694 - INFO - whatsapp_bot - Found conversation text: gostaria de fazer um orçamento
+2025-10-20 20:38:34,694 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:38:34,694 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:38:34,694 - INFO - whatsapp_bot - Processing text message: 'gostaria de fazer um orçamento' from 558186732159@s.whatsapp.net
+2025-10-20 20:38:34,705 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-20 20:38:34,705 - INFO - whatsapp_bot - Using Gemini AI for response
+2025-10-20 20:38:34,706 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): gostaria de fazer um orçamento...
+2025-10-20 20:38:36,667 - INFO - whatsapp_bot - Started customer form for 558186732159_s_whatsapp_net - reason: Cliente solicitou contato com consultor
+2025-10-20 20:38:36,668 - INFO - whatsapp_bot - Started customer form based on AI response
+2025-10-20 20:38:36,668 - INFO - whatsapp_bot - Sending 1 message chunks to 558186732159@s.whatsapp.net
+2025-10-20 20:38:36,671 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:38:37,328 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:38:37,328 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-20 20:38:37,329 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:38:37,330 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-20 20:38:37,330 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:38:37,330 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:38:37] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:38:39,424 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:38:39,428 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:38:39,428 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:38:39,428 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:38:39] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:38:39,744 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:38:39,751 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB06B04DCB0E06C659BE5
+2025-10-20 20:38:39,752 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:38:39] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:03,623 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:03,624 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0461C34D885DC973955', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003513, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'Pedro Henrique Bulhões da Silva', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'Bd5k8iGQnU3t1LMTCSeaZ2JRHBUoU8Cm5zmDefhs8iE='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0461C34D885DC973955'}}, 'timestamp': 1761003513062}
+2025-10-20 20:39:03,624 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:39:03,624 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:03,624 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:03] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:03,633 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:03,634 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0461C34D885DC973955', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003513, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'Pedro Henrique Bulhões da Silva', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'Bd5k8iGQnU3t1LMTCSeaZ2JRHBUoU8Cm5zmDefhs8iE='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0461C34D885DC973955'}}, 'timestamp': 1761003513063}
+2025-10-20 20:39:03,634 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0461C34D885DC973955', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003513, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'Pedro Henrique Bulhões da Silva', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'Bd5k8iGQnU3t1LMTCSeaZ2JRHBUoU8Cm5zmDefhs8iE='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0461C34D885DC973955'}
+2025-10-20 20:39:03,634 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:39:03,634 - INFO - whatsapp_bot - Message content object: {'conversation': 'Pedro Henrique Bulhões da Silva', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'Bd5k8iGQnU3t1LMTCSeaZ2JRHBUoU8Cm5zmDefhs8iE='}}
+2025-10-20 20:39:03,635 - INFO - whatsapp_bot - Found conversation text: Pedro Henrique Bulhões da Silva
+2025-10-20 20:39:03,635 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:39:03,635 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:03,635 - INFO - whatsapp_bot - Processing text message: 'Pedro Henrique Bulhões da Silva' from 558186732159@s.whatsapp.net
+2025-10-20 20:39:03,635 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:39:03,635 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: phone
+2025-10-20 20:39:03,636 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:39:04,207 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:39:04,207 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:04,207 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:04,207 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:04] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:05,615 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:05,615 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558186732159@s.whatsapp.net', 'msgId': 7746061, 'success': True, 'result': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB02914361B42550FD843'}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': '1761003515', 'status': 'PENDING'}}, 'timestamp': 1761003515109}
+2025-10-20 20:39:05,615 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:39:05,615 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:05,615 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:05] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:05,881 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:05,881 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB02914361B42550FD843', 'msgId': 7746061}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761003515, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB02914361B42550FD843'}}, 'timestamp': 1761003515376}
+2025-10-20 20:39:05,881 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB02914361B42550FD843', 'msgId': 7746061}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761003515, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB02914361B42550FD843'}
+2025-10-20 20:39:05,882 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB02914361B42550FD843
+2025-10-20 20:39:05,882 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:05] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:13,844 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:13,844 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB06B2EA1194925920BD0', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003523, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '81986732159]', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6Y6kKAFlONe/YLrz+7gOelagqVacSONw23ew7dtMIgM='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB06B2EA1194925920BD0'}}, 'timestamp': 1761003523275}
+2025-10-20 20:39:13,844 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:39:13,844 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:13,844 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:13] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:13,847 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:13,848 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB06B2EA1194925920BD0', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003523, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '81986732159]', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6Y6kKAFlONe/YLrz+7gOelagqVacSONw23ew7dtMIgM='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB06B2EA1194925920BD0'}}, 'timestamp': 1761003523276}
+2025-10-20 20:39:13,848 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB06B2EA1194925920BD0', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003523, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '81986732159]', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6Y6kKAFlONe/YLrz+7gOelagqVacSONw23ew7dtMIgM='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB06B2EA1194925920BD0'}
+2025-10-20 20:39:13,848 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:39:13,848 - INFO - whatsapp_bot - Message content object: {'conversation': '81986732159]', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '6Y6kKAFlONe/YLrz+7gOelagqVacSONw23ew7dtMIgM='}}
+2025-10-20 20:39:13,849 - INFO - whatsapp_bot - Found conversation text: 81986732159]
+2025-10-20 20:39:13,849 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:39:13,849 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:13,849 - INFO - whatsapp_bot - Processing text message: '81986732159]' from 558186732159@s.whatsapp.net
+2025-10-20 20:39:13,849 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:39:13,849 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: cpf
+2025-10-20 20:39:13,849 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:39:14,425 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:39:14,425 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:14,425 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:14,425 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:14] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:15,352 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:15,352 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558186732159@s.whatsapp.net', 'msgId': 7746076, 'success': True, 'result': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB053B644680613E553BD'}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': '1761003524', 'status': 'PENDING'}}, 'timestamp': 1761003524844}
+2025-10-20 20:39:15,352 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:39:15,352 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:15,352 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:15] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:15,613 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:15,614 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB053B644680613E553BD', 'msgId': 7746076}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761003524, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB053B644680613E553BD'}}, 'timestamp': 1761003525108}
+2025-10-20 20:39:15,614 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB053B644680613E553BD', 'msgId': 7746076}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761003524, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB053B644680613E553BD'}
+2025-10-20 20:39:15,614 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB053B644680613E553BD
+2025-10-20 20:39:15,614 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:15] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:21,382 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:21,382 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0B55B4483E16DDD5CDD', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003530, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kqctFq6R2PGGGxH/dUz37f5I4PvX/rpiCjYCtCYMH9w='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0B55B4483E16DDD5CDD'}}, 'timestamp': 1761003530826}
+2025-10-20 20:39:21,382 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:39:21,383 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:21,383 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:21] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:21,391 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:21,392 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0B55B4483E16DDD5CDD', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003530, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kqctFq6R2PGGGxH/dUz37f5I4PvX/rpiCjYCtCYMH9w='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0B55B4483E16DDD5CDD'}}, 'timestamp': 1761003530827}
+2025-10-20 20:39:21,392 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0B55B4483E16DDD5CDD', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003530, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kqctFq6R2PGGGxH/dUz37f5I4PvX/rpiCjYCtCYMH9w='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0B55B4483E16DDD5CDD'}
+2025-10-20 20:39:21,392 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:39:21,392 - INFO - whatsapp_bot - Message content object: {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kqctFq6R2PGGGxH/dUz37f5I4PvX/rpiCjYCtCYMH9w='}}
+2025-10-20 20:39:21,392 - INFO - whatsapp_bot - Found conversation text: 10534595480
+2025-10-20 20:39:21,392 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:39:21,392 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:21,393 - INFO - whatsapp_bot - Processing text message: '10534595480' from 558186732159@s.whatsapp.net
+2025-10-20 20:39:21,393 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:39:21,393 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: confirm
+2025-10-20 20:39:21,393 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: confirm
+2025-10-20 20:39:21,393 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:39:21,966 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:39:21,966 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:21,966 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:21,967 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:21] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:23,643 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:23,647 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:39:23,647 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:23,647 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:23] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:23,915 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:23,922 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0C20F211CB12D4EF844
+2025-10-20 20:39:23,922 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:23] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:34,051 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:34,051 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB05B34F4C803441326D1', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003543, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'CHtL8knukcm4IwCRfPRR32CJoxbINf5RFIufCojp3rg='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB05B34F4C803441326D1'}}, 'timestamp': 1761003543485}
+2025-10-20 20:39:34,051 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:39:34,051 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:34,051 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:34] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:34,057 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:34,057 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB05B34F4C803441326D1', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003543, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'CHtL8knukcm4IwCRfPRR32CJoxbINf5RFIufCojp3rg='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB05B34F4C803441326D1'}}, 'timestamp': 1761003543487}
+2025-10-20 20:39:34,058 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB05B34F4C803441326D1', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761003543, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'CHtL8knukcm4IwCRfPRR32CJoxbINf5RFIufCojp3rg='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB05B34F4C803441326D1'}
+2025-10-20 20:39:34,058 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:39:34,058 - INFO - whatsapp_bot - Message content object: {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'CHtL8knukcm4IwCRfPRR32CJoxbINf5RFIufCojp3rg='}}
+2025-10-20 20:39:34,058 - INFO - whatsapp_bot - Found conversation text: SIM
+2025-10-20 20:39:34,059 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:39:34,059 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:34,059 - INFO - whatsapp_bot - Processing text message: 'SIM' from 558186732159@s.whatsapp.net
+2025-10-20 20:39:34,059 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:39:34,059 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:39:34,718 - INFO - whatsapp_bot - Text message sent to 120363404721021632@g.us.
+2025-10-20 20:39:34,721 - INFO - whatsapp_bot - Cancelled customer form for 558186732159_s_whatsapp_net
+2025-10-20 20:39:34,721 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:39:36,188 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:36,191 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:39:36,192 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:36,192 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:36,601 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:36,608 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB02AD4D0EBA5AE0DA9E1
+2025-10-20 20:39:36,608 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:40,861 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:39:40,861 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:39:40,861 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:40,861 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:40] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:42,893 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:42,897 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:39:42,897 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:39:42,897 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:39:43,205 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:39:43,212 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB01F27C8B2D5A26BEFDA
+2025-10-20 20:39:43,212 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:39:43] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:47:15,412 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:47:15,413 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB09E2DADEEDAEA793AF1', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004004, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kvs4EXSNOvjfs4b1eUPaZ3/tekzXTOPNOKAFu8NMmDM='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB09E2DADEEDAEA793AF1'}}, 'timestamp': 1761004004777}
+2025-10-20 20:47:15,413 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:47:15,413 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB09E2DADEEDAEA793AF1', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004004, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kvs4EXSNOvjfs4b1eUPaZ3/tekzXTOPNOKAFu8NMmDM='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB09E2DADEEDAEA793AF1'}
+2025-10-20 20:47:15,413 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB09E2DADEEDAEA793AF1', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004004, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kvs4EXSNOvjfs4b1eUPaZ3/tekzXTOPNOKAFu8NMmDM='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB09E2DADEEDAEA793AF1'}}, 'timestamp': 1761004004776}
+2025-10-20 20:47:15,414 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:47:15,414 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:47:15,414 - INFO - whatsapp_bot - Message content object: {'conversation': 'gostaria de fazer um orçamento', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'kvs4EXSNOvjfs4b1eUPaZ3/tekzXTOPNOKAFu8NMmDM='}}
+2025-10-20 20:47:15,414 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:47:15,414 - INFO - whatsapp_bot - Found conversation text: gostaria de fazer um orçamento
+2025-10-20 20:47:15,414 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:47:15] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:47:15,414 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:47:15,415 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:47:15,415 - INFO - whatsapp_bot - Processing text message: 'gostaria de fazer um orçamento' from 558186732159@s.whatsapp.net
+2025-10-20 20:47:15,424 - INFO - whatsapp_bot - Loaded conversation history for 558186732159_s_whatsapp_net
+2025-10-20 20:47:15,424 - INFO - whatsapp_bot - Using Gemini AI for response
+2025-10-20 20:47:15,425 - INFO - whatsapp_bot - Sending prompt to Gemini (system persona active): gostaria de fazer um orçamento...
+2025-10-20 20:47:17,267 - INFO - whatsapp_bot - Started customer form for 558186732159_s_whatsapp_net - reason: Cliente solicitou contato com consultor
+2025-10-20 20:47:17,267 - INFO - whatsapp_bot - Started customer form based on AI response
+2025-10-20 20:47:17,267 - INFO - whatsapp_bot - Sending 2 message chunks to 558186732159@s.whatsapp.net
+2025-10-20 20:47:17,270 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:47:17,912 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:47:17,912 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558186732159@s.whatsapp.net
+2025-10-20 20:47:17,913 - INFO - whatsapp_bot - Waiting 1.7 seconds before next chunk...
+2025-10-20 20:47:19,232 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:47:19,236 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:47:19,237 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:47:19,237 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:47:19] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:47:19,417 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:47:19,565 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:47:19,572 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0A299CC87BC1CA46482
+2025-10-20 20:47:19,572 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:47:19] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:47:23,558 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:47:23,558 - INFO - whatsapp_bot - Successfully sent chunk 2 to 558186732159@s.whatsapp.net
+2025-10-20 20:47:23,558 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:47:23,559 - INFO - whatsapp_bot - Saved conversation history for 558186732159_s_whatsapp_net
+2025-10-20 20:47:23,559 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:47:23,560 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:47:23] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:47:25,925 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:47:25,928 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:47:25,928 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:47:25,928 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:47:25] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:47:26,253 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:47:26,259 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0EF5863816BB378346E
+2025-10-20 20:47:26,260 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:47:26] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:07,939 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:07,940 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB02493FADFB1B05E98F7', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004117, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'Pedro', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'NP0aTPzZe/IZzW/mP+Gz0G2wFHfDdVh36v7Idlk3DP4='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB02493FADFB1B05E98F7'}}, 'timestamp': 1761004117359}
+2025-10-20 20:49:07,940 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:07,940 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:49:07,941 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB02493FADFB1B05E98F7', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004117, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'Pedro', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'NP0aTPzZe/IZzW/mP+Gz0G2wFHfDdVh36v7Idlk3DP4='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB02493FADFB1B05E98F7'}}, 'timestamp': 1761004117361}
+2025-10-20 20:49:07,941 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:07,941 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB02493FADFB1B05E98F7', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004117, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'Pedro', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'NP0aTPzZe/IZzW/mP+Gz0G2wFHfDdVh36v7Idlk3DP4='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB02493FADFB1B05E98F7'}
+2025-10-20 20:49:07,941 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:07] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:07,941 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:49:07,942 - INFO - whatsapp_bot - Message content object: {'conversation': 'Pedro', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'NP0aTPzZe/IZzW/mP+Gz0G2wFHfDdVh36v7Idlk3DP4='}}
+2025-10-20 20:49:07,942 - INFO - whatsapp_bot - Found conversation text: Pedro
+2025-10-20 20:49:07,943 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:49:07,943 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:07,943 - INFO - whatsapp_bot - Processing text message: 'Pedro' from 558186732159@s.whatsapp.net
+2025-10-20 20:49:07,943 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:49:07,943 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: phone
+2025-10-20 20:49:07,943 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:49:08,522 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:49:08,522 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:08,522 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:08,523 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:08] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:10,033 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:10,034 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558186732159@s.whatsapp.net', 'msgId': 7746917, 'success': True, 'result': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB09AA44110A8113C8325'}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': '1761004119', 'status': 'PENDING'}}, 'timestamp': 1761004119534}
+2025-10-20 20:49:10,034 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:49:10,035 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:10,035 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:10] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:10,286 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:10,286 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB09AA44110A8113C8325', 'msgId': 7746917}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004119, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB09AA44110A8113C8325'}}, 'timestamp': 1761004119798}
+2025-10-20 20:49:10,287 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB09AA44110A8113C8325', 'msgId': 7746917}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004119, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB09AA44110A8113C8325'}
+2025-10-20 20:49:10,287 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB09AA44110A8113C8325
+2025-10-20 20:49:10,287 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:10] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:18,788 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:18,789 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB08EDC72A7A68C3F52BF', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004128, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '81986732159', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'mYAKgmSHlzBwFR+DVEQ0k+R1FzIDXxJfieYN4vEcRiI='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB08EDC72A7A68C3F52BF'}}, 'timestamp': 1761004128244}
+2025-10-20 20:49:18,789 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB08EDC72A7A68C3F52BF', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004128, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '81986732159', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'mYAKgmSHlzBwFR+DVEQ0k+R1FzIDXxJfieYN4vEcRiI='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB08EDC72A7A68C3F52BF'}
+2025-10-20 20:49:18,789 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:49:18,790 - INFO - whatsapp_bot - Message content object: {'conversation': '81986732159', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'mYAKgmSHlzBwFR+DVEQ0k+R1FzIDXxJfieYN4vEcRiI='}}
+2025-10-20 20:49:18,790 - INFO - whatsapp_bot - Found conversation text: 81986732159
+2025-10-20 20:49:18,790 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:49:18,790 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:18,790 - INFO - whatsapp_bot - Processing text message: '81986732159' from 558186732159@s.whatsapp.net
+2025-10-20 20:49:18,790 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:49:18,790 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: cpf
+2025-10-20 20:49:18,790 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:49:18,851 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:18,851 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB08EDC72A7A68C3F52BF', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004128, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '81986732159', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'mYAKgmSHlzBwFR+DVEQ0k+R1FzIDXxJfieYN4vEcRiI='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB08EDC72A7A68C3F52BF'}}, 'timestamp': 1761004128243}
+2025-10-20 20:49:18,851 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:49:18,851 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:18,852 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:18] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:19,374 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:49:19,375 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:19,375 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:19,375 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:19] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:21,322 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:21,323 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558186732159@s.whatsapp.net', 'msgId': 7746927, 'success': True, 'result': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB0398487AB3763451BD4'}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': '1761004130', 'status': 'PENDING'}}, 'timestamp': 1761004130832}
+2025-10-20 20:49:21,323 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:49:21,323 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:21,324 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:21] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:21,586 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:21,586 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB0398487AB3763451BD4', 'msgId': 7746927}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004130, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0398487AB3763451BD4'}}, 'timestamp': 1761004131095}
+2025-10-20 20:49:21,587 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': True, 'id': '3EB0398487AB3763451BD4', 'msgId': 7746927}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004130, 'high': 0, 'unsigned': True}, 'status': 2, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0398487AB3763451BD4'}
+2025-10-20 20:49:21,587 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0398487AB3763451BD4
+2025-10-20 20:49:21,587 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:21] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:26,806 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:26,806 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0BA34CEE2346F966039', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004136, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'ZgpFCVy2j+oV+86wygrnsMjiMYRiBtdUdyS5yDpDEkY='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0BA34CEE2346F966039'}}, 'timestamp': 1761004136303}
+2025-10-20 20:49:26,806 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:49:26,806 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:26,806 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:26] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:26,864 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:26,864 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0BA34CEE2346F966039', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004136, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'ZgpFCVy2j+oV+86wygrnsMjiMYRiBtdUdyS5yDpDEkY='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0BA34CEE2346F966039'}}, 'timestamp': 1761004136304}
+2025-10-20 20:49:26,864 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB0BA34CEE2346F966039', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004136, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'ZgpFCVy2j+oV+86wygrnsMjiMYRiBtdUdyS5yDpDEkY='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB0BA34CEE2346F966039'}
+2025-10-20 20:49:26,864 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:49:26,864 - INFO - whatsapp_bot - Message content object: {'conversation': '10534595480', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'ZgpFCVy2j+oV+86wygrnsMjiMYRiBtdUdyS5yDpDEkY='}}
+2025-10-20 20:49:26,865 - INFO - whatsapp_bot - Found conversation text: 10534595480
+2025-10-20 20:49:26,865 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:49:26,865 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:26,865 - INFO - whatsapp_bot - Processing text message: '10534595480' from 558186732159@s.whatsapp.net
+2025-10-20 20:49:26,865 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:49:26,865 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: confirm
+2025-10-20 20:49:26,865 - INFO - whatsapp_bot - Updated customer form for 558186732159_s_whatsapp_net - step: confirm
+2025-10-20 20:49:26,865 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:49:27,443 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:49:27,443 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:27,443 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:27,443 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:27] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:28,836 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:28,845 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:49:28,845 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:28,846 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:28] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:29,102 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:29,110 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0C20CC027E745FFA383
+2025-10-20 20:49:29,110 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:29] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:33,585 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:33,585 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB076DC898D9520F6BBAA', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004143, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'J5INYPzlK5GWnwrWN0Sfn6aWSxEPjcdUl0MLNQSsw0g='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB076DC898D9520F6BBAA'}}, 'timestamp': 1761004143093}
+2025-10-20 20:49:33,585 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB076DC898D9520F6BBAA', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004143, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'J5INYPzlK5GWnwrWN0Sfn6aWSxEPjcdUl0MLNQSsw0g='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB076DC898D9520F6BBAA'}
+2025-10-20 20:49:33,585 - INFO - whatsapp_bot - Sender number: 558186732159@s.whatsapp.net
+2025-10-20 20:49:33,585 - INFO - whatsapp_bot - Message content object: {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'J5INYPzlK5GWnwrWN0Sfn6aWSxEPjcdUl0MLNQSsw0g='}}
+2025-10-20 20:49:33,585 - INFO - whatsapp_bot - Found conversation text: SIM
+2025-10-20 20:49:33,586 - INFO - whatsapp_bot - Safe sender ID: 558186732159_s_whatsapp_net
+2025-10-20 20:49:33,586 - INFO - whatsapp_bot - Started new sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:33,586 - INFO - whatsapp_bot - Processing text message: 'SIM' from 558186732159@s.whatsapp.net
+2025-10-20 20:49:33,586 - INFO - whatsapp_bot - Processing customer form step for 558186732159_s_whatsapp_net
+2025-10-20 20:49:33,586 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:49:33,587 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:33,588 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558186732159@s.whatsapp.net', 'fromMe': False, 'id': '3EB076DC898D9520F6BBAA', 'senderLid': '62337188896831@lid'}, 'messageTimestamp': 1761004143, 'pushName': 'Pedro Henrique', 'broadcast': False, 'message': {'conversation': 'SIM', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': 'G7oknoAjKO0GHQ==', 'senderTimestamp': '1760407916', 'senderAccountType': 'E2EE', 'receiverAccountType': 'E2EE', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'J5INYPzlK5GWnwrWN0Sfn6aWSxEPjcdUl0MLNQSsw0g='}}, 'remoteJid': '558186732159@s.whatsapp.net', 'id': '3EB076DC898D9520F6BBAA'}}, 'timestamp': 1761004143092}
+2025-10-20 20:49:33,588 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:49:33,588 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:33,588 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:33] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:34,412 - INFO - whatsapp_bot - Text message sent to 120363404721021632@g.us.
+2025-10-20 20:49:34,415 - INFO - whatsapp_bot - Cancelled customer form for 558186732159_s_whatsapp_net
+2025-10-20 20:49:34,415 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:49:36,035 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:36,040 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:49:36,040 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:36,040 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:36,426 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:36,432 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0BE9046FA9C57D58FEB
+2025-10-20 20:49:36,433 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:40,569 - INFO - whatsapp_bot - Text message sent to 558186732159@s.whatsapp.net.
+2025-10-20 20:49:40,569 - INFO - whatsapp_bot - Ended sending session for 558186732159_s_whatsapp_net
+2025-10-20 20:49:40,569 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:40,570 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:40] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:42,305 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:42,308 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:49:42,308 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:49:42,308 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:49:42,626 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:49:42,632 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0D4A7BDC6EBEAFC8565
+2025-10-20 20:49:42,632 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:49:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:07,045 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:07,045 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACBC938A5F20BEC4FB06D77096736DE7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004236, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Boa noite', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'PSn4hfx/TKSxm6ZBEDPM1Rb7M4gGDP8ebD2FLDvOpAs='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACBC938A5F20BEC4FB06D77096736DE7'}}, 'timestamp': 1761004236418}
+2025-10-20 20:51:07,045 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:51:07,045 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:07,046 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:07] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:07,048 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:07,048 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACBC938A5F20BEC4FB06D77096736DE7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004236, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Boa noite', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'PSn4hfx/TKSxm6ZBEDPM1Rb7M4gGDP8ebD2FLDvOpAs='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACBC938A5F20BEC4FB06D77096736DE7'}}, 'timestamp': 1761004236420}
+2025-10-20 20:51:07,048 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACBC938A5F20BEC4FB06D77096736DE7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004236, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Boa noite', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'PSn4hfx/TKSxm6ZBEDPM1Rb7M4gGDP8ebD2FLDvOpAs='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACBC938A5F20BEC4FB06D77096736DE7'}
+2025-10-20 20:51:07,048 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:51:07,049 - INFO - whatsapp_bot - Message content object: {'conversation': 'Boa noite', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'PSn4hfx/TKSxm6ZBEDPM1Rb7M4gGDP8ebD2FLDvOpAs='}}
+2025-10-20 20:51:07,049 - INFO - whatsapp_bot - Found conversation text: Boa noite
+2025-10-20 20:51:07,049 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:51:07,049 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:07,049 - INFO - whatsapp_bot - Processing text message: 'Boa noite' from 558199045078@s.whatsapp.net
+2025-10-20 20:51:07,063 - INFO - whatsapp_bot - Loaded conversation history for 558199045078_s_whatsapp_net
+2025-10-20 20:51:07,063 - INFO - whatsapp_bot - Greeting detected, showing menu to 558199045078@s.whatsapp.net
+2025-10-20 20:51:07,063 - INFO - whatsapp_bot - Sending 3 message chunks to 558199045078@s.whatsapp.net
+2025-10-20 20:51:07,066 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:07,769 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:51:07,769 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558199045078@s.whatsapp.net
+2025-10-20 20:51:07,769 - INFO - whatsapp_bot - Waiting 1.3 seconds before next chunk...
+2025-10-20 20:51:08,021 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:08,021 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': 'A54A4DBE42DC84EDBD50477EE0C650E5'}, 'messageTimestamp': 1761004237, 'pushName': 'GGDISK Ótica', 'broadcast': False, 'status': 2, 'message': {'conversation': 'A GGDISK Ótica agradece sua mensagem. Não estamos em horário de atendimento , mas responderemos assim que possível.\nAté mais!'}, 'verifiedBizName': 'GGDISK Ótica', 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'A54A4DBE42DC84EDBD50477EE0C650E5'}}, 'timestamp': 1761004237530}
+2025-10-20 20:51:08,021 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': 'A54A4DBE42DC84EDBD50477EE0C650E5'}, 'messageTimestamp': 1761004237, 'pushName': 'GGDISK Ótica', 'broadcast': False, 'status': 2, 'message': {'conversation': 'A GGDISK Ótica agradece sua mensagem. Não estamos em horário de atendimento , mas responderemos assim que possível.\nAté mais!'}, 'verifiedBizName': 'GGDISK Ótica', 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'A54A4DBE42DC84EDBD50477EE0C650E5'}
+2025-10-20 20:51:08,021 - INFO - whatsapp_bot - Ignoring self-sent message: A54A4DBE42DC84EDBD50477EE0C650E5
+2025-10-20 20:51:08,021 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:08] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:08,775 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:08,860 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:08,863 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:51:08,863 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:08,863 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:08] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:09,099 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:09,106 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0B039DE8474E8243F05
+2025-10-20 20:51:09,106 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:09] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:13,915 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:51:13,916 - INFO - whatsapp_bot - Successfully sent chunk 2 to 558199045078@s.whatsapp.net
+2025-10-20 20:51:13,916 - INFO - whatsapp_bot - Waiting 1.9 seconds before next chunk...
+2025-10-20 20:51:15,421 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:16,212 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:16,215 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:51:16,215 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:16,215 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:16] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:16,408 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:16,414 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0B5A99B872FD905F056
+2025-10-20 20:51:16,415 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:16] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:19,556 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:51:19,556 - INFO - whatsapp_bot - Successfully sent chunk 3 to 558199045078@s.whatsapp.net
+2025-10-20 20:51:19,557 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:19,558 - INFO - whatsapp_bot - Saved conversation history for 558199045078_s_whatsapp_net
+2025-10-20 20:51:19,558 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:19,558 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:19] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:20,473 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:20,477 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:51:20,477 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:20,477 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:20] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:20,658 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:20,666 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0A85E6CE1708AF5E3E7
+2025-10-20 20:51:20,666 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:20] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:41,064 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:41,064 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC5F97874A5430751811FB75091373E3', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004270, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rI+zpN//DBx5nrSzAxdFF3CTL4/u+EwZy9sVnaL2zz8='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC5F97874A5430751811FB75091373E3'}}, 'timestamp': 1761004270517}
+2025-10-20 20:51:41,064 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC5F97874A5430751811FB75091373E3', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004270, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rI+zpN//DBx5nrSzAxdFF3CTL4/u+EwZy9sVnaL2zz8='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC5F97874A5430751811FB75091373E3'}
+2025-10-20 20:51:41,065 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:51:41,065 - INFO - whatsapp_bot - Message content object: {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rI+zpN//DBx5nrSzAxdFF3CTL4/u+EwZy9sVnaL2zz8='}}
+2025-10-20 20:51:41,065 - INFO - whatsapp_bot - Found conversation text: 2
+2025-10-20 20:51:41,065 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:51:41,065 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:41,065 - INFO - whatsapp_bot - Processing text message: '2' from 558199045078@s.whatsapp.net
+2025-10-20 20:51:41,069 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:41,069 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC5F97874A5430751811FB75091373E3', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004270, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '2', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'rI+zpN//DBx5nrSzAxdFF3CTL4/u+EwZy9sVnaL2zz8='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC5F97874A5430751811FB75091373E3'}}, 'timestamp': 1761004270516}
+2025-10-20 20:51:41,069 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:51:41,069 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:41,069 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:41] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:41,077 - INFO - whatsapp_bot - Loaded conversation history for 558199045078_s_whatsapp_net
+2025-10-20 20:51:41,077 - INFO - whatsapp_bot - Menu option 2 selected by 558199045078@s.whatsapp.net
+2025-10-20 20:51:41,078 - INFO - whatsapp_bot - Started customer form for 558199045078_s_whatsapp_net - reason: 2 - Fazer orçamento de óculos
+2025-10-20 20:51:41,078 - INFO - whatsapp_bot - Started customer form for menu option 2
+2025-10-20 20:51:41,078 - INFO - whatsapp_bot - Sending 3 message chunks to 558199045078@s.whatsapp.net
+2025-10-20 20:51:41,081 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:41,658 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:51:41,659 - INFO - whatsapp_bot - Successfully sent chunk 1 to 558199045078@s.whatsapp.net
+2025-10-20 20:51:41,659 - INFO - whatsapp_bot - Waiting 1.1 seconds before next chunk...
+2025-10-20 20:51:42,541 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:42,545 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:51:42,545 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:42,545 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:42,660 - INFO - whatsapp_bot - Sending chunk 2/3: 
+Eles vão te ajudar com todas as opções disponívei...
+2025-10-20 20:51:42,660 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:42,795 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:42,802 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0089E30F7B5745F2FD5
+2025-10-20 20:51:42,802 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:42] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:47,900 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:51:47,901 - INFO - whatsapp_bot - Successfully sent chunk 2 to 558199045078@s.whatsapp.net
+2025-10-20 20:51:47,901 - INFO - whatsapp_bot - Waiting 1.6 seconds before next chunk...
+2025-10-20 20:51:49,156 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:49,160 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:51:49,160 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:49,160 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:49] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:49,340 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:49,346 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB017D81B4BF4ECC60B39
+2025-10-20 20:51:49,347 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:49] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:49,406 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:51,859 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:51,860 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC1096BCC5C95DC49151159C978217D7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004281, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Josimar', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'YqG4q3NS0ej4cN9nJvxhT2B5UlQRcyMfhJlrUq5IRlI='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC1096BCC5C95DC49151159C978217D7'}}, 'timestamp': 1761004281376}
+2025-10-20 20:51:51,860 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:51:51,860 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:51,860 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:51] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:51,866 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:51,867 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC1096BCC5C95DC49151159C978217D7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004281, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Josimar', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'YqG4q3NS0ej4cN9nJvxhT2B5UlQRcyMfhJlrUq5IRlI='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC1096BCC5C95DC49151159C978217D7'}}, 'timestamp': 1761004281376}
+2025-10-20 20:51:51,867 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC1096BCC5C95DC49151159C978217D7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004281, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Josimar', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'YqG4q3NS0ej4cN9nJvxhT2B5UlQRcyMfhJlrUq5IRlI='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC1096BCC5C95DC49151159C978217D7'}
+2025-10-20 20:51:51,867 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:51:51,867 - INFO - whatsapp_bot - Message content object: {'conversation': 'Josimar', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'YqG4q3NS0ej4cN9nJvxhT2B5UlQRcyMfhJlrUq5IRlI='}}
+2025-10-20 20:51:51,868 - INFO - whatsapp_bot - Found conversation text: Josimar
+2025-10-20 20:51:51,868 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:51:51,868 - INFO - whatsapp_bot - Cancelling previous sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:51,868 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:51,868 - INFO - whatsapp_bot - Processing text message: 'Josimar' from 558199045078@s.whatsapp.net
+2025-10-20 20:51:51,868 - INFO - whatsapp_bot - Processing customer form step for 558199045078_s_whatsapp_net
+2025-10-20 20:51:51,868 - INFO - whatsapp_bot - Updated customer form for 558199045078_s_whatsapp_net - step: phone
+2025-10-20 20:51:51,868 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:53,545 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:51:53,545 - INFO - whatsapp_bot - Successfully sent chunk 3 to 558199045078@s.whatsapp.net
+2025-10-20 20:51:53,545 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:53,546 - INFO - whatsapp_bot - Saved conversation history for 558199045078_s_whatsapp_net
+2025-10-20 20:51:53,546 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:53,546 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:53] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:54,845 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:54,848 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:51:54,848 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:54,848 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:54] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:55,031 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:55,038 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0F7B618D39EF902C267
+2025-10-20 20:51:55,038 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:55] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:58,235 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:58,235 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACD8D6F8DFD7DFB51DB92CD11DE10A6B', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004287, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Edson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XMU7JdMxFxKn/o+YamEN4kATKafMtCOYhYGI01E2DXs='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACD8D6F8DFD7DFB51DB92CD11DE10A6B'}}, 'timestamp': 1761004287748}
+2025-10-20 20:51:58,236 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:51:58,236 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:51:58,236 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACD8D6F8DFD7DFB51DB92CD11DE10A6B', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004287, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Edson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XMU7JdMxFxKn/o+YamEN4kATKafMtCOYhYGI01E2DXs='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACD8D6F8DFD7DFB51DB92CD11DE10A6B'}}, 'timestamp': 1761004287749}
+2025-10-20 20:51:58,236 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:58,236 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACD8D6F8DFD7DFB51DB92CD11DE10A6B', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004287, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Edson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XMU7JdMxFxKn/o+YamEN4kATKafMtCOYhYGI01E2DXs='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACD8D6F8DFD7DFB51DB92CD11DE10A6B'}
+2025-10-20 20:51:58,236 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:58] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:51:58,237 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:51:58,237 - INFO - whatsapp_bot - Message content object: {'conversation': 'Edson', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': 'XMU7JdMxFxKn/o+YamEN4kATKafMtCOYhYGI01E2DXs='}}
+2025-10-20 20:51:58,237 - INFO - whatsapp_bot - Found conversation text: Edson
+2025-10-20 20:51:58,237 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:51:58,237 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:58,237 - INFO - whatsapp_bot - Processing text message: 'Edson' from 558199045078@s.whatsapp.net
+2025-10-20 20:51:58,237 - INFO - whatsapp_bot - Processing customer form step for 558199045078_s_whatsapp_net
+2025-10-20 20:51:58,238 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:51:58,817 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:51:58,817 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:51:58,817 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:51:58,818 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:51:58] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:00,125 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:00,125 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558199045078@s.whatsapp.net', 'msgId': 7747118, 'success': True, 'result': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB02E826DBD717CBDCFE7'}, 'message': {'extendedTextMessage': {'text': 'Por favor, digite um telefone válido com DDD:\n_(Exemplo: 81999887766)_'}}, 'messageTimestamp': '1761004289', 'status': 'PENDING'}}, 'timestamp': 1761004289635}
+2025-10-20 20:52:00,125 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:52:00,125 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:00,125 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:00] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:00,309 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:00,309 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB02E826DBD717CBDCFE7', 'msgId': 7747118}, 'message': {'extendedTextMessage': {'text': 'Por favor, digite um telefone válido com DDD:\n_(Exemplo: 81999887766)_'}}, 'messageTimestamp': {'low': 1761004289, 'high': 0, 'unsigned': True}, 'status': 1, 'remoteJid': '558199045078@s.whatsapp.net', 'id': '3EB02E826DBD717CBDCFE7'}}, 'timestamp': 1761004289821}
+2025-10-20 20:52:00,310 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB02E826DBD717CBDCFE7', 'msgId': 7747118}, 'message': {'extendedTextMessage': {'text': 'Por favor, digite um telefone válido com DDD:\n_(Exemplo: 81999887766)_'}}, 'messageTimestamp': {'low': 1761004289, 'high': 0, 'unsigned': True}, 'status': 1, 'remoteJid': '558199045078@s.whatsapp.net', 'id': '3EB02E826DBD717CBDCFE7'}
+2025-10-20 20:52:00,310 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB02E826DBD717CBDCFE7
+2025-10-20 20:52:00,310 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:00] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:04,133 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:52:04,133 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:04,134 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:04] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:05,806 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:05,807 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558199045078@s.whatsapp.net', 'msgId': 7747124, 'success': True, 'result': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB00C276509883879829F'}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': '1761004295', 'status': 'PENDING'}}, 'timestamp': 1761004295318}
+2025-10-20 20:52:05,807 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:52:05,807 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:05,807 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:05] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:06,055 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:06,055 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB00C276509883879829F', 'msgId': 7747124}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004295, 'high': 0, 'unsigned': True}, 'status': 1, 'remoteJid': '558199045078@s.whatsapp.net', 'id': '3EB00C276509883879829F'}}, 'timestamp': 1761004295503}
+2025-10-20 20:52:06,055 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB00C276509883879829F', 'msgId': 7747124}, 'message': {'extendedTextMessage': {'text': 'Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004295, 'high': 0, 'unsigned': True}, 'status': 1, 'remoteJid': '558199045078@s.whatsapp.net', 'id': '3EB00C276509883879829F'}
+2025-10-20 20:52:06,055 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB00C276509883879829F
+2025-10-20 20:52:06,055 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:06] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:06,189 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:06,190 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC6391D2BBF9E9A0089B19AEC3DB35C3', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004295, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '8199045078', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '9DJGX23hdeIQKDZ0OCa8tL5ul8anW2YekcbDtdGRAJQ='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC6391D2BBF9E9A0089B19AEC3DB35C3'}}, 'timestamp': 1761004295702}
+2025-10-20 20:52:06,190 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:52:06,190 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:06,190 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:06] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:06,245 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:06,245 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC6391D2BBF9E9A0089B19AEC3DB35C3', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004295, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '8199045078', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '9DJGX23hdeIQKDZ0OCa8tL5ul8anW2YekcbDtdGRAJQ='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC6391D2BBF9E9A0089B19AEC3DB35C3'}}, 'timestamp': 1761004295702}
+2025-10-20 20:52:06,245 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC6391D2BBF9E9A0089B19AEC3DB35C3', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004295, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '8199045078', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '9DJGX23hdeIQKDZ0OCa8tL5ul8anW2YekcbDtdGRAJQ='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC6391D2BBF9E9A0089B19AEC3DB35C3'}
+2025-10-20 20:52:06,245 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:52:06,245 - INFO - whatsapp_bot - Message content object: {'conversation': '8199045078', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '9DJGX23hdeIQKDZ0OCa8tL5ul8anW2YekcbDtdGRAJQ='}}
+2025-10-20 20:52:06,245 - INFO - whatsapp_bot - Found conversation text: 8199045078
+2025-10-20 20:52:06,245 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:52:06,246 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:52:06,246 - INFO - whatsapp_bot - Processing text message: '8199045078' from 558199045078@s.whatsapp.net
+2025-10-20 20:52:06,246 - INFO - whatsapp_bot - Processing customer form step for 558199045078_s_whatsapp_net
+2025-10-20 20:52:06,246 - INFO - whatsapp_bot - Updated customer form for 558199045078_s_whatsapp_net - step: cpf
+2025-10-20 20:52:06,246 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:52:09,380 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:52:09,381 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:52:09,381 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:09,381 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:09] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:10,954 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:10,954 - INFO - whatsapp_bot - Received webhook data: {'event': 'message.sent', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'jid': '558199045078@s.whatsapp.net', 'msgId': 7747133, 'success': True, 'result': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB0F9FB90268FEBA93BEF'}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': '1761004300', 'status': 'PENDING'}}, 'timestamp': 1761004300471}
+2025-10-20 20:52:10,954 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:52:10,955 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:10,955 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:10] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:11,149 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:11,149 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB0F9FB90268FEBA93BEF', 'msgId': 7747133}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004300, 'high': 0, 'unsigned': True}, 'status': 1, 'remoteJid': '558199045078@s.whatsapp.net', 'id': '3EB0F9FB90268FEBA93BEF'}}, 'timestamp': 1761004300660}
+2025-10-20 20:52:11,150 - INFO - whatsapp_bot - Processing message info: {'messageStubParameters': [], 'labels': [], 'userReceipt': [], 'reactions': [], 'pollUpdates': [], 'eventResponses': [], 'statusMentions': [], 'messageAddOns': [], 'statusMentionSources': [], 'supportAiCitations': [], 'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': True, 'id': '3EB0F9FB90268FEBA93BEF', 'msgId': 7747133}, 'message': {'extendedTextMessage': {'text': 'Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_'}}, 'messageTimestamp': {'low': 1761004300, 'high': 0, 'unsigned': True}, 'status': 1, 'remoteJid': '558199045078@s.whatsapp.net', 'id': '3EB0F9FB90268FEBA93BEF'}
+2025-10-20 20:52:11,150 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0F9FB90268FEBA93BEF
+2025-10-20 20:52:11,150 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:11] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:19,962 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:19,963 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC601113B4A183D2F051F4B336936F05', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004309, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '13232522408', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '+yHCYgwTczsK11cmESDZHNCfHJp5Wy8sETR4+f/LAdw='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC601113B4A183D2F051F4B336936F05'}}, 'timestamp': 1761004309370}
+2025-10-20 20:52:19,963 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:52:19,963 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:19,963 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:19,964 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC601113B4A183D2F051F4B336936F05', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004309, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '13232522408', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '+yHCYgwTczsK11cmESDZHNCfHJp5Wy8sETR4+f/LAdw='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC601113B4A183D2F051F4B336936F05'}}, 'timestamp': 1761004309371}
+2025-10-20 20:52:19,964 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:19] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:19,964 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC601113B4A183D2F051F4B336936F05', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004309, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': '13232522408', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '+yHCYgwTczsK11cmESDZHNCfHJp5Wy8sETR4+f/LAdw='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC601113B4A183D2F051F4B336936F05'}
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Message content object: {'conversation': '13232522408', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '+yHCYgwTczsK11cmESDZHNCfHJp5Wy8sETR4+f/LAdw='}}
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Found conversation text: 13232522408
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Processing text message: '13232522408' from 558199045078@s.whatsapp.net
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Processing customer form step for 558199045078_s_whatsapp_net
+2025-10-20 20:52:19,965 - INFO - whatsapp_bot - Updated customer form for 558199045078_s_whatsapp_net - step: prescription
+2025-10-20 20:52:19,965 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:52:20,599 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:52:20,599 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:52:20,599 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:20,600 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:20] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:22,282 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:22,285 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:52:22,285 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:22,285 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:22] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:22,464 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:22,470 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0BD6263CB0FEF36FED1
+2025-10-20 20:52:22,470 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:22] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:32,287 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:32,287 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACA133C50C17E493D76E9ADE581B9C33', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004321, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '/wYh4GDSA+F41jjG/0n3FKeQK7JD1otNDN3+qKUSSoY='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACA133C50C17E493D76E9ADE581B9C33'}}, 'timestamp': 1761004321751}
+2025-10-20 20:52:32,287 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACA133C50C17E493D76E9ADE581B9C33', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004321, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '/wYh4GDSA+F41jjG/0n3FKeQK7JD1otNDN3+qKUSSoY='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACA133C50C17E493D76E9ADE581B9C33'}
+2025-10-20 20:52:32,287 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:52:32,287 - INFO - whatsapp_bot - Message content object: {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '/wYh4GDSA+F41jjG/0n3FKeQK7JD1otNDN3+qKUSSoY='}}
+2025-10-20 20:52:32,287 - INFO - whatsapp_bot - Found conversation text: Sim
+2025-10-20 20:52:32,288 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:52:32,288 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:52:32,288 - INFO - whatsapp_bot - Processing text message: 'Sim' from 558199045078@s.whatsapp.net
+2025-10-20 20:52:32,288 - INFO - whatsapp_bot - Processing customer form step for 558199045078_s_whatsapp_net
+2025-10-20 20:52:32,288 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:52:32,294 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:32,294 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACA133C50C17E493D76E9ADE581B9C33', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004321, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '/wYh4GDSA+F41jjG/0n3FKeQK7JD1otNDN3+qKUSSoY='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACA133C50C17E493D76E9ADE581B9C33'}}, 'timestamp': 1761004321750}
+2025-10-20 20:52:32,294 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:52:32,294 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:32,295 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:32] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:32,888 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:52:32,888 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:52:32,888 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:32,889 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:32] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:34,616 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:34,621 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:52:34,621 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:34,621 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:34] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:34,804 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:34,811 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB04608B98F7E62BD08C1
+2025-10-20 20:52:34,812 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:34] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:44,423 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:44,424 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACEE86CB13F012D56019ED71218F67C7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004333, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'imageMessage': {'url': 'https://mmg.whatsapp.net/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c&mms3=true', 'mimetype': 'image/jpeg', 'fileSha256': 'LahkWKjlnVs6RlBlU5pzft0V5YBvxh9/EM+iqjE4N/I=', 'fileLength': '83280', 'height': 1280, 'width': 720, 'mediaKey': 'DN+ohiI5IIyW5kbtasVkoOsVpwL7ficfqHWD70O94FM=', 'fileEncSha256': 'cmCBKwnle2RwFW0k6pxG6g4ghOS3Wl+XgghZ6snaQA0=', 'directPath': '/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c', 'mediaKeyTimestamp': '1760958102', 'jpegThumbnail': '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAQACAwQF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPo3cl560EgJpQtxzwxlQWlHO0LcccjW3LLrMDrltOtS8CUgl1UdDKdLEedpJpZo20NR/8QAFREBAQAAAAAAAAAAAAAAAAAAMAH/2gAIAQIBAT8AKP8A/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPwBP/8QAJxAAAgIABQMDBQAAAAAAAAAAAAECEQMSITFRE0FhECJSBCBicZH/2gAIAQEAAT8AeFNdjpyFhvkyeRR5ZlQ8LDk9Yoj9PhxdpajwYtDf256ko8jdKxPQTGxSWaWux1U1auhz02Iu1ZpmXJiOnFcsTlwLOre/gRULe1sUVHZDVteBFe7N4G3e2hF2Ii04+BpNrL/RsQjNcq4Jfsi9NqEYD0fApKUnS0O5ZZFe5sxL60dG1XYT8EdjDVRoUFG6b1Ni9fSNqT8iZ3IPsbFkmR9UWWZ5XWUzYnxGpy7JChicoyYnyFhy+RHD/JnRXLMiXc///gADAP/Z', 'contextInfo': {'pairedMediaType': 'NOT_PAIRED_MEDIA'}}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '7J6KZiFj72hTqtU8HwCdOb0w5BTLhxQtaTSQCmPedDU='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACEE86CB13F012D56019ED71218F67C7'}}, 'timestamp': 1761004333884}
+2025-10-20 20:52:44,424 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACEE86CB13F012D56019ED71218F67C7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004333, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'imageMessage': {'url': 'https://mmg.whatsapp.net/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c&mms3=true', 'mimetype': 'image/jpeg', 'fileSha256': 'LahkWKjlnVs6RlBlU5pzft0V5YBvxh9/EM+iqjE4N/I=', 'fileLength': '83280', 'height': 1280, 'width': 720, 'mediaKey': 'DN+ohiI5IIyW5kbtasVkoOsVpwL7ficfqHWD70O94FM=', 'fileEncSha256': 'cmCBKwnle2RwFW0k6pxG6g4ghOS3Wl+XgghZ6snaQA0=', 'directPath': '/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c', 'mediaKeyTimestamp': '1760958102', 'jpegThumbnail': '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAQACAwQF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPo3cl560EgJpQtxzwxlQWlHO0LcccjW3LLrMDrltOtS8CUgl1UdDKdLEedpJpZo20NR/8QAFREBAQAAAAAAAAAAAAAAAAAAMAH/2gAIAQIBAT8AKP8A/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPwBP/8QAJxAAAgIABQMDBQAAAAAAAAAAAAECEQMSITFRE0FhECJSBCBicZH/2gAIAQEAAT8AeFNdjpyFhvkyeRR5ZlQ8LDk9Yoj9PhxdpajwYtDf256ko8jdKxPQTGxSWaWux1U1auhz02Iu1ZpmXJiOnFcsTlwLOre/gRULe1sUVHZDVteBFe7N4G3e2hF2Ii04+BpNrL/RsQjNcq4Jfsi9NqEYD0fApKUnS0O5ZZFe5sxL60dG1XYT8EdjDVRoUFG6b1Ni9fSNqT8iZ3IPsbFkmR9UWWZ5XWUzYnxGpy7JChicoyYnyFhy+RHD/JnRXLMiXc///gADAP/Z', 'contextInfo': {'pairedMediaType': 'NOT_PAIRED_MEDIA'}}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '7J6KZiFj72hTqtU8HwCdOb0w5BTLhxQtaTSQCmPedDU='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACEE86CB13F012D56019ED71218F67C7'}
+2025-10-20 20:52:44,425 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:52:44,425 - INFO - whatsapp_bot - Message content object: {'imageMessage': {'url': 'https://mmg.whatsapp.net/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c&mms3=true', 'mimetype': 'image/jpeg', 'fileSha256': 'LahkWKjlnVs6RlBlU5pzft0V5YBvxh9/EM+iqjE4N/I=', 'fileLength': '83280', 'height': 1280, 'width': 720, 'mediaKey': 'DN+ohiI5IIyW5kbtasVkoOsVpwL7ficfqHWD70O94FM=', 'fileEncSha256': 'cmCBKwnle2RwFW0k6pxG6g4ghOS3Wl+XgghZ6snaQA0=', 'directPath': '/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c', 'mediaKeyTimestamp': '1760958102', 'jpegThumbnail': '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAQACAwQF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPo3cl560EgJpQtxzwxlQWlHO0LcccjW3LLrMDrltOtS8CUgl1UdDKdLEedpJpZo20NR/8QAFREBAQAAAAAAAAAAAAAAAAAAMAH/2gAIAQIBAT8AKP8A/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPwBP/8QAJxAAAgIABQMDBQAAAAAAAAAAAAECEQMSITFRE0FhECJSBCBicZH/2gAIAQEAAT8AeFNdjpyFhvkyeRR5ZlQ8LDk9Yoj9PhxdpajwYtDf256ko8jdKxPQTGxSWaWux1U1auhz02Iu1ZpmXJiOnFcsTlwLOre/gRULe1sUVHZDVteBFe7N4G3e2hF2Ii04+BpNrL/RsQjNcq4Jfsi9NqEYD0fApKUnS0O5ZZFe5sxL60dG1XYT8EdjDVRoUFG6b1Ni9fSNqT8iZ3IPsbFkmR9UWWZ5XWUzYnxGpy7JChicoyYnyFhy+RHD/JnRXLMiXc///gADAP/Z', 'contextInfo': {'pairedMediaType': 'NOT_PAIRED_MEDIA'}}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '7J6KZiFj72hTqtU8HwCdOb0w5BTLhxQtaTSQCmPedDU='}}
+2025-10-20 20:52:44,425 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:52:44,425 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:52:44,426 - WARNING - whatsapp_bot - Message type 'unknown' not supported or no text content
+2025-10-20 20:52:44,426 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:44,426 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:44] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:52:44,482 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:52:44,483 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'ACEE86CB13F012D56019ED71218F67C7', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004333, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'imageMessage': {'url': 'https://mmg.whatsapp.net/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c&mms3=true', 'mimetype': 'image/jpeg', 'fileSha256': 'LahkWKjlnVs6RlBlU5pzft0V5YBvxh9/EM+iqjE4N/I=', 'fileLength': '83280', 'height': 1280, 'width': 720, 'mediaKey': 'DN+ohiI5IIyW5kbtasVkoOsVpwL7ficfqHWD70O94FM=', 'fileEncSha256': 'cmCBKwnle2RwFW0k6pxG6g4ghOS3Wl+XgghZ6snaQA0=', 'directPath': '/o1/v/t24/f2/m232/AQMjN3C15cIacpwgLUqzvnPuKg3NWjayu06LOwLndOrwpDpOLJgiA_Fw1WVxFQ6Tq_5X9R7ajQud9PeEGMzwb_XZeFpU-_qIiNNknT7Qww?ccb=9-4&oh=01_Q5Aa2wE1oa4WhAjv8UfxfU6vfbjeOdO8AnTbua-8z4IhasDtVw&oe=691E563C&_nc_sid=e6ed6c', 'mediaKeyTimestamp': '1760958102', 'jpegThumbnail': '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAQACAwQF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPo3cl560EgJpQtxzwxlQWlHO0LcccjW3LLrMDrltOtS8CUgl1UdDKdLEedpJpZo20NR/8QAFREBAQAAAAAAAAAAAAAAAAAAMAH/2gAIAQIBAT8AKP8A/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPwBP/8QAJxAAAgIABQMDBQAAAAAAAAAAAAECEQMSITFRE0FhECJSBCBicZH/2gAIAQEAAT8AeFNdjpyFhvkyeRR5ZlQ8LDk9Yoj9PhxdpajwYtDf256ko8jdKxPQTGxSWaWux1U1auhz02Iu1ZpmXJiOnFcsTlwLOre/gRULe1sUVHZDVteBFe7N4G3e2hF2Ii04+BpNrL/RsQjNcq4Jfsi9NqEYD0fApKUnS0O5ZZFe5sxL60dG1XYT8EdjDVRoUFG6b1Ni9fSNqT8iZ3IPsbFkmR9UWWZ5XWUzYnxGpy7JChicoyYnyFhy+RHD/JnRXLMiXc///gADAP/Z', 'contextInfo': {'pairedMediaType': 'NOT_PAIRED_MEDIA'}}, 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '7J6KZiFj72hTqtU8HwCdOb0w5BTLhxQtaTSQCmPedDU='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'ACEE86CB13F012D56019ED71218F67C7'}}, 'timestamp': 1761004333883}
+2025-10-20 20:52:44,483 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:52:44,484 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:52:44,484 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:52:44] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:25,039 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:25,039 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC43D25AA189A24004196DAAA00BC8F1', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004374, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Pronto', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '3m91ksEYxpzYSkl5RRShGTFHI+4zW2Gp5phH3OeF+V4='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC43D25AA189A24004196DAAA00BC8F1'}}, 'timestamp': 1761004374460}
+2025-10-20 20:53:25,039 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:53:25,039 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:53:25,040 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:25] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:25,099 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:25,099 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC43D25AA189A24004196DAAA00BC8F1', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004374, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Pronto', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '3m91ksEYxpzYSkl5RRShGTFHI+4zW2Gp5phH3OeF+V4='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC43D25AA189A24004196DAAA00BC8F1'}}, 'timestamp': 1761004374462}
+2025-10-20 20:53:25,100 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC43D25AA189A24004196DAAA00BC8F1', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004374, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Pronto', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '3m91ksEYxpzYSkl5RRShGTFHI+4zW2Gp5phH3OeF+V4='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC43D25AA189A24004196DAAA00BC8F1'}
+2025-10-20 20:53:25,100 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:53:25,100 - INFO - whatsapp_bot - Message content object: {'conversation': 'Pronto', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '3m91ksEYxpzYSkl5RRShGTFHI+4zW2Gp5phH3OeF+V4='}}
+2025-10-20 20:53:25,100 - INFO - whatsapp_bot - Found conversation text: Pronto
+2025-10-20 20:53:25,100 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:53:25,101 - INFO - whatsapp_bot - Cancelling previous sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:53:25,101 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:53:25,101 - INFO - whatsapp_bot - Processing text message: 'Pronto' from 558199045078@s.whatsapp.net
+2025-10-20 20:53:25,101 - INFO - whatsapp_bot - Processing customer form step for 558199045078_s_whatsapp_net
+2025-10-20 20:53:25,101 - INFO - whatsapp_bot - Updated customer form for 558199045078_s_whatsapp_net - step: confirm
+2025-10-20 20:53:25,101 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:53:25,690 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:53:25,690 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:53:25,691 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:53:25,691 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:25] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:27,139 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:27,144 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:53:27,144 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:53:27,144 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:27] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:27,329 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:27,336 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB09360280D5283715BEB
+2025-10-20 20:53:27,336 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:27] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:34,961 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:34,961 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.received', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC5F6BA9881114014611756A51439EE8', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004384, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '2ERZFjULMnPXIYQ8oHX1m5x5cXz+x6mMvPS5JoVL4Hw='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC5F6BA9881114014611756A51439EE8'}}, 'timestamp': 1761004384412}
+2025-10-20 20:53:34,961 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: messages.received
+2025-10-20 20:53:34,961 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:53:34,962 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:34] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:35,021 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:35,022 - INFO - whatsapp_bot - Received webhook data: {'event': 'messages.upsert', 'sessionId': '808842e8a437883a22839d496f152d54442c4ead4df38c10365484483f249662', 'data': {'messages': {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC5F6BA9881114014611756A51439EE8', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004384, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '2ERZFjULMnPXIYQ8oHX1m5x5cXz+x6mMvPS5JoVL4Hw='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC5F6BA9881114014611756A51439EE8'}}, 'timestamp': 1761004384413}
+2025-10-20 20:53:35,022 - INFO - whatsapp_bot - Processing message info: {'key': {'remoteJid': '558199045078@s.whatsapp.net', 'fromMe': False, 'id': 'AC5F6BA9881114014611756A51439EE8', 'senderLid': '21182845849754@lid'}, 'messageTimestamp': 1761004384, 'pushName': 'Vinicius Pereira', 'broadcast': False, 'message': {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '2ERZFjULMnPXIYQ8oHX1m5x5cXz+x6mMvPS5JoVL4Hw='}}, 'remoteJid': '558199045078@s.whatsapp.net', 'id': 'AC5F6BA9881114014611756A51439EE8'}
+2025-10-20 20:53:35,022 - INFO - whatsapp_bot - Sender number: 558199045078@s.whatsapp.net
+2025-10-20 20:53:35,022 - INFO - whatsapp_bot - Message content object: {'conversation': 'Sim', 'messageContextInfo': {'deviceListMetadata': {'senderKeyHash': '/DoA8ECtFAcnNg==', 'senderTimestamp': '1760991105', 'recipientKeyHash': 'B2a4Q6+mEoRg6Q==', 'recipientTimestamp': '1760814617'}, 'deviceListMetadataVersion': 2, 'messageSecret': '2ERZFjULMnPXIYQ8oHX1m5x5cXz+x6mMvPS5JoVL4Hw='}}
+2025-10-20 20:53:35,023 - INFO - whatsapp_bot - Found conversation text: Sim
+2025-10-20 20:53:35,023 - INFO - whatsapp_bot - Safe sender ID: 558199045078_s_whatsapp_net
+2025-10-20 20:53:35,023 - INFO - whatsapp_bot - Started new sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:53:35,023 - INFO - whatsapp_bot - Processing text message: 'Sim' from 558199045078@s.whatsapp.net
+2025-10-20 20:53:35,023 - INFO - whatsapp_bot - Processing customer form step for 558199045078_s_whatsapp_net
+2025-10-20 20:53:35,023 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:53:35,617 - INFO - whatsapp_bot - Text message sent to 120363404721021632@g.us.
+2025-10-20 20:53:35,621 - INFO - whatsapp_bot - Cancelled customer form for 558199045078_s_whatsapp_net
+2025-10-20 20:53:35,621 - WARNING - whatsapp_bot - Could not send typing indicator: 'WasenderSyncClient' object has no attribute 'send_presence'
+2025-10-20 20:53:37,627 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:37,631 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:53:37,631 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:53:37,631 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:37] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:37,965 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:37,972 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB00AF0970BD64FCC4035
+2025-10-20 20:53:37,972 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:37] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:41,792 - INFO - whatsapp_bot - Text message sent to 558199045078@s.whatsapp.net.
+2025-10-20 20:53:41,793 - INFO - whatsapp_bot - Ended sending session for 558199045078_s_whatsapp_net
+2025-10-20 20:53:41,793 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:53:41,793 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:41] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:43,017 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:43,019 - WARNING - whatsapp_bot - Webhook data doesn't match expected format. Event: message.sent
+2025-10-20 20:53:43,020 - INFO - whatsapp_bot - === WEBHOOK PROCESSING COMPLETE ===
+2025-10-20 20:53:43,020 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:43] "POST /webhook HTTP/1.1" 200 -
+2025-10-20 20:53:43,195 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
+2025-10-20 20:53:43,202 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB076F6A89EE774BC90CC
+2025-10-20 20:53:43,202 - INFO - werkzeug - 127.0.0.1 - - [20/Oct/2025 20:53:43] "POST /webhook HTTP/1.1" 200 -
