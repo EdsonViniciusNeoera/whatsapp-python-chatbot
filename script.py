@@ -494,7 +494,7 @@ def start_customer_form(safe_sender_id, reason):
         reason: The reason for the form (menu option or description)
     """
     customer_forms[safe_sender_id] = {
-        'step': 'name',  # Possible steps: name, phone, cpf, prescription, confirm
+        'step': 'name',  # Possible steps: name, phone, cpf, consultant, prescription, confirm
         'data': {},
         'timestamp': time.time(),
         'reason': reason
@@ -602,19 +602,41 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
         cpf_formatted = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
         form_data['cpf'] = cpf_formatted
         
+        # After CPF, ask which consultant they prefer
+        update_customer_form(safe_sender_id, 'consultant', 'cpf', cpf_formatted)
+        return "Perfeito! Agora me diga, com qual *consultor* você prefere falar?\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
+    
+    # Step 4: Select Consultant
+    elif current_step == 'consultant':
+        consultant_choice = message_text.strip()
+        
+        if consultant_choice in ['1', '01', 'josimar', 'Josimar']:
+            consultant_name = "Josimar"
+            consultant_phone = "(81) 99974-5545"
+        elif consultant_choice in ['2', '02', 'jailson', 'Jailson']:
+            consultant_name = "Jailson"
+            consultant_phone = "(81) 99750-7161"
+        else:
+            return "Por favor, escolha uma opção válida:\n\n*01* - Josimar\n*02* - Jailson\n\n_Digite 01 ou 02_"
+        
+        form_data['consultant_name'] = consultant_name
+        form_data['consultant_phone'] = consultant_phone
+        
         # Check if this is for budget (opção 2) - only ask for prescription in this case
         form_reason = form.get('reason', '')
         is_budget = '2 -' in form_reason or 'orçamento' in form_reason.lower()
         
         if is_budget:
             # Only ask for prescription if it's a budget request
-            update_customer_form(safe_sender_id, 'prescription', 'cpf', cpf_formatted)
-            return "Ótimo! Você possui *receita médica*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
+            update_customer_form(safe_sender_id, 'prescription', 'consultant_name', consultant_name)
+            update_customer_form(safe_sender_id, 'prescription', 'consultant_phone', consultant_phone)
+            return f"Ótimo! O *{consultant_name}* vai te atender! 😊\n\nAgora, você possui *receita médica*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
         else:
             # For other options, skip prescription and go to confirmation
             form_data['prescription'] = "Não solicitado (apenas para orçamentos)"
             form_data['has_prescription'] = False
-            update_customer_form(safe_sender_id, 'confirm', 'cpf', cpf_formatted)
+            update_customer_form(safe_sender_id, 'confirm', 'consultant_name', consultant_name)
+            update_customer_form(safe_sender_id, 'confirm', 'consultant_phone', consultant_phone)
             update_customer_form(safe_sender_id, 'confirm', 'prescription', "Não solicitado")
             
             # Show summary for confirmation
@@ -624,6 +646,7 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
 👤 *Nome:* {form_data.get('name')}
 📱 *Telefone:* {form_data.get('phone')}
 🆔 *CPF:* {form_data.get('cpf')}
+👨‍💼 *Consultor:* {consultant_name} - {consultant_phone}
 
 *Motivo do contato:* {form['reason']}
 
@@ -634,7 +657,7 @@ _Seus dados estão corretos?_
 """
             return summary.strip()
     
-    # Step 4: Collect prescription
+    # Step 5: Collect prescription
     elif current_step == 'prescription':
         has_prescription = False
         prescription_info = "Não possui receita"
@@ -670,6 +693,7 @@ _Seus dados estão corretos?_
 👤 *Nome:* {form_data.get('name')}
 📱 *Telefone:* {form_data.get('phone')}
 🆔 *CPF:* {form_data.get('cpf')}
+👨‍💼 *Consultor:* {form_data.get('consultant_name')} - {form_data.get('consultant_phone')}
 💊 *Receita:* {prescription_info}
 
 *Motivo do contato:* {form['reason']}
@@ -681,13 +705,17 @@ _Seus dados estão corretos?_
 """
         return summary.strip()
     
-    # Step 5: Confirm and send to group
+    # Step 6: Confirm and send to group
     elif current_step == 'confirm':
         if message_text.lower().strip() in ['sim', 's', 'confirmo', 'correto', 'ok']:
             # Send notification to group with all collected data
             send_customer_form_to_group(sender_number, form)
+            
+            # Get consultant name for personalized message
+            consultant_name = form_data.get('consultant_name', 'nosso consultor')
+            
             cancel_customer_form(safe_sender_id)
-            return "✅ Perfeito! Suas informações foram enviadas para nossos consultores.\n\nEles entrarão em contato com você em breve! 😊\n\n_Posso ajudar com mais alguma coisa?_"
+            return f"✅ Perfeito! Suas informações foram enviadas para o *{consultant_name}*.\n\nEle entrará em contato com você em breve! 😊\n\n_Posso ajudar com mais alguma coisa?_"
         
         elif message_text.lower().strip() in ['não', 'nao', 'n', 'cancelar', 'recomeçar', 'recomecar']:
             cancel_customer_form(safe_sender_id)
@@ -730,6 +758,9 @@ def send_customer_form_to_group(customer_number, form):
         f"• *Telefone:* {form_data.get('phone', 'Não informado')}",
         f"• *WhatsApp:* {display_number}",
         f"• *CPF:* {form_data.get('cpf', 'Não informado')}",
+        "",
+        "👨‍💼 *CONSULTOR SOLICITADO*",
+        f"• *{form_data.get('consultant_name', 'Não especificado')}* - {form_data.get('consultant_phone', '')}",
         "",
     ]
     
