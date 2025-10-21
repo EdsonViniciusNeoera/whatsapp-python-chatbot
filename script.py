@@ -1091,7 +1091,8 @@ def webhook():
             # Extract message content based on message structure
             if message_info.get('message'):
                 msg_content_obj = message_info['message']
-                logger.info(f"Message content object: {msg_content_obj}")
+                logger.info(f"Message content object keys: {msg_content_obj.keys()}")
+                logger.info(f"Full message content object: {msg_content_obj}")
                 
                 if 'conversation' in msg_content_obj:
                     incoming_message_text = msg_content_obj['conversation']
@@ -1104,11 +1105,20 @@ def webhook():
                 elif 'imageMessage' in msg_content_obj:
                     incoming_message_text = "[Imagem enviada]"
                     message_type = 'image'
-                    logger.info(f"Found image message")
+                    logger.info(f"Found image message - Full data: {msg_content_obj['imageMessage']}")
                 elif 'documentMessage' in msg_content_obj:
                     incoming_message_text = "[Documento enviado]"
                     message_type = 'document'
-                    logger.info(f"Found document message")
+                    logger.info(f"Found document message - Full data: {msg_content_obj['documentMessage']}")
+                else:
+                    logger.warning(f"Unknown message type. Available keys: {list(msg_content_obj.keys())}")
+                    # Try to detect any message type that contains 'Message'
+                    for key in msg_content_obj.keys():
+                        if 'Message' in key:
+                            logger.info(f"Found potential message type: {key} with data: {msg_content_obj[key]}")
+                            incoming_message_text = f"[{key} recebido]"
+                            message_type = key.replace('Message', '').lower()
+                            break
 
             if not sender_number:
                 logger.warning("Webhook received message without sender information.")
@@ -1124,7 +1134,9 @@ def webhook():
             
             # Check if user is in the middle of filling a customer form (accepts text, image, and documents)
             active_form = get_customer_form(safe_sender_id)
-            if active_form and message_type in ['text', 'image', 'document']:
+            
+            # Accept any message type that was detected (text, image, document, or others)
+            if active_form and message_type != 'unknown':
                 logger.info(f"Processing customer form step for {safe_sender_id} - message_type: {message_type}")
                 
                 # For media messages, use placeholder text
@@ -1138,6 +1150,10 @@ def webhook():
                     end_sending_session(safe_sender_id)
                     logger.info("=== WEBHOOK PROCESSING COMPLETE ===")
                     return jsonify({'status': 'success'}), 200
+                else:
+                    logger.info("Form step returned no response, continuing to normal flow")
+            elif active_form:
+                logger.warning(f"User has active form but message type is unknown: {message_type}")
             
             # Process text messages (normal conversation flow)
             if message_type == 'text' and incoming_message_text:
