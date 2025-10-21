@@ -1101,6 +1101,14 @@ def webhook():
                     incoming_message_text = msg_content_obj['extendedTextMessage']['text']
                     message_type = 'text'
                     logger.info(f"Found extended text: {incoming_message_text}")
+                elif 'imageMessage' in msg_content_obj:
+                    incoming_message_text = "[Imagem enviada]"
+                    message_type = 'image'
+                    logger.info(f"Found image message")
+                elif 'documentMessage' in msg_content_obj:
+                    incoming_message_text = "[Documento enviado]"
+                    message_type = 'document'
+                    logger.info(f"Found document message")
 
             if not sender_number:
                 logger.warning("Webhook received message without sender information.")
@@ -1114,21 +1122,26 @@ def webhook():
             start_sending_session(safe_sender_id)
             cleanup_sending_sessions()
             
-            # we should do this in queue in production if we take too long to respond the request will timeout
+            # Check if user is in the middle of filling a customer form (accepts text, image, and documents)
+            active_form = get_customer_form(safe_sender_id)
+            if active_form and message_type in ['text', 'image', 'document']:
+                logger.info(f"Processing customer form step for {safe_sender_id} - message_type: {message_type}")
+                
+                # For media messages, use placeholder text
+                if not incoming_message_text:
+                    incoming_message_text = ""
+                
+                form_response = process_customer_form_step(safe_sender_id, sender_number, incoming_message_text, message_info)
+                
+                if form_response:
+                    send_whatsapp_message(sender_number, form_response, message_type='text')
+                    end_sending_session(safe_sender_id)
+                    logger.info("=== WEBHOOK PROCESSING COMPLETE ===")
+                    return jsonify({'status': 'success'}), 200
+            
+            # Process text messages (normal conversation flow)
             if message_type == 'text' and incoming_message_text:
                 logger.info(f"Processing text message: '{incoming_message_text}' from {sender_number}")
-                
-                # Check if user is in the middle of filling a customer form
-                active_form = get_customer_form(safe_sender_id)
-                if active_form:
-                    logger.info(f"Processing customer form step for {safe_sender_id}")
-                    form_response = process_customer_form_step(safe_sender_id, sender_number, incoming_message_text, message_info)
-                    
-                    if form_response:
-                        send_whatsapp_message(sender_number, form_response, message_type='text')
-                        end_sending_session(safe_sender_id)
-                        logger.info("=== WEBHOOK PROCESSING COMPLETE ===")
-                        return jsonify({'status': 'success'}), 200
                 
                 conversation_history = load_conversation_history(safe_sender_id)
                 logger.info(f"Loaded conversation history for {safe_sender_id}")
