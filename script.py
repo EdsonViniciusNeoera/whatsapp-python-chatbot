@@ -494,7 +494,7 @@ def start_customer_form(safe_sender_id, reason):
         reason: The reason for the form (menu option or description)
     """
     customer_forms[safe_sender_id] = {
-        'step': 'name',  # Possible steps: name, phone, cpf, consultant, prescription, confirm
+        'step': 'consultant',  # Possible steps: consultant, name, phone, cpf, prescription, confirm
         'data': {},
         'timestamp': time.time(),
         'reason': reason
@@ -571,43 +571,8 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
     current_step = form['step']
     form_data = form['data']
     
-    # Step 1: Collect name
-    if current_step == 'name':
-        if len(message_text.strip()) < 2:
-            return "Por favor, digite seu nome completo:"
-        
-        form_data['name'] = message_text.strip()
-        update_customer_form(safe_sender_id, 'phone', 'name', message_text.strip())
-        return "Ótimo! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_"
-    
-    # Step 2: Collect phone
-    elif current_step == 'phone':
-        # Remove non-digits
-        phone = ''.join(filter(str.isdigit, message_text))
-        if len(phone) < 10:
-            return "Por favor, digite um telefone válido com DDD:\n_(Exemplo: 81999887766)_"
-        
-        form_data['phone'] = phone
-        update_customer_form(safe_sender_id, 'cpf', 'phone', phone)
-        return "Perfeito! Agora preciso do seu *CPF*:\n_(Digite apenas números)_"
-    
-    # Step 3: Collect CPF
-    elif current_step == 'cpf':
-        # Remove non-digits
-        cpf = ''.join(filter(str.isdigit, message_text))
-        if len(cpf) != 11:
-            return "Por favor, digite um CPF válido com 11 dígitos:\n_(Apenas números)_"
-        
-        # Format CPF for display
-        cpf_formatted = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
-        form_data['cpf'] = cpf_formatted
-        
-        # After CPF, ask which consultant they prefer
-        update_customer_form(safe_sender_id, 'consultant', 'cpf', cpf_formatted)
-        return "Perfeito! Agora me diga, com qual *consultor* você prefere falar?\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
-    
-    # Step 4: Select Consultant
-    elif current_step == 'consultant':
+    # Step 1: Select Consultant (FIRST)
+    if current_step == 'consultant':
         consultant_choice = message_text.strip()
         
         if consultant_choice in ['1', '01', 'josimar', 'Josimar']:
@@ -621,6 +586,41 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
         
         form_data['consultant_name'] = consultant_name
         form_data['consultant_phone'] = consultant_phone
+        update_customer_form(safe_sender_id, 'name', 'consultant_name', consultant_name)
+        update_customer_form(safe_sender_id, 'name', 'consultant_phone', consultant_phone)
+        
+        return f"Ótimo! O *{consultant_name}* vai te atender! 😊\n\nAgora preciso de algumas informações.\n\n👤 Por favor, me diga seu *nome completo*:"
+    
+    # Step 2: Collect name
+    elif current_step == 'name':
+        if len(message_text.strip()) < 2:
+            return "Por favor, digite seu nome completo:"
+        
+        form_data['name'] = message_text.strip()
+        update_customer_form(safe_sender_id, 'phone', 'name', message_text.strip())
+        return "Perfeito! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_"
+    
+    # Step 3: Collect phone
+    elif current_step == 'phone':
+        # Remove non-digits
+        phone = ''.join(filter(str.isdigit, message_text))
+        if len(phone) < 10:
+            return "Por favor, digite um telefone válido com DDD:\n_(Exemplo: 81999887766)_"
+        
+        form_data['phone'] = phone
+        update_customer_form(safe_sender_id, 'cpf', 'phone', phone)
+        return "Ótimo! Agora preciso do seu *CPF*:\n_(Digite apenas números)_"
+    
+    # Step 4: Collect CPF
+    elif current_step == 'cpf':
+        # Remove non-digits
+        cpf = ''.join(filter(str.isdigit, message_text))
+        if len(cpf) != 11:
+            return "Por favor, digite um CPF válido com 11 dígitos:\n_(Apenas números)_"
+        
+        # Format CPF for display
+        cpf_formatted = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+        form_data['cpf'] = cpf_formatted
         
         # Check if this is for budget (opção 2) - only ask for prescription in this case
         form_reason = form.get('reason', '')
@@ -628,25 +628,23 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
         
         if is_budget:
             # Only ask for prescription if it's a budget request
-            update_customer_form(safe_sender_id, 'prescription', 'consultant_name', consultant_name)
-            update_customer_form(safe_sender_id, 'prescription', 'consultant_phone', consultant_phone)
-            return f"Ótimo! O *{consultant_name}* vai te atender! 😊\n\nAgora, você possui *receita médica*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
+            update_customer_form(safe_sender_id, 'prescription', 'cpf', cpf_formatted)
+            return "Perfeito! Você possui *receita médica*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
         else:
             # For other options, skip prescription and go to confirmation
             form_data['prescription'] = "Não solicitado (apenas para orçamentos)"
             form_data['has_prescription'] = False
-            update_customer_form(safe_sender_id, 'confirm', 'consultant_name', consultant_name)
-            update_customer_form(safe_sender_id, 'confirm', 'consultant_phone', consultant_phone)
+            update_customer_form(safe_sender_id, 'confirm', 'cpf', cpf_formatted)
             update_customer_form(safe_sender_id, 'confirm', 'prescription', "Não solicitado")
             
             # Show summary for confirmation
             summary = f"""
 📋 *Confirmação dos Dados*
 
+👨‍💼 *Consultor:* {form_data.get('consultant_name')} - {form_data.get('consultant_phone')}
 👤 *Nome:* {form_data.get('name')}
 📱 *Telefone:* {form_data.get('phone')}
-🆔 *CPF:* {form_data.get('cpf')}
-👨‍💼 *Consultor:* {consultant_name} - {consultant_phone}
+🆔 *CPF:* {cpf_formatted}
 
 *Motivo do contato:* {form['reason']}
 
@@ -690,10 +688,10 @@ _Seus dados estão corretos?_
         summary = f"""
 📋 *Confirmação dos Dados*
 
+👨‍💼 *Consultor:* {form_data.get('consultant_name')} - {form_data.get('consultant_phone')}
 👤 *Nome:* {form_data.get('name')}
 📱 *Telefone:* {form_data.get('phone')}
 🆔 *CPF:* {form_data.get('cpf')}
-👨‍💼 *Consultor:* {form_data.get('consultant_name')} - {form_data.get('consultant_phone')}
 💊 *Receita:* {prescription_info}
 
 *Motivo do contato:* {form['reason']}
@@ -1163,8 +1161,8 @@ def webhook():
                             start_customer_form(safe_sender_id, selected_menu_option)
                             logger.info(f"Started customer form for menu option {option_key}")
                             
-                            # Add prompt to start form
-                            response_text += "\n\n📋 Para que nossos consultores possam te atender melhor, preciso de algumas informações.\n\n👤 Por favor, me diga seu *nome completo*:"
+                            # Add prompt to start form - ask for consultant first
+                            response_text += "\n\n📋 Primeiro, escolha com qual *consultor* você prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
                 
                 # If no menu response, use Gemini AI
                 if not response_text:
@@ -1202,8 +1200,8 @@ def webhook():
                         start_customer_form(safe_sender_id, form_reason)
                         logger.info(f"Started customer form based on AI response - reason: {form_reason}")
                         
-                        # Add prompt to start form
-                        response_text += "\n\n📋 Para facilitar o atendimento, preciso de algumas informações.\n\n👤 Por favor, me diga seu *nome completo*:"
+                        # Add prompt to start form - ask for consultant first
+                        response_text += "\n\n📋 Primeiro, escolha com qual *consultor* você prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
                 
                 if response_text:
                     message_chunks = split_message(response_text)
