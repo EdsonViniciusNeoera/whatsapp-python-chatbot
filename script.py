@@ -663,15 +663,48 @@ _Seus dados estão corretos?_
         # Check if message has image
         if message_info.get('message', {}).get('imageMessage'):
             has_prescription = True
-            image_url = message_info['message']['imageMessage'].get('url', 'Imagem recebida')
-            prescription_info = f"📷 Receita enviada (imagem)\nURL: {image_url}"
+            image_data = message_info['message']['imageMessage']
+            
+            # Try to get URL from different possible fields
+            image_url = (
+                image_data.get('url') or 
+                image_data.get('directPath') or 
+                image_data.get('mediaKey') or
+                'URL não disponível'
+            )
+            
+            # Get additional info
+            caption = image_data.get('caption', '')
+            mimetype = image_data.get('mimetype', 'image/jpeg')
+            
+            logger.info(f"Image data received: {image_data}")
+            prescription_info = f"📷 Receita enviada (imagem - {mimetype})"
+            if caption:
+                prescription_info += f"\nLegenda: {caption}"
+            if image_url != 'URL não disponível':
+                prescription_info += f"\n🔗 Link: {image_url}"
         
         # Check if message has document/PDF
         elif message_info.get('message', {}).get('documentMessage'):
             has_prescription = True
-            doc_name = message_info['message']['documentMessage'].get('fileName', 'documento.pdf')
-            doc_url = message_info['message']['documentMessage'].get('url', 'Documento recebido')
-            prescription_info = f"📄 Receita enviada ({doc_name})\nURL: {doc_url}"
+            doc_data = message_info['message']['documentMessage']
+            
+            doc_name = doc_data.get('fileName', 'documento.pdf')
+            
+            # Try to get URL from different possible fields
+            doc_url = (
+                doc_data.get('url') or 
+                doc_data.get('directPath') or 
+                doc_data.get('mediaKey') or
+                'URL não disponível'
+            )
+            
+            mimetype = doc_data.get('mimetype', 'application/pdf')
+            
+            logger.info(f"Document data received: {doc_data}")
+            prescription_info = f"📄 Receita enviada ({doc_name})"
+            if doc_url != 'URL não disponível':
+                prescription_info += f"\n🔗 Link: {doc_url}"
         
         # Check for text response
         elif message_text.lower().strip() in ['não', 'nao', 'n', 'sem receita', 'não tenho', 'nao tenho']:
@@ -751,14 +784,15 @@ def send_customer_form_to_group(customer_number, form):
         f"⏰ *Horário:* {timestamp}",
         f"📋 *Motivo:* {form['reason']}",
         "",
+        "�‍💼 *CONSULTOR SOLICITADO*",
+        f"• *{form_data.get('consultant_name', 'Não especificado')}*",
+        f"• *Telefone:* {form_data.get('consultant_phone', 'Não informado')}",
+        "",
         "👤 *DADOS DO CLIENTE*",
         f"• *Nome:* {form_data.get('name', 'Não informado')}",
         f"• *Telefone:* {form_data.get('phone', 'Não informado')}",
         f"• *WhatsApp:* {display_number}",
         f"• *CPF:* {form_data.get('cpf', 'Não informado')}",
-        "",
-        "👨‍💼 *CONSULTOR SOLICITADO*",
-        f"• *{form_data.get('consultant_name', 'Não especificado')}* - {form_data.get('consultant_phone', '')}",
         "",
     ]
     
