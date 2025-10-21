@@ -659,6 +659,8 @@ _Seus dados estão corretos?_
     elif current_step == 'prescription':
         has_prescription = False
         prescription_info = "Não possui receita"
+        prescription_media_url = None
+        prescription_media_type = None
         
         # Check if message has image
         if message_info.get('message', {}).get('imageMessage'):
@@ -673,6 +675,10 @@ _Seus dados estão corretos?_
                 'URL não disponível'
             )
             
+            # Store media info for forwarding
+            prescription_media_url = image_url if image_url != 'URL não disponível' else None
+            prescription_media_type = 'image'
+            
             # Get additional info
             caption = image_data.get('caption', '')
             mimetype = image_data.get('mimetype', 'image/jpeg')
@@ -681,8 +687,6 @@ _Seus dados estão corretos?_
             prescription_info = f"📷 Receita enviada (imagem - {mimetype})"
             if caption:
                 prescription_info += f"\nLegenda: {caption}"
-            if image_url != 'URL não disponível':
-                prescription_info += f"\n🔗 Link: {image_url}"
         
         # Check if message has document/PDF
         elif message_info.get('message', {}).get('documentMessage'):
@@ -699,12 +703,14 @@ _Seus dados estão corretos?_
                 'URL não disponível'
             )
             
+            # Store media info for forwarding
+            prescription_media_url = doc_url if doc_url != 'URL não disponível' else None
+            prescription_media_type = 'document'
+            
             mimetype = doc_data.get('mimetype', 'application/pdf')
             
             logger.info(f"Document data received: {doc_data}")
             prescription_info = f"📄 Receita enviada ({doc_name})"
-            if doc_url != 'URL não disponível':
-                prescription_info += f"\n🔗 Link: {doc_url}"
         
         # Check for text response
         elif message_text.lower().strip() in ['não', 'nao', 'n', 'sem receita', 'não tenho', 'nao tenho']:
@@ -715,6 +721,8 @@ _Seus dados estão corretos?_
         
         form_data['prescription'] = prescription_info
         form_data['has_prescription'] = has_prescription
+        form_data['prescription_media_url'] = prescription_media_url
+        form_data['prescription_media_type'] = prescription_media_type
         update_customer_form(safe_sender_id, 'confirm', 'prescription', prescription_info)
         
         # Show summary for confirmation
@@ -798,11 +806,16 @@ def send_customer_form_to_group(customer_number, form):
     
     # Add prescription info (only if it was collected - budget requests)
     prescription_info = form_data.get('prescription', 'Não solicitado')
+    prescription_media_url = form_data.get('prescription_media_url')
+    prescription_media_type = form_data.get('prescription_media_type')
     
     # Check if prescription was actually collected (not skipped)
     if form_data.get('has_prescription', False):
         notification_parts.append("💊 *RECEITA MÉDICA*")
-        notification_parts.append(prescription_info)
+        if prescription_media_url:
+            notification_parts.append("📎 _Receita anexada abaixo_")
+        else:
+            notification_parts.append(prescription_info)
         notification_parts.append("")
         notification_parts.append("⚠️ _Verifique a receita antes de confirmar o atendimento_")
     elif prescription_info and prescription_info != "Não solicitado (apenas para orçamentos)":
@@ -819,13 +832,32 @@ def send_customer_form_to_group(customer_number, form):
     notification_message = "\n".join(notification_parts)
     
     try:
+        # Send text notification first
         result = send_whatsapp_message(
             CONFIG["NOTIFICATION_GROUP_ID"],
             notification_message,
             message_type='text'
         )
+        
         if result:
             logger.info(f"✅ Customer form sent to group for {display_number}")
+            
+            # If there's a prescription media, forward it to the group
+            if prescription_media_url and prescription_media_type:
+                logger.info(f"📎 Forwarding prescription media to group: {prescription_media_type}")
+                
+                media_result = send_whatsapp_message(
+                    CONFIG["NOTIFICATION_GROUP_ID"],
+                    f"💊 *Receita de {form_data.get('name', 'Cliente')}*",
+                    message_type=prescription_media_type,
+                    media_url=prescription_media_url
+                )
+                
+                if media_result:
+                    logger.info(f"✅ Prescription media forwarded to group")
+                else:
+                    logger.warning(f"⚠️ Failed to forward prescription media to group")
+        
         return result
     except Exception as e:
         logger.error(f"❌ Error sending customer form to group: {e}")
@@ -1065,6 +1097,7 @@ def send_whatsapp_message(recipient_number, message_content, message_type='text'
             response = wasender_client.send_document(
                 to=formatted_recipient_number,
                 url=media_url,
+                filename="receita.pdf",  # Default filename for prescription documents
                 caption=message_content if message_content else None
             )
             logger.info(f"Document message sent to {recipient_number}. ")
