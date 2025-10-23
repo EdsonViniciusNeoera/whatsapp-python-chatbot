@@ -106,5 +106,17 @@
     "parts": [
       "\ud83d\udcb0 Sem problemas! Para um or\u00e7amento detalhado, vou precisar de algumas informa\u00e7\u00f5es para agilizar o atendimento do consultor.\n\n\ud83d\udc64 Por favor, me diga seu *nome completo*:\n\n\ud83d\udccb Para facilitar o atendimento, preciso de algumas informa\u00e7\u00f5es.\n\n\ud83d\udc64 Por favor, me diga seu *nome completo*:"
     ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      "gostaria de fazer um or\u00e7amento"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Compreendo! Para te ajudar com o or\u00e7amento, vou te direcionar para um de nossos consultores. Voc\u00ea prefere falar com o Jailson (99750-7161) ou com o Josimar (99974-5545)?\n\nEles poder\u00e3o te auxiliar com os melhores or\u00e7amentos e op\u00e7\u00f5es para voc\u00ea. \ud83d\ude0a\n\n\ud83d\udccb Primeiro, escolha com qual *consultor* voc\u00ea prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
+    ]
   }
 ]
