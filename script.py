@@ -629,7 +629,7 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
         if is_budget:
             # Only ask for prescription if it's a budget request
             update_customer_form(safe_sender_id, 'prescription', 'cpf', cpf_formatted)
-            return "Perfeito! Você possui *receita médica*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
+            return "Perfeito! Você possui *receita de óculos*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
         else:
             # For other options, skip prescription and go to confirmation
             form_data['prescription'] = "Não solicitado (apenas para orçamentos)"
@@ -717,7 +717,7 @@ _Seus dados estão corretos?_
             prescription_info = "Cliente informou que não possui receita"
         
         elif message_text.lower().strip() in ['sim', 's', 'tenho', 'possuo']:
-            return "Por favor, *envie a foto ou PDF* da sua receita médica 📸"
+            return "Por favor, *envie a foto ou PDF* da sua receita de óculos 📸"
         
         form_data['prescription'] = prescription_info
         form_data['has_prescription'] = has_prescription
@@ -811,16 +811,16 @@ def send_customer_form_to_group(customer_number, form):
     
     # Check if prescription was actually collected (not skipped)
     if form_data.get('has_prescription', False):
-        notification_parts.append("💊 *RECEITA MÉDICA*")
+        notification_parts.append("💊 *RECEITA DE ÓCULOS*")
         if prescription_media_url:
-            notification_parts.append("📎 _Receita anexada abaixo_")
+            notification_parts.append("📎 _Receita de óculos anexada abaixo_")
         else:
             notification_parts.append(prescription_info)
         notification_parts.append("")
-        notification_parts.append("⚠️ _Verifique a receita antes de confirmar o atendimento_")
+        notification_parts.append("⚠️ _Verifique a receita de óculos antes de confirmar o atendimento_")
     elif prescription_info and prescription_info != "Não solicitado (apenas para orçamentos)":
         # Prescription was asked but customer doesn't have one
-        notification_parts.append(f"💊 *Receita:* {prescription_info}")
+        notification_parts.append(f"💊 *Receita de óculos:* {prescription_info}")
     # If prescription_info contains "Não solicitado", don't show it at all
     
     notification_parts.extend([
@@ -848,7 +848,7 @@ def send_customer_form_to_group(customer_number, form):
                 
                 media_result = send_whatsapp_message(
                     CONFIG["NOTIFICATION_GROUP_ID"],
-                    f"💊 *Receita de {form_data.get('name', 'Cliente')}*",
+                    f"💊 *Receita de óculos de {form_data.get('name', 'Cliente')}*",
                     message_type=prescription_media_type,
                     media_url=prescription_media_url
                 )
