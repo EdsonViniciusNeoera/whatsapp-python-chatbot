@@ -4,6 +4,121 @@ Registro de todas as mudanças notáveis neste projeto.
 
 ---
 
+## [2.1.0] - 2025-10-23
+
+### 🔥 **CORREÇÃO CRÍTICA: Imagens agora chegam aos consultores!**
+
+#### 🐛 **Problema Identificado**
+- ❌ Sistema v2.0.0 salvava imagens localmente mas **NÃO as enviava ao grupo**
+- ❌ WaSender API **rejeita data URLs** (base64 inline)
+- ❌ Consultores recebiam apenas notificação de texto
+
+#### ✅ **Solução Implementada**
+
+**1. Endpoint HTTP para servir arquivos:**
+```python
+@app.route('/media/<filename>')
+def serve_media(filename):
+    """Serve arquivos de temp_media/ via HTTP público"""
+```
+
+**2. Variável de ambiente `WEBHOOK_BASE_URL`:**
+```bash
+# .env
+WEBHOOK_BASE_URL=https://abc123.ngrok-free.app
+```
+
+**3. URLs públicas em vez de data URLs:**
+```python
+# ANTES (quebrado):
+data_url = f"data:image/jpeg;base64,{file_base64}"
+
+# DEPOIS (funciona):
+public_url = f"{CONFIG['WEBHOOK_BASE_URL']}/media/{filename}"
+```
+
+#### ✨ Funcionalidades
+
+**Endpoint `/media/<filename>`:**
+- ✅ Serve arquivos temporários via HTTP/HTTPS
+- ✅ Validação de segurança (sem path traversal)
+- ✅ Cache-Control configurado (24h)
+- ✅ MIME type automático
+- ✅ Compatível com WaSender API
+
+**Fluxo Completo:**
+1. Cliente envia receita 📸
+2. Bot salva em `temp_media/prescription_xxx.jpg` 💾
+3. Bot cria URL pública: `https://ngrok.../media/prescription_xxx.jpg` 🌐
+4. Bot envia URL ao grupo via WaSender API 📤
+5. WaSender baixa imagem da URL ⬇️
+6. **Consultores recebem IMAGEM no grupo!** ✅
+
+#### 🛠️ Arquivos Modificados
+
+**`script.py`:**
+- Adicionado: `send_from_directory` import
+- Adicionado: `CONFIG["WEBHOOK_BASE_URL"]`
+- Adicionado: Rota `/media/<filename>`
+- Modificado: `send_customer_form_to_group()` para usar URLs públicas
+- Removido: Lógica de data URL (base64 inline)
+
+**`.env`:**
+- Adicionado: `WEBHOOK_BASE_URL` (requer configuração com ngrok)
+
+#### 📚 Documentação Criada
+
+**`GUIA_ENVIO_IMAGENS.md`:**
+- 📖 Explicação completa da arquitetura
+- 🔧 Instruções de configuração passo-a-passo
+- 🧪 Testes e verificações
+- ⚠️ Troubleshooting de problemas comuns
+- 📊 Exemplos com logs reais
+
+**`auto_update_webhook_url.py`:**
+- 🤖 Script para atualizar `.env` automaticamente
+- 🔍 Detecta URL do ngrok via API local
+- ✅ Valida HTTPS
+- 📝 Atualiza `WEBHOOK_BASE_URL` automaticamente
+
+#### ⚙️ Requisitos
+
+**Desenvolvimento:**
+- ngrok rodando: `.\ngrok.exe http 5001`
+- `.env` atualizado com URL do ngrok
+- Bot reiniciado após mudanças
+
+**Produção:**
+- Servidor com domínio público (HTTPS)
+- `WEBHOOK_BASE_URL` configurado com domínio real
+
+#### 🎯 Resultado
+
+**ANTES (v2.0.0):**
+```
+Grupo de consultores:
+✅ Notificação de texto
+❌ Imagem NÃO chega
+```
+
+**DEPOIS (v2.1.0):**
+```
+Grupo de consultores:
+✅ Notificação de texto
+✅ Imagem DA RECEITA ✨
+```
+
+#### 📝 Notas de Migração
+
+Se você está usando v2.0.0:
+1. Adicione `WEBHOOK_BASE_URL` no `.env`
+2. Configure ngrok: `.\ngrok.exe http 5001`
+3. Atualize `.env` com URL do ngrok
+4. Reinicie o bot: `python script.py`
+5. Teste enviando receita
+
+---
+
 ## [2.0.0] - 2025-10-23
 
 ### 🎉 **NOVO: Sistema de Armazenamento Temporário de Mídia**

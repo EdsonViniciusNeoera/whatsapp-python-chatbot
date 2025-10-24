@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from dotenv import load_dotenv
 import google.generativeai as genai
 import json
@@ -50,6 +50,7 @@ CONFIG = {
     "MESSAGE_DELAY_MAX": float(os.getenv('MESSAGE_DELAY_MAX', '1.5')),
     "NOTIFICATION_GROUP_ID": os.getenv('NOTIFICATION_GROUP_ID'),
     "MEDIA_CLEANUP_HOURS": int(os.getenv('MEDIA_CLEANUP_HOURS', '24')),
+    "WEBHOOK_BASE_URL": os.getenv('WEBHOOK_BASE_URL', 'http://localhost:5001'),
 }
 
 # Directory for storing conversations
@@ -104,11 +105,60 @@ def index():
             '/health': 'Health check endpoint',
             '/status': 'Detailed bot status',
             '/webhook': 'Webhook endpoint for WhatsApp messages (POST only)',
-            '/clear_history/<user_id>': 'Clear conversation history for a user (POST only)'
+            '/clear_history/<user_id>': 'Clear conversation history for a user (POST only)',
+            '/media/<filename>': 'Serve temporary media files (GET only)'
         },
         'documentation': 'Send POST requests to /webhook for WhatsApp integration',
         'version': '1.0.0'
     })
+
+@app.route('/media/<filename>', methods=['GET'])
+def serve_media(filename):
+    """
+    Serve temporary media files for WhatsApp API access.
+    
+    This endpoint allows the WaSender API to download prescription images/PDFs
+    via public URLs (through ngrok or your server domain).
+    
+    Args:
+        filename: The name of the file to serve from temp_media directory
+        
+    Returns:
+        The requested file or 404 if not found
+        
+    Security:
+        - Only serves files from TEMP_MEDIA_DIR (no path traversal)
+        - Files are automatically cleaned up after 24 hours
+        - No authentication required (temporary files only)
+    """
+    try:
+        # Security: Validate filename (no path traversal)
+        if '..' in filename or '/' in filename or '\\' in filename:
+            logger.warning(f"⚠️ Attempted path traversal: {filename}")
+            return jsonify({'error': 'Invalid filename'}), 400
+        
+        # Check if file exists
+        file_path = os.path.join(CONFIG["TEMP_MEDIA_DIR"], filename)
+        if not os.path.exists(file_path):
+            logger.warning(f"⚠️ File not found: {filename}")
+            return jsonify({'error': 'File not found'}), 404
+        
+        # Determine mimetype
+        mimetype = mimetypes.guess_type(file_path)[0] or 'application/octet-stream'
+        
+        logger.info(f"📤 Serving media file: {filename} (type: {mimetype})")
+        
+        # Serve file with appropriate headers
+        return send_from_directory(
+            CONFIG["TEMP_MEDIA_DIR"],
+            filename,
+            mimetype=mimetype,
+            as_attachment=False,  # Display inline in browser
+            max_age=86400  # Cache for 24 hours (matches cleanup time)
+        )
+    except Exception as e:
+        logger.error(f"❌ Error serving media file {filename}: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -971,34 +1021,28 @@ def send_customer_form_to_group(customer_number, form):
                 else:
                     media_type = 'document'
                 
-                # Upload file to a public URL first (WaSender needs public URLs)
-                # For now, we'll try sending with file:// protocol or convert to base64
+                # Build public URL for WaSender API to download the file
+                # Format: https://your-ngrok-url.com/media/prescription_xxx.jpg
+                filename = os.path.basename(prescription_file_path)
+                public_url = f"{CONFIG['WEBHOOK_BASE_URL']}/media/{filename}"
+                
+                logger.info(f"🌐 Public media URL: {public_url}")
+                
                 try:
-                    # Read file as bytes
-                    with open(prescription_file_path, 'rb') as f:
-                        file_data = f.read()
-                    
-                    # Convert to base64 for data URL
-                    file_base64 = base64.b64encode(file_data).decode('utf-8')
-                    
-                    # Create data URL
-                    mimetype = mimetypes.guess_type(prescription_file_path)[0] or 'application/octet-stream'
-                    data_url = f"data:{mimetype};base64,{file_base64}"
-                    
                     media_result = send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
                         f"💊 *Receita de óculos de {form_data.get('name', 'Cliente')}*",
                         message_type=media_type,
-                        media_url=data_url
+                        media_url=public_url  # Use public URL instead of data URL
                     )
                     
                     if media_result:
-                        logger.info(f"✅ Prescription file sent to group")
+                        logger.info(f"✅ Prescription file sent to group successfully")
                     else:
                         logger.warning(f"⚠️ Failed to send prescription file - informing group")
                         send_whatsapp_message(
                             CONFIG["NOTIFICATION_GROUP_ID"],
-                            f"⚠️ Não foi possível enviar o arquivo automaticamente.\n📁 Arquivo salvo em: {prescription_file_path}\n\n_Solicite a receita diretamente ao cliente: {display_number}_",
+                            f"⚠️ Não foi possível enviar o arquivo automaticamente.\n📁 Arquivo salvo localmente: {filename}\n\n_Solicite a receita diretamente ao cliente: {display_number}_",
                             message_type='text'
                         )
                         

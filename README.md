@@ -14,13 +14,14 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
 - **WhatsApp Integration**: Receives and sends messages through WaSenderAPI
 - **AI-Powered Responses**: Generates intelligent replies using Google's Gemini AI
 - **Media Support**: Handles text, images, audio, video, and document messages
-- **📦 Temporary Media Storage**: Automatically saves and forwards prescription images/PDFs to consultants
+- **� Image Forwarding to Consultants**: Automatically sends prescription images/PDFs to consultant group via public URLs
 - **Smart Message Splitting**: Automatically breaks long responses into multiple messages for better readability
 - **Customizable AI Persona**: Tailor the bot's personality and behavior via simple JSON configuration
 - **Conversation History**: Maintains context between messages for natural conversations
 - **Interactive Menu System**: Guided customer service with menu options
 - **Customer Form Collection**: Collects customer information before connecting to consultants
 - **🗑️ Auto-Cleanup**: Removes old media files after 24 hours (configurable)
+- **🌐 Public Media Endpoint**: Serves temporary files via HTTP for WhatsApp API access
 - **Error Handling**: Robust logging and error management for reliable operation
 - **Easy Configuration**: Simple setup with environment variables
 
@@ -30,10 +31,12 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
 /whatsapp-python-chatbot/
 ├── script.py                           # Main Flask application and bot logic
 ├── message_splitter.py                 # Message splitting utility
+├── auto_update_webhook_url.py          # Auto-update WEBHOOK_BASE_URL from ngrok
 ├── requirements.txt                    # Python dependencies
 ├── .env                                # Environment variables (API keys, etc.)
 ├── persona.json                        # Customizable AI personality settings
 ├── README.md                           # This file
+├── GUIA_ENVIO_IMAGENS.md               # Complete guide for image forwarding
 ├── SISTEMA_ARMAZENAMENTO_TEMPORARIO.md # Media storage documentation
 ├── conversations/                      # Conversation history storage
 └── temp_media/                         # Temporary media storage (auto-cleanup)
@@ -64,6 +67,9 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
     WASENDER_API_TOKEN="YOUR_WASENDER_API_TOKEN_HERE"  # $6/month subscription
     NOTIFICATION_GROUP_ID="YOUR_GROUP_ID"  # WhatsApp group for consultant notifications
     
+    # IMPORTANTE: Configure com a URL do ngrok quando rodar o bot
+    WEBHOOK_BASE_URL=https://abc123.ngrok-free.app  # Public URL for media serving
+    
     # Optional configurations
     TEMP_MEDIA_DIR=temp_media  # Directory for temporary media storage
     MEDIA_CLEANUP_HOURS=24     # Hours before cleaning old media files
@@ -76,6 +82,7 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
     - `GEMINI_API_KEY`: Your API key for the Gemini API (free tier available)
     - `WASENDER_API_TOKEN`: Your API token from WaSenderAPI ($6/month subscription)
     - `NOTIFICATION_GROUP_ID`: WhatsApp group ID for consultant notifications
+    - `WEBHOOK_BASE_URL`: **Public URL of your server (ngrok or domain)** - REQUIRED for image forwarding!
     - `TEMP_MEDIA_DIR`: Folder for temporary media storage (default: temp_media)
     - `MEDIA_CLEANUP_HOURS`: Hours before auto-cleanup (default: 24)
 
@@ -105,7 +112,26 @@ ngrok http 5001
 
 c. **ngrok will provide you with a public URL** (e.g., `https://xxxx-xx-xxx-xxx-xx.ngrok-free.app`).
 
-d. **Configure this ngrok URL as your webhook URL** in the WaSenderAPI dashboard for your connected device/session. Make sure to append the `/webhook` path (e.g., `https://xxxx-xx-xxx-xxx-xx.ngrok-free.app/webhook`).
+d. **⚠️ IMPORTANTE: Atualize o `.env` com a URL do ngrok:**
+
+```bash
+# Opção 1: Automático (recomendado)
+python auto_update_webhook_url.py
+
+# Opção 2: Manual
+# Edite .env e substitua:
+WEBHOOK_BASE_URL=https://xxxx-xx-xxx-xxx-xx.ngrok-free.app
+```
+
+e. **Reinicie o bot** para aplicar as mudanças:
+
+```bash
+python script.py
+```
+
+f. **Configure this ngrok URL as your webhook URL** in the WaSenderAPI dashboard for your connected device/session. Make sure to append the `/webhook` path (e.g., `https://xxxx-xx-xxx-xxx-xx.ngrok-free.app/webhook`).
+
+💡 **Dica:** O script `auto_update_webhook_url.py` detecta automaticamente a URL do ngrok e atualiza o `.env` para você!
 
 ### 3. Production Deployment (using Gunicorn)
 
@@ -127,7 +153,14 @@ gunicorn --workers 4 --bind 0.0.0.0:5001 script:app
 - `--workers 4`: Adjust the number of worker processes based on your server's CPU cores (a common starting point is `2 * num_cores + 1`).
 - `--bind 0.0.0.0:5001`: Specifies the address and port Gunicorn should listen on.
 
-c. **Reverse Proxy (Recommended):**
+c. **Configure WEBHOOK_BASE_URL for production:**
+
+```bash
+# Use your actual domain (not ngrok)
+WEBHOOK_BASE_URL=https://seu-dominio.com
+```
+
+d. **Reverse Proxy (Recommended):**
 In a typical production setup, you would run Gunicorn behind a reverse proxy like Nginx or Apache. The reverse proxy would handle incoming HTTPS requests, SSL termination, static file serving (if any), and forward requests to Gunicorn.
 
 ## 🔄 WaSenderAPI Webhook Configuration
