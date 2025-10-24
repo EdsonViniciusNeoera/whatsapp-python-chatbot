@@ -1698,8 +1698,13 @@ def webhook():
                             start_customer_form(safe_sender_id, selected_menu_option)
                             logger.info(f"Started customer form for menu option {option_key}")
                             
-                            # Add prompt to start form - ask for consultant first
-                            response_text += "\n\n📋 Primeiro, escolha com qual *consultor* você prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
+                            # Add consultant selection prompt ONLY if the menu response doesn't already include it
+                            # Avoid duplication - menu options 2, 3, 4 already have consultant info in persona.json
+                            if option_key in ['6']:  # Only add for "Outras dúvidas" which needs consultant selection
+                                response_text += "\n\n📋 Primeiro, escolha com qual *consultor* você prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
+                            else:
+                                # For options 2, 3, 4: Just add the prompt without duplicating consultant info
+                                response_text += "\n\n📋 Primeiro, escolha com qual consultor você prefere falar:\n\n*01* - Josimar\n*02* - Jailson\n\n_Digite 01 ou 02_"
                 
                 # If no menu response, use Gemini AI
                 if not response_text:
@@ -1749,8 +1754,8 @@ def webhook():
                         start_customer_form(safe_sender_id, form_reason)
                         logger.info(f"Started customer form - reason: {form_reason}")
                         
-                        # Add prompt to start form - ask for consultant first
-                        response_text += "\n\n📋 Primeiro, escolha com qual *consultor* você prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
+                        # Add prompt to start form - ask for consultant first (simplified to avoid duplication)
+                        response_text += "\n\n📋 Primeiro, escolha com qual consultor você prefere falar:\n\n*01* - Josimar\n*02* - Jailson\n\n_Digite 01 ou 02_"
                 
                 if response_text:
                     message_chunks = split_message(response_text)
