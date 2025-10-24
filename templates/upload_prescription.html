@@ -13,7 +13,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #8B8B8C 0%, #A4A5A6 50%, #D7D9D9 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,7 +22,7 @@
         }
         
         .container {
-            background: white;
+            background: #8B8B8C;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 500px;
@@ -47,14 +47,21 @@
             margin-bottom: 30px;
         }
         
+        .logo img {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+        
         .logo h1 {
-            color: #667eea;
+            color: #FFFFFF;
             font-size: 28px;
             margin-bottom: 5px;
         }
         
         .logo p {
-            color: #666;
+            color: #E0E0E0;
             font-size: 14px;
         }
         
@@ -64,7 +71,7 @@
         
         label {
             display: block;
-            color: #333;
+            color: #FFFFFF;
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 14px;
@@ -74,17 +81,18 @@
         input[type="tel"] {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #D7D9D9;
             border-radius: 10px;
             font-size: 16px;
             transition: all 0.3s;
+            background: #FFFFFF;
         }
         
         input[type="text"]:focus,
         input[type="tel"]:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #D7D9D9;
+            box-shadow: 0 0 0 3px rgba(215, 217, 217, 0.3);
         }
         
         .file-upload {
@@ -104,8 +112,8 @@
         .file-upload-label {
             display: block;
             padding: 20px;
-            background: #f8f9fa;
-            border: 2px dashed #667eea;
+            background: #FFFFFF;
+            border: 2px dashed #D7D9D9;
             border-radius: 10px;
             text-align: center;
             cursor: pointer;
@@ -113,8 +121,8 @@
         }
         
         .file-upload-label:hover {
-            background: #e8eaf6;
-            border-color: #764ba2;
+            background: #F5F5F5;
+            border-color: #A4A5A6;
         }
         
         .file-upload-label .icon {
@@ -128,13 +136,13 @@
         }
         
         .file-upload-label .text strong {
-            color: #667eea;
+            color: #8B8B8C;
         }
         
         .file-preview {
             margin-top: 15px;
             padding: 15px;
-            background: #e8f5e9;
+            background: #FFFFFF;
             border-radius: 10px;
             display: none;
         }
@@ -152,7 +160,7 @@
         button[type="submit"] {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #A4A5A6 0%, #8B8B8C 100%);
             color: white;
             border: none;
             border-radius: 10px;
@@ -160,12 +168,12 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(139, 139, 140, 0.4);
         }
         
         button[type="submit"]:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 6px 20px rgba(139, 139, 140, 0.6);
         }
         
         button[type="submit"]:disabled {
@@ -198,15 +206,15 @@
         }
         
         .info-box {
-            background: #e3f2fd;
+            background: #FFFFFF;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 25px;
-            border-left: 4px solid #2196f3;
+            border-left: 4px solid #A4A5A6;
         }
         
         .info-box p {
-            color: #1565c0;
+            color: #555555;
             font-size: 13px;
             line-height: 1.6;
         }
@@ -219,41 +227,18 @@
 <body>
     <div class="container">
         <div class="logo">
-            <h1>👓 GGDISK Ótica</h1>
-            <p>Envio de Receita de Óculos</p>
+            <img src="/static/logoGG.jpg" alt="GGDISK Ótica">
         </div>
         
         <div class="info-box">
-            <p>📋 Por favor, preencha seus dados e faça o upload da sua receita de óculos (foto ou PDF).</p>
+            <p>📋 Por favor, envie sua receita de óculos (foto ou PDF).</p>
         </div>
         
         <div id="message" class="message"></div>
         
         <form id="uploadForm" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="phone">Seu WhatsApp <span class="required">*</span></label>
-                <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    placeholder="Ex: 81999887766" 
-                    required
-                    pattern="[0-9]{10,11}"
-                >
-                <small style="color: #666; font-size: 12px;">Apenas números (DDD + número)</small>
-            </div>
-            
-            <div class="form-group">
-                <label for="name">Seu Nome <span class="required">*</span></label>
-                <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    placeholder="Digite seu nome completo" 
-                    required
-                    minlength="3"
-                >
-            </div>
+            <input type="hidden" id="phone" name="phone">
+            <input type="hidden" id="name" name="name" value="Cliente">
             
             <div class="form-group">
                 <label for="prescription">Receita de Óculos <span class="required">*</span></label>
@@ -292,11 +277,17 @@
         const submitBtn = document.getElementById('submitBtn');
         const messageDiv = document.getElementById('message');
         
-        // Preencher telefone automaticamente se vier da URL
+        // Pegar dados da URL (phone e opcionalmente name)
         const urlParams = new URLSearchParams(window.location.search);
         const phoneParam = urlParams.get('phone');
+        const nameParam = urlParams.get('name') || 'Cliente';
+        
         if (phoneParam) {
             document.getElementById('phone').value = phoneParam;
+            document.getElementById('name').value = nameParam;
+        } else {
+            showMessage('❌ Link inválido. Por favor, use o link enviado pelo WhatsApp.', 'error');
+            submitBtn.disabled = true;
         }
         
         // Mostrar preview do arquivo selecionado
@@ -323,8 +314,8 @@
             
             // Validar telefone
             const phone = document.getElementById('phone').value.replace(/\D/g, '');
-            if (phone.length < 10 || phone.length > 11) {
-                showMessage('Telefone inválido! Digite DDD + número (10 ou 11 dígitos).', 'error');
+            if (!phone || phone.length < 10 || phone.length > 11) {
+                showMessage('❌ Link inválido. Por favor, use o link enviado pelo WhatsApp.', 'error');
                 return;
             }
             
@@ -341,7 +332,7 @@
             // Preparar dados
             const formData = new FormData();
             formData.append('phone', phone);
-            formData.append('name', document.getElementById('name').value.trim());
+            formData.append('name', document.getElementById('name').value);
             formData.append('prescription', fileInput.files[0]);
             
             try {

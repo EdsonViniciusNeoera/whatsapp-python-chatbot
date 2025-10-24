@@ -148,14 +148,14 @@ def upload_prescription():
     """
     try:
         # Validate required fields
-        if 'phone' not in request.form or 'name' not in request.form:
-            return jsonify({'error': 'Phone and name are required'}), 400
+        if 'phone' not in request.form:
+            return jsonify({'error': 'Phone is required'}), 400
         
         if 'prescription' not in request.files:
             return jsonify({'error': 'Prescription file is required'}), 400
         
         phone = request.form['phone'].strip()
-        name = request.form['name'].strip()
+        name = request.form.get('name', 'Cliente').strip()  # Default to 'Cliente' if not provided
         file = request.files['prescription']
         
         # Validate phone format (10-11 digits)
@@ -163,9 +163,8 @@ def upload_prescription():
         if len(phone_digits) < 10 or len(phone_digits) > 11:
             return jsonify({'error': 'Invalid phone number format'}), 400
         
-        # Validate name
-        if len(name) < 2:
-            return jsonify({'error': 'Name is too short'}), 400
+        # Name validation is optional now (defaults to 'Cliente')
+        # Skip name length validation since it might be default value
         
         # Validate file
         if file.filename == '':
