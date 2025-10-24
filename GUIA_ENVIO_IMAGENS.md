@@ -242,19 +242,95 @@ INFO - ✅ Prescription file sent to group successfully
 
 **Sintoma:** Apenas notificação de texto chega, sem imagem.
 
-**Causas possíveis:**
-1. ❌ `WEBHOOK_BASE_URL` não configurado ou incorreto
-2. ❌ ngrok não está rodando
-3. ❌ Firewall bloqueando ngrok
-4. ❌ URL com `http://` ao invés de `https://`
+**Diagnóstico passo a passo:**
 
-**Solução:**
+1. **Verificar logs do Flask** - Procure por estas mensagens:
+   ```
+   📎 === SENDING PRESCRIPTION FILE TO GROUP ===
+   🌐 === CONSTRUCTING PUBLIC URL ===
+   📤 === CALLING WASENDER API ===
+   ✅ === SUCCESS: Prescription file sent to group! ===
+   ```
+
+2. **Se aparecer `❌ CRITICAL: WEBHOOK_BASE_URL is not configured correctly!`:**
+   ```powershell
+   # Verificar configuração atual
+   python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('WEBHOOK_BASE_URL:', os.getenv('WEBHOOK_BASE_URL'))"
+   ```
+   - ❌ `http://localhost:5001` → Não funciona! WhatsApp precisa de HTTPS público
+   - ❌ `None` ou vazio → Não configurado
+   - ✅ `https://abc123.ngrok-free.app` → Correto!
+
+3. **Se aparecer `⚠️ === FAILED: WaSender API returned False ===`:**
+   
+   **Causas possíveis:**
+   - ❌ URL não é acessível publicamente
+   - ❌ API key da WasenderAPI inválida
+   - ❌ Formato de arquivo não suportado
+   - ❌ Firewall/antivírus bloqueando
+   
+   **Testes:**
+   ```powershell
+   # Teste 1: URL está acessível publicamente?
+   curl https://SEU_NGROK_URL/media/prescription_xxx.jpg --output teste.jpg
+   
+   # Teste 2: API key está correta?
+   python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('API Key:', os.getenv('WASENDER_API_TOKEN')[:20] + '...')"
+   
+   # Teste 3: Arquivo existe localmente?
+   ls temp_media\
+   ```
+
+4. **Se aparecer `📸 Processing image message:` mas sem `✅ SUCCESS:`:**
+   
+   Verifique qual estratégia foi usada:
+   ```
+   📥 Strategy 1: Attempting to download full resolution image from URL
+   ✅ SUCCESS: Full resolution image downloaded and saved!
+   ```
+   ou
+   ```
+   ⚠️ No 'url' field in imageMessage, skipping URL download
+   📥 Strategy 2: Using jpegThumbnail (base64 encoded)
+   ✅ SUCCESS: Thumbnail image saved (lower quality)
+   ```
+   
+   Se ambas falharem:
+   ```
+   ❌ CRITICAL: No 'jpegThumbnail' available - cannot save image!
+   ```
+   → Problema no webhook do WhatsApp (dados incompletos)
+
+**Soluções por causa:**
+
+**Causa: WEBHOOK_BASE_URL incorreta**
 ```powershell
-# Verificar configuração
-python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('WEBHOOK_BASE_URL:', os.getenv('WEBHOOK_BASE_URL'))"
+# Passo 1: Parar o bot (Ctrl+C)
+# Passo 2: Atualizar .env
+notepad .env  # Altere WEBHOOK_BASE_URL=https://sua-url-ngrok.ngrok-free.app
+# Passo 3: Reiniciar bot
+python script.py
+```
 
-# Testar conectividade
-curl https://abc123.ngrok-free.app/health
+**Causa: ngrok não está rodando**
+```powershell
+# Terminal 1: Iniciar ngrok
+.\ngrok.exe http 5001
+
+# Copiar URL HTTPS (ex: https://abc123.ngrok-free.app)
+# Terminal 2: Atualizar .env e reiniciar bot
+```
+
+**Causa: Firewall bloqueando**
+```powershell
+# Windows Defender Firewall
+# Adicionar exceção para Python e ngrok.exe
+```
+
+**Causa: API key inválida**
+```powershell
+# Verificar no painel WasenderAPI
+# Atualizar .env com nova key
 ```
 
 ---
@@ -273,8 +349,23 @@ curl https://abc123.ngrok-free.app/health
 # Verificar arquivos existentes
 ls temp_media\
 
-# Testar com arquivo existente
-curl http://localhost:5001/media/NOME_DO_ARQUIVO_AQUI.jpg
+# Ver idade dos arquivos
+Get-ChildItem temp_media\ | Select-Object Name, LastWriteTime
+
+# Testar com arquivo real
+# Substitua NOME_DO_ARQUIVO pelo arquivo que apareceu no ls
+curl http://localhost:5001/media/NOME_DO_ARQUIVO.jpg --output teste.jpg
+```
+
+**Criar arquivo de teste:**
+```powershell
+# Criar imagem de teste
+python -c "import base64, os; os.makedirs('temp_media', exist_ok=True); open('temp_media/test.jpg', 'wb').write(base64.b64decode('/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAALCAABAAEBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAAA//EABQQAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQEAAD8AH//Z'))"
+
+# Testar endpoint
+curl http://localhost:5001/media/test.jpg --output test_downloaded.jpg
+
+# Se funcionar, arquivo test_downloaded.jpg será criado
 ```
 
 ---
@@ -288,55 +379,97 @@ curl http://localhost:5001/media/NOME_DO_ARQUIVO_AQUI.jpg
 
 **Soluções:**
 
-**Opção 1:** Conta ngrok paga (URL fixa)
+**Opção 1: Conta ngrok paga (URL fixa) - RECOMENDADO**
 ```bash
 # URL permanente: https://seu-app.ngrok.io
 ngrok http 5001 --domain=seu-app.ngrok.io
 ```
 
-**Opção 2:** Script automático de atualização
-```python
-# auto_update_env.py
-import subprocess
-import re
-import os
+**Opção 2: Script automático de atualização (já incluído!)**
+```powershell
+# Usar o script existente
+python auto_update_webhook_url.py
 
-# Obter URL do ngrok via API
-result = subprocess.run(['curl', 'http://127.0.0.1:4040/api/tunnels'], 
-                       capture_output=True, text=True)
-match = re.search(r'"public_url":"(https://[^"]+)"', result.stdout)
-
-if match:
-    ngrok_url = match.group(1)
-    
-    # Atualizar .env
-    with open('.env', 'r') as f:
-        content = f.read()
-    
-    content = re.sub(r'WEBHOOK_BASE_URL=.*', 
-                    f'WEBHOOK_BASE_URL={ngrok_url}', content)
-    
-    with open('.env', 'w') as f:
-        f.write(content)
-    
-    print(f"✅ .env atualizado: {ngrok_url}")
-else:
-    print("❌ ngrok não está rodando!")
+# Isso vai:
+# 1. Obter URL do ngrok automaticamente
+# 2. Atualizar .env
+# 3. Não precisa reiniciar o bot!
 ```
 
-**Uso:**
+**Opção 3: Workflow completo automatizado**
 ```powershell
-# Inicia ngrok em background
-Start-Process .\ngrok.exe -ArgumentList "http 5001"
+# Criar arquivo start_bot.ps1:
+# =====================
+# Start ngrok in background
+Start-Process -FilePath ".\ngrok.exe" -ArgumentList "http 5001" -WindowStyle Hidden
 
-# Aguarda 3 segundos
-Start-Sleep 3
+# Wait for ngrok to start
+Start-Sleep -Seconds 3
 
-# Atualiza .env automaticamente
-python auto_update_env.py
+# Update webhook URL
+python auto_update_webhook_url.py
 
-# Inicia bot
+# Start bot
 python script.py
+# =====================
+
+# Executar:
+.\start_bot.ps1
+```
+
+---
+
+### **Problema 4: Imagem de baixa qualidade**
+
+**Sintoma:** Imagem enviada está pixelizada ou em baixa resolução.
+
+**Diagnóstico:**
+```powershell
+# Verificar logs - qual estratégia foi usada?
+# Procure por uma destas mensagens:
+
+# ✅ Melhor qualidade:
+# "✅ SUCCESS: Full resolution image downloaded and saved!"
+
+# ⚠️ Qualidade reduzida:
+# "✅ SUCCESS: Thumbnail image saved (lower quality)"
+```
+
+**Causas e soluções:**
+
+**Causa: WhatsApp não fornece URL de alta resolução**
+- Estratégia 1 falha → cai para jpegThumbnail
+- **Solução:** Não há solução técnica. jpegThumbnail é o melhor disponível.
+- **Workaround:** Pedir ao cliente para enviar novamente ou solicitar diretamente
+
+**Causa: Timeout no download**
+```python
+# Em script.py, linha ~665 (função download_and_save_media):
+response = requests.get(url, timeout=30)  # Aumentar timeout se necessário
+```
+
+**Causa: Erro de rede/autenticação**
+- Verificar se a URL do WhatsApp requer autenticação
+- Verificar logs para exceções durante download
+
+---
+
+### **Problema 5: Erro "Invalid filename" ao acessar /media/**
+
+**Sintoma:** `{"error": "Invalid filename"}`
+
+**Causa:** Tentativa de path traversal (segurança ativada)
+
+**Exemplos que causam erro:**
+```
+/media/../script.py  ❌
+/media/folder/file.jpg  ❌
+/media/..\\..\\secret.txt  ❌
+```
+
+**Solução:** Use apenas o nome do arquivo sem `/`, `\` ou `..`
+```
+/media/prescription_558199887766_20251023_143052.jpg  ✅
 ```
 
 ---
@@ -436,18 +569,153 @@ Atender o cliente iniciando conversa com o WhatsApp dele
 
 ## 📞 **Suporte**
 
-**Problemas?** Verifique:
-1. ✅ ngrok rodando → `.\ngrok.exe http 5001`
-2. ✅ `.env` atualizado → `WEBHOOK_BASE_URL=https://...ngrok...`
-3. ✅ Bot reiniciado → `python script.py`
-4. ✅ Logs sem erros → Procure `✅ Prescription file sent`
+**Problemas?** Siga este processo:
+
+1. ✅ **Execute o Checklist de Diagnóstico** (veja seção abaixo)
+2. ✅ **Capture os logs** relevantes:
+   ```powershell
+   # Últimas 100 linhas do log
+   Get-Content whatsapp_bot.log -Tail 100 > debug_logs.txt
+   ```
+3. ✅ **Teste manualmente** os endpoints
+4. ✅ **Verifique as variáveis de ambiente**
+5. ✅ **Reinicie tudo na ordem correta:**
+   ```powershell
+   # 1. Parar bot (Ctrl+C)
+   # 2. Parar ngrok (Ctrl+C)
+   # 3. Iniciar ngrok
+   .\ngrok.exe http 5001
+   # 4. Atualizar .env com nova URL
+   # 5. Iniciar bot
+   python script.py
+   ```
 
 **Ainda não funciona?**
-- Envie logs completos
-- Teste endpoint manualmente: `curl https://...ngrok.../media/teste.jpg`
-- Verifique firewall/antivírus
+- 📋 Envie os logs (`debug_logs.txt`)
+- 📋 Informe a URL do ngrok
+- 📋 Confirme versão do Python (`python --version`)
+- 📋 Liste pacotes instalados (`pip list`)
 
 ---
 
-**Última atualização:** 23/10/2025  
-**Versão:** 2.1.0
+## ✅ **Checklist de Diagnóstico Rápido**
+
+Use este checklist quando imagens não estiverem sendo enviadas:
+
+### **Fase 1: Configuração Básica**
+- [ ] ngrok está rodando? (`.\ngrok.exe http 5001`)
+- [ ] Bot Flask está rodando? (`python script.py`)
+- [ ] `WEBHOOK_BASE_URL` configurada no `.env`?
+- [ ] URL é HTTPS? (não `http://localhost`)
+- [ ] Pasta `temp_media/` existe?
+
+### **Fase 2: Teste de Conectividade**
+- [ ] Endpoint `/health` responde? → `curl http://localhost:5001/health`
+- [ ] Endpoint `/media/` funciona? → Criar arquivo teste e acessar
+- [ ] URL pública acessível? → `curl https://SEU_NGROK_URL/health`
+
+### **Fase 3: Análise de Logs**
+- [ ] Cliente enviou imagem? → Procure `📸 Processing image message:`
+- [ ] Imagem foi salva? → Procure `✅ SUCCESS: Full resolution image` ou `✅ SUCCESS: Thumbnail image`
+- [ ] URL foi construída? → Procure `🌐 Complete public URL:`
+- [ ] API foi chamada? → Procure `📤 === CALLING WASENDER API ===`
+- [ ] Envio teve sucesso? → Procure `✅ === SUCCESS: Prescription file sent to group! ===`
+
+### **Fase 4: Verificação de Erros**
+- [ ] Erro de URL? → `❌ CRITICAL: WEBHOOK_BASE_URL is not configured correctly!`
+- [ ] Erro de API? → `⚠️ === FAILED: WaSender API returned False ===`
+- [ ] Erro de exceção? → `❌ === EXCEPTION while sending prescription file ===`
+
+### **Fase 5: Testes Manuais**
+```powershell
+# 1. Verificar configuração
+python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('WEBHOOK_BASE_URL:', os.getenv('WEBHOOK_BASE_URL')); print('WASENDER_API_TOKEN:', os.getenv('WASENDER_API_TOKEN')[:20] + '...' if os.getenv('WASENDER_API_TOKEN') else 'NOT SET')"
+
+# 2. Testar endpoint local
+curl http://localhost:5001/health
+
+# 3. Listar arquivos salvos
+ls temp_media\ | Select-Object Name, Length, LastWriteTime
+
+# 4. Testar URL pública (substitua SEU_NGROK_URL)
+curl https://SEU_NGROK_URL/health
+
+# 5. Ver logs em tempo real
+Get-Content whatsapp_bot.log -Tail 50 -Wait
+```
+
+---
+
+## 🔍 **Interpretando os Logs**
+
+### **Logs de Sucesso (✅ Tudo funcionando)**
+```log
+INFO - 📸 Processing image message:
+INFO -    - MIME type: image/jpeg
+INFO - 📥 Strategy 1: Attempting to download full resolution image from URL
+INFO - ✅ SUCCESS: Full resolution image downloaded and saved!
+INFO - 📊 Final image processing status:
+INFO -    - File saved: True
+INFO -    - File path: temp_media/prescription_558199887766_20251024_143052.jpg
+INFO -    - File size: 245678 bytes
+INFO - ✅ Customer form sent to group for 558199887766
+INFO - 📎 === SENDING PRESCRIPTION FILE TO GROUP ===
+INFO - 🌐 Complete public URL: https://abc123.ngrok-free.app/media/prescription_558199887766_20251024_143052.jpg
+INFO - 📤 === CALLING WASENDER API ===
+INFO - Image message sent to 120363404721021632@g.us
+INFO - ✅ === SUCCESS: Prescription file sent to group! ===
+```
+
+### **Logs com Fallback (⚠️ Usando thumbnail - qualidade reduzida)**
+```log
+INFO - 📸 Processing image message:
+INFO - ⚠️ No 'url' field in imageMessage, skipping URL download
+INFO - 📥 Strategy 2: Using jpegThumbnail (base64 encoded)
+INFO - ✅ SUCCESS: Thumbnail image saved (lower quality)
+INFO - 📎 === SENDING PRESCRIPTION FILE TO GROUP ===
+INFO - 📤 === CALLING WASENDER API ===
+INFO - ✅ === SUCCESS: Prescription file sent to group! ===
+```
+
+### **Logs de Erro (❌ Problemas identificados)**
+
+**Erro 1: URL não configurada**
+```log
+ERROR - ❌ CRITICAL: WEBHOOK_BASE_URL is not configured correctly!
+ERROR - ❌ Current value: http://localhost:5001
+ERROR - ❌ WhatsApp API requires HTTPS public URL (use ngrok for dev)
+```
+**Solução:** Configure ngrok e atualize `WEBHOOK_BASE_URL` no `.env`
+
+**Erro 2: Falha no download da imagem**
+```log
+WARNING - ⚠️ FAILED: Could not download from URL, trying fallback...
+WARNING - ⚠️ No 'url' field in imageMessage, skipping URL download
+ERROR - ❌ CRITICAL: No 'jpegThumbnail' available - cannot save image!
+```
+**Solução:** Problema no webhook do WhatsApp. Verificar integração WasenderAPI.
+
+**Erro 3: Falha ao enviar para grupo**
+```log
+WARNING - ⚠️ === FAILED: WaSender API returned False ===
+WARNING - ⚠️ Possible causes:
+WARNING -    1. URL is not publicly accessible
+WARNING -    2. WaSender API key is invalid
+WARNING -    3. File format not supported
+WARNING -    4. Network/firewall issue
+```
+**Solução:** Testar cada causa listada acima.
+
+---
+
+## 📚 **Referências**
+
+- **WasenderAPI Docs:** https://www.wasenderapi.com/docs
+- **ngrok Docs:** https://ngrok.com/docs
+- **Flask Docs:** https://flask.palletsprojects.com/
+
+---
+
+**Última atualização:** 24/10/2025  
+**Versão:** 2.2.0 (com diagnóstico avançado e logs detalhados)
+```
