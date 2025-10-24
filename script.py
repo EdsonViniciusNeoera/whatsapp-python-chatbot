@@ -957,41 +957,41 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
             consultant_name = "Jailson"
             consultant_phone = "(81) 99750-7161"
         else:
-            return "Por favor, escolha uma opção válida:\n\n*01* - Josimar\n*02* - Jailson\n\n_Digite 01 ou 02_"
+            return "Ops! Não entendi... 😅\n\nEscolhe uma dessas opções:\n\n*01* - Josimar\n*02* - Jailson\n\nDigita 01 ou 02 aí!"
         
         form_data['consultant_name'] = consultant_name
         form_data['consultant_phone'] = consultant_phone
         update_customer_form(safe_sender_id, 'name', 'consultant_name', consultant_name)
         update_customer_form(safe_sender_id, 'name', 'consultant_phone', consultant_phone)
         
-        return f"Ótimo! O *{consultant_name}* vai te atender! 😊\n\nAgora preciso de algumas informações.\n\n👤 Por favor, me diga seu *nome completo*:"
+        return f"Perfeito! O *{consultant_name}* vai te atender! 😊\n\nAgora vou precisar de algumas informações suas...\n\n👤 Qual seu *nome completo*?"
     
     # Step 2: Collect name
     elif current_step == 'name':
         if len(message_text.strip()) < 2:
-            return "Por favor, digite seu nome completo:"
+            return "Hmm, o nome ficou muito curto... 🤔\n\nMe diz seu nome completo aí!"
         
         form_data['name'] = message_text.strip()
         update_customer_form(safe_sender_id, 'phone', 'name', message_text.strip())
-        return "Perfeito! Agora, qual seu *telefone* para contato?\n_(Digite apenas números)_"
+        return "Beleza! 👍\n\nAgora me passa seu *telefone* de contato?\n\n_Só os números, pode mandar com ou sem DDD_"
     
     # Step 3: Collect phone
     elif current_step == 'phone':
         # Remove non-digits
         phone = ''.join(filter(str.isdigit, message_text))
         if len(phone) < 10:
-            return "Por favor, digite um telefone válido com DDD:\n_(Exemplo: 81999887766)_"
+            return "Opa, acho que faltou algum número! 📱\n\nManda o telefone com DDD, por favor!\n\n_Exemplo: 81999887766_"
         
         form_data['phone'] = phone
         update_customer_form(safe_sender_id, 'cpf', 'phone', phone)
-        return "Ótimo! Agora preciso do seu *CPF*:\n_(Digite apenas números)_"
+        return "Show! 🎉\n\nPra finalizar, preciso do seu *CPF*:\n\n_Só os números mesmo!_"
     
     # Step 4: Collect CPF
     elif current_step == 'cpf':
         # Remove non-digits
         cpf = ''.join(filter(str.isdigit, message_text))
         if len(cpf) != 11:
-            return "Por favor, digite um CPF válido com 11 dígitos:\n_(Apenas números)_"
+            return "Hmm, o CPF precisa ter 11 números... 🤔\n\nManda de novo, só os números!\n\n_Exemplo: 12345678901_"
         
         # Format CPF for display
         cpf_formatted = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
@@ -1004,7 +1004,7 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
         if is_budget:
             # Only ask for prescription if it's a budget request
             update_customer_form(safe_sender_id, 'prescription', 'cpf', cpf_formatted)
-            return "Perfeito! Você possui *receita de óculos*?\n\n✅ Se *SIM*: Envie uma foto ou PDF da receita\n❌ Se *NÃO*: Digite 'não' ou 'nao'"
+            return "Maravilha! 🎉\n\nVocê tem *receita de óculos*?\n\n✅ *SIM* - Eu te mando um link pra enviar\n❌ *NÃO* - Só digita 'não'\n\nQual é?"
         else:
             # For other options, skip prescription and go to confirmation
             form_data['prescription'] = "Não solicitado (apenas para orçamentos)"
@@ -1014,19 +1014,19 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
             
             # Show summary for confirmation
             summary = f"""
-📋 *Confirmação dos Dados*
+Pronto! Vou só confirmar seus dados aqui... 📝
 
 👨‍💼 *Consultor:* {form_data.get('consultant_name')} - {form_data.get('consultant_phone')}
 👤 *Nome:* {form_data.get('name')}
 📱 *Telefone:* {form_data.get('phone')}
 🆔 *CPF:* {cpf_formatted}
 
-*Motivo do contato:* {form['reason']}
+*Por quê você quer falar:* {form['reason']}
 
-_Seus dados estão corretos?_
+Tá tudo certo? 🤔
 
-✅ Digite *SIM* para confirmar
-❌ Digite *NÃO* para recomeçar
+✅ *SIM* - Pode enviar!
+❌ *NÃO* - Quero refazer
 """
             return summary.strip()
     
@@ -1046,18 +1046,18 @@ _Seus dados estão corretos?_
             upload_url = f"{CONFIG['WEBHOOK_BASE_URL']}/upload?phone={phone_number}"
             
             return f"""
-Perfeito! 📸
+Show! 📸
 
-Por questões de segurança e qualidade, pedimos que você envie sua receita através do nosso formulário online:
+Pra garantir a melhor qualidade, vou te mandar um link pra você enviar a receita:
 
-🔗 *Link para envio:*
+🔗 *Clica aqui:*
 {upload_url}
 
-✅ É rápido e seguro!
-✅ Pode enviar foto ou PDF
-✅ Receberemos em alta qualidade
+✅ É rapidinho!
+✅ Pode ser foto ou PDF
+✅ Super seguro
 
-Após enviar pelo link, digite *"enviado"* aqui para continuar.
+Depois de enviar lá, volta aqui e digita *"enviado"* pra eu continuar! 😊
 """
         
         # Check if user confirmed they uploaded via form
@@ -1071,20 +1071,20 @@ Após enviar pelo link, digite *"enviado"* aqui para continuar.
                 prescription_info = "✅ Cliente enviou receita via FORMULÁRIO ONLINE"
             else:
                 return f"""
-⚠️ Ainda não encontrei sua receita no sistema.
+Opa! Ainda não chegou aqui... 🤔
 
-Por favor:
-1. Acesse o link novamente: {CONFIG['WEBHOOK_BASE_URL']}/upload?phone={safe_sender_id.replace('_', '')}
-2. Faça o upload da foto/PDF
-3. Aguarde a confirmação na tela
-4. Digite *"enviado"* aqui novamente
+Tenta assim:
+1. Abre o link de novo: {CONFIG['WEBHOOK_BASE_URL']}/upload?phone={safe_sender_id.replace('_', '')}
+2. Faz o upload da foto/PDF
+3. Espera aparecer a confirmação na tela
+4. Volta aqui e digita *"enviado"*
 
-_Caso tenha dificuldades, digite *"não tenho"* para prosseguir sem receita_
+Ou se preferir, digita *"não tenho"* pra gente continuar sem a receita! 😊
 """
         
         else:
             # User sent something unexpected
-            return "Por favor, responda:\n\n✅ *SIM* - se você possui receita (enviaremos link para upload)\n❌ *NÃO* - se você não possui receita"
+            return "Desculpa, não entendi... 😅\n\nVocê tem receita?\n\n✅ *SIM* - Te mando o link pra enviar\n❌ *NÃO* - Só digita 'não'"
         
         form_data['prescription'] = prescription_info
         form_data['has_prescription'] = has_prescription
@@ -1095,7 +1095,7 @@ _Caso tenha dificuldades, digite *"não tenho"* para prosseguir sem receita_
         
         # Show summary for confirmation
         summary = f"""
-📋 *Confirmação dos Dados*
+Beleza! Deixa eu confirmar tudo aqui... 📝
 
 👨‍💼 *Consultor:* {form_data.get('consultant_name')} - {form_data.get('consultant_phone')}
 👤 *Nome:* {form_data.get('name')}
@@ -1103,12 +1103,12 @@ _Caso tenha dificuldades, digite *"não tenho"* para prosseguir sem receita_
 🆔 *CPF:* {form_data.get('cpf')}
 💊 *Receita:* {prescription_info}
 
-*Motivo do contato:* {form['reason']}
+*Por quê você quer falar:* {form['reason']}
 
-_Seus dados estão corretos?_
+Tá tudo certinho? 🤔
 
-✅ Digite *SIM* para confirmar
-❌ Digite *NÃO* para recomeçar
+✅ *SIM* - Pode mandar!
+❌ *NÃO* - Quero refazer
 """
         return summary.strip()
     
@@ -1122,14 +1122,14 @@ _Seus dados estão corretos?_
             consultant_name = form_data.get('consultant_name', 'nosso consultor')
             
             cancel_customer_form(safe_sender_id)
-            return f"✅ Perfeito! Suas informações foram enviadas para o *{consultant_name}*.\n\nEle entrará em contato com você em breve! 😊\n\n_Posso ajudar com mais alguma coisa?_"
+            return f"Pronto! 🎉\n\nEnviei tudo pro *{consultant_name}*. Ele vai te chamar aqui no WhatsApp em breve!\n\nPrecisa de mais alguma coisa? 😊"
         
         elif message_text.lower().strip() in ['não', 'nao', 'n', 'cancelar', 'recomeçar', 'recomecar']:
             cancel_customer_form(safe_sender_id)
-            return "❌ Formulário cancelado. Vamos recomeçar!\n\n_Como posso ajudar você?_"
+            return "Sem problema! Vamos começar de novo! 😊\n\nComo posso te ajudar?"
         
         else:
-            return "Por favor, digite *SIM* para confirmar ou *NÃO* para recomeçar:"
+            return "Hmm, não entendi... 😅\n\nDigita:\n\n✅ *SIM* pra confirmar\n❌ *NÃO* pra refazer"
     
     return None
 
@@ -1701,10 +1701,10 @@ def webhook():
                             # Add consultant selection prompt ONLY if the menu response doesn't already include it
                             # Avoid duplication - menu options 2, 3, 4 already have consultant info in persona.json
                             if option_key in ['6']:  # Only add for "Outras dúvidas" which needs consultant selection
-                                response_text += "\n\n📋 Primeiro, escolha com qual *consultor* você prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
+                                response_text += "\n\nCom quem você prefere conversar?\n\n*01* - Josimar\n*02* - Jailson\n\nDigita o número aí! 😊"
                             else:
                                 # For options 2, 3, 4: Just add the prompt without duplicating consultant info
-                                response_text += "\n\n📋 Primeiro, escolha com qual consultor você prefere falar:\n\n*01* - Josimar\n*02* - Jailson\n\n_Digite 01 ou 02_"
+                                response_text += "\n\nCom quem você prefere falar?\n\n*01* - Josimar\n*02* - Jailson\n\nÉ só digitar o número! 😊"
                 
                 # If no menu response, use Gemini AI
                 if not response_text:
@@ -1754,8 +1754,8 @@ def webhook():
                         start_customer_form(safe_sender_id, form_reason)
                         logger.info(f"Started customer form - reason: {form_reason}")
                         
-                        # Add prompt to start form - ask for consultant first (simplified to avoid duplication)
-                        response_text += "\n\n📋 Primeiro, escolha com qual consultor você prefere falar:\n\n*01* - Josimar\n*02* - Jailson\n\n_Digite 01 ou 02_"
+                        # Add prompt to start form - ask for consultant first (humanized)
+                        response_text += "\n\nCom quem você prefere conversar?\n\n*01* - Josimar\n*02* - Jailson\n\nDigita o número aí! 😊"
                 
                 if response_text:
                     message_chunks = split_message(response_text)

@@ -11,19 +11,19 @@
     },
     "2": {
       "title": "Fazer orçamento de óculos",
-      "response": "💰 Ótimo! Para um orçamento personalizado de óculos, vou encaminhar você para nossos especialistas.\n\nEscolha com quem prefere falar:\n• *Jailson*\n• *Josimar*\n\nEles vão te ajudar com todas as opções disponíveis! 👓✨"
+      "response": "💰 Ótimo! Vou te conectar com um consultor que vai fazer um orçamento personalizado pra você! 😊\n\nCom quem você prefere conversar?\n• *Jailson*\n• *Josimar*\n\nEles são especialistas e vão te ajudar com todas as opções!"
     },
     "3": {
       "title": "Ajustes e reparos",
-      "response": "🔧 Entendo sua necessidade! Para ajustes e reparos, nossos consultores vão te ajudar pessoalmente.\n\nPrefere falar com:\n• *Jailson*\n• *Josimar*\n\nEles vão resolver isso pra você! 😊"
+      "response": "🔧 Entendi! Nossos consultores são experts em ajustes e reparos.\n\nQuem você prefere que te ajude?\n• *Jailson*\n• *Josimar*\n\nEles vão resolver isso pra você rapidinho! 😊"
     },
     "4": {
       "title": "Formas de pagamento",
-      "response": "💳 *Formas de pagamento aceitas:*\n• PIX\n• Cartão de crédito (parcelamento disponível)\n• Cartão de débito\n• Dinheiro\n\nPara detalhes sobre parcelamento e condições especiais, posso encaminhar você para:\n• *Jailson*\n• *Josimar*\n\nQuer falar com algum deles? 😊"
+      "response": "💳 *Formas de pagamento que aceitamos:*\n• PIX\n• Cartão de crédito (parcelamos!)\n• Cartão de débito\n• Dinheiro\n\nQuer saber mais sobre parcelamento e condições especiais?\n\nPosso te conectar com:\n• *Jailson*\n• *Josimar*\n\nEles te explicam direitinho! 😊"
     },
     "5": {
       "title": "Falar com consultor",
-      "response": "👤 Claro! Nossos consultores especializados estão prontos para te atender:\n\n• *Jailson*\n• *Josimar*\n\nMe diga com qual prefere falar que eu encaminho! 😊"
+      "response": "👤 Claro! Nossos consultores estão prontos pra te atender agora!\n\n• *Jailson*\n• *Josimar*\n\nMe diz com quem você prefere falar que eu te conecto! 😊"
     },
     "6": {
       "title": "Outras dúvidas",
@@ -66,47 +66,47 @@
     },
     {
       "input": "Preciso fazer um exame de vista",
-      "output": "Perfeito! Para agendar seu exame de vista, vou encaminhar você para um de nossos consultores especializados. 👓\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Perfeito! Vou te conectar com um dos nossos consultores para agendar seu exame de vista. 👓\n\nCom quem você prefere conversar?\n\n01 - Josimar\n02 - Jailson\n\nÉ só digitar 01 ou 02 😊"
     },
     {
       "input": "Quero fazer um orçamento de óculos",
-      "output": "Ótimo! Para um orçamento personalizado de óculos, vou encaminhar você para nosso consultor! 😊\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Ótimo! Vou te conectar com um consultor que vai fazer um orçamento personalizado pra você! 😊\n\nCom quem você prefere falar?\n\n01 - Josimar\n02 - Jailson\n\nDigita 01 ou 02 que eu encaminho!"
     },
     {
       "input": "Quanto custa fazer óculos?",
-      "output": "O valor varia conforme o tipo de lente e armação escolhida! Para um orçamento personalizado, nossos consultores podem te ajudar. 💰\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "O valor varia bastante dependendo da lente e da armação que você escolher! 💰\n\nVou te conectar com um consultor pra fazer um orçamento certinho pra você.\n\nPrefere falar com:\n\n01 - Josimar\n02 - Jailson\n\nDigita o número aí!"
     },
     {
       "input": "Meu óculos está com defeito",
-      "output": "Entendo sua preocupação! Para questões de ajustes e reparos, vou encaminhar você para um de nossos consultores especializados. 🔧\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Entendo, que chato quando isso acontece! 😔\n\nMas fica tranquilo, nossos consultores vão resolver isso pra você!\n\nPrefere conversar com:\n\n01 - Josimar\n02 - Jailson\n\nDigita o número que você escolher 🔧"
     },
     {
       "input": "Meu óculos quebrou",
-      "output": "Que pena! Mas não se preocupe, podemos te ajudar com reparos. 🔧\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Puxa, que pena! 😔 Mas não se preocupe, a gente dá um jeito!\n\nVou te conectar com um consultor especializado em reparos.\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nDigita aí! 🔧"
     },
     {
       "input": "Preciso ajustar meus óculos",
-      "output": "Sem problemas! Fazemos ajustes na loja. Você pode vir até nós ou falar com nossos consultores para agendar. 😊\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Claro! Fazemos ajustes aqui na loja sim! 😊\n\nVocê pode vir até nós ou conversar com um dos consultores pra gente ver o melhor horário.\n\nPrefere falar com:\n\n01 - Josimar\n02 - Jailson\n\nManda o número aí!"
     },
     {
       "input": "Quero comprar lentes de contato",
-      "output": "Não trabalhamos com lentes de contato no momento. Mas posso encaminhar você para um de nossos consultores especializados que pode ajudar com outras opções de óculos. 👓\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Ah, no momento a gente não trabalha com lentes de contato 😕\n\nMas posso te conectar com um consultor que pode te mostrar outras opções legais de óculos!\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nDigita aí que eu encaminho! 👓"
     },
     {
       "input": "Vocês trabalham com Ray-Ban?",
-      "output": "Temos diversas marcas disponíveis! Para saber sobre modelos específicos como Ray-Ban e fazer um orçamento, nossos consultores podem te ajudar. 😎\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Temos várias marcas aqui! 😎\n\nPra saber sobre Ray-Ban e outros modelos específicos, é melhor falar direto com nossos consultores.\n\nPrefere conversar com:\n\n01 - Josimar\n02 - Jailson\n\nDigita o número!"
     },
     {
       "input": "Tem óculos de sol?",
-      "output": "Sim! Temos várias opções de óculos de sol, inclusive com grau. 😎\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Sim! Temos várias opções de óculos de sol, inclusive com grau! 😎\n\nQuer ver nossa coleção? Vou te conectar com um consultor.\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nDigita aí!"
     },
     {
       "input": "Vocês vendem armação infantil?",
-      "output": "Sim, temos armações infantis! Para ver modelos e tamanhos específicos para crianças, recomendo falar com nossos consultores. 👶👓\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Sim! Temos armações fofinhas pras crianças! 👶👓\n\nPra ver os modelos e tamanhos certinhos, melhor falar com nossos consultores.\n\nPrefere conversar com:\n\n01 - Josimar\n02 - Jailson\n\nManda o número!"
     },
     {
       "input": "Qual a garantia dos óculos?",
-      "output": "A garantia varia conforme o tipo de produto e fabricante. Para informações específicas sobre garantia, nossos consultores podem esclarecer! 😊\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "A garantia varia de acordo com o produto e fabricante! 😊\n\nNossos consultores vão te explicar direitinho todas as condições.\n\nPrefere falar com:\n\n01 - Josimar\n02 - Jailson\n\nDigita o número aí!"
     },
     {
       "input": "Como limpar os óculos?",
@@ -114,19 +114,19 @@
     },
     {
       "input": "Vocês fazem óculos com receita?",
-      "output": "Sim! Fazemos óculos de grau com sua receita. 👓\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Sim! A gente faz óculos de grau com sua receita sim! 👓\n\nVou te conectar com um consultor pra fazer um orçamento pra você.\n\nPrefere falar com:\n\n01 - Josimar\n02 - Jailson\n\nDigita o número!"
     },
     {
       "input": "Preciso trocar as lentes",
-      "output": "Perfeito! Fazemos troca de lentes sim. Para avaliar sua armação e fazer um orçamento, nossos consultores podem te ajudar. 🔧\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Claro! Fazemos troca de lentes sim! 🔧\n\nNosso consultor vai avaliar sua armação e ver o melhor pra você.\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nManda aí!"
     },
     {
       "input": "Quanto tempo demora pra ficar pronto?",
-      "output": "O prazo varia conforme o tipo de lente e armação escolhida. Para informações precisas sobre o prazo do seu pedido, recomendo falar com nossos consultores! ⏰\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "O prazo varia bastante dependendo da lente e armação, sabe? ⏰\n\nMas nossos consultores vão te dar uma previsão certinha do seu caso!\n\nPrefere conversar com:\n\n01 - Josimar\n02 - Jailson\n\nDigita aí!"
     },
     {
       "input": "Preciso falar com um consultor",
-      "output": "Claro! 😊\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Claro! Vou te conectar agora mesmo! 😊\n\nCom quem você prefere falar?\n\n01 - Josimar\n02 - Jailson\n\nÉ só digitar o número!"
     },
     {
       "input": "Quero falar com o Jailson",
@@ -138,27 +138,27 @@
     },
     {
       "input": "Quanto custa uma armação?",
-      "output": "Temos diversas opções de armações com diferentes valores! Para um orçamento detalhado e personalizado, vou encaminhar você para nossos consultores. 💰\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Ah, temos várias opções com preços diferentes! 💰\n\nPra fazer um orçamento certinho do que você tá procurando, melhor falar com nossos consultores.\n\nPrefere conversar com:\n\n01 - Josimar\n02 - Jailson\n\nManda o número!"
     },
     {
       "input": "Qual o preço das lentes?",
-      "output": "O valor das lentes varia conforme o tipo (simples, multifocal, antirreflexo, etc). Para um orçamento completo, nossos consultores podem te ajudar! 💰\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "O valor das lentes muda bastante dependendo do tipo, viu? Tem simples, multifocal, antirreflexo... 💰\n\nNossos consultores vão te explicar direitinho e fazer um orçamento!\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nDigita aí!"
     },
     {
       "input": "Vocês aceitam cartão?",
-      "output": "Sim, aceitamos cartões de crédito e débito! Para mais detalhes sobre formas de pagamento e parcelamento, posso encaminhar você para nossos consultores. 💳\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Sim! Aceitamos cartão de crédito e débito! 💳\n\nPra saber mais sobre parcelamento e condições, vou te conectar com um consultor.\n\nPrefere falar com:\n\n01 - Josimar\n02 - Jailson\n\nManda o número!"
     },
     {
       "input": "Posso parcelar?",
-      "output": "Sim! Trabalhamos com parcelamento no cartão de crédito. Para detalhes sobre condições e número de parcelas, nossos consultores podem te informar melhor! 💳\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Pode sim! Trabalhamos com parcelamento no cartão de crédito! 💳\n\nNossos consultores vão te contar todas as condições e opções.\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nDigita o número aí!"
     },
     {
       "input": "Aceitam pix?",
-      "output": "Sim! Aceitamos PIX, cartão de crédito, débito e dinheiro. 💳\n\nPosso te encaminhar para nossos consultores para mais detalhes.\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Sim! Aceitamos PIX, cartão de crédito, débito e dinheiro também! 💳\n\nQuer saber mais sobre formas de pagamento? Vou te conectar com um consultor.\n\nPrefere conversar com:\n\n01 - Josimar\n02 - Jailson\n\nManda aí!"
     },
     {
       "input": "Tem desconto à vista?",
-      "output": "Para informações sobre descontos e condições especiais de pagamento, recomendo falar com nossos consultores! Eles podem te ajudar com as melhores condições. 💰\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Pra saber sobre descontos e condições especiais, melhor falar direto com nossos consultores! 💰\n\nEles vão te dar as melhores opções!\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nDigita o número!"
     },
     {
       "input": "Qual o telefone do Jailson?",
@@ -174,19 +174,19 @@
     },
     {
       "input": "Vocês atendem convênio?",
-      "output": "Para informações sobre convênios e parcerias, recomendo falar diretamente com nossos consultores! Eles vão esclarecer todas as opções disponíveis. 🏥\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Pra saber sobre convênios e parcerias, melhor conversar direto com nossos consultores! 🏥\n\nEles vão te explicar todas as opções disponíveis.\n\nPrefere falar com:\n\n01 - Josimar\n02 - Jailson\n\nManda o número!"
     },
     {
       "input": "Tem promoção?",
-      "output": "Para saber sobre nossas promoções atuais e ofertas especiais, nossos consultores têm todas as informações! 🎁\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Pra saber das promoções que tão rolando agora, nossos consultores têm todas as informações! 🎁\n\nQuem você prefere?\n\n01 - Josimar\n02 - Jailson\n\nDigita aí!"
     },
     {
       "input": "Vocês fazem óculos de grau?",
-      "output": "Sim! Fazemos óculos de grau com diversos tipos de lentes e armações. 👓\n\n📋 Escolha com qual consultor você prefere falar:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Sim! Fazemos óculos de grau com vários tipos de lentes e armações! 👓\n\nVou te conectar com um consultor pra fazer seu orçamento.\n\nPrefere conversar com:\n\n01 - Josimar\n02 - Jailson\n\nManda o número!"
     },
     {
       "input": "Não entendi",
-      "output": "Desculpe se não fui claro! Posso te ajudar com: endereço, horários, orçamentos, reparos e mais. 😊\n\nOu prefere falar diretamente com um consultor?\n\n📋 Escolha uma opção:\n\n01 - Josimar\n02 - Jailson\n\nDigite 01 ou 02"
+      "output": "Opa, desculpa se não fui claro! 😅\n\nPosso te ajudar com: endereço, horários, orçamentos, reparos e muito mais!\n\nOu se preferir, te conecto direto com um consultor:\n\n01 - Josimar\n02 - Jailson\n\nQual prefere?"
     },
     {
       "input": "Me ajuda",
