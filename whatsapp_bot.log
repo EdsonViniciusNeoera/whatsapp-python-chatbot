@@ -5462,3 +5462,37 @@ Eles vão te ajudar a encontrar as melhores opções...
 2025-10-21 20:21:36,093 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
 2025-10-21 20:21:36,100 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB02BEE2C540B27E6FB63
 2025-10-21 20:21:36,100 - INFO - werkzeug - 127.0.0.1 - - [21/Oct/2025 20:21:36] "POST /webhook HTTP/1.1" 200 -
+2025-10-23 19:57:16,365 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-23 19:57:16,365 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-23 19:57:16,367 - INFO - whatsapp_bot - Successfully loaded persona: Pedro
+2025-10-23 19:57:16,368 - INFO - whatsapp_bot - Loaded 47 few-shot examples
+2025-10-23 19:57:16,368 - INFO - whatsapp_bot - Interactive menu: Enabled
+2025-10-23 19:57:16,368 - INFO - whatsapp_bot - Using persona 'Pedro' with 47 training examples
+2025-10-23 19:57:16,369 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-23 19:57:16,369 - INFO - whatsapp_bot - Few-shot learning: Enabled (47 examples)
+2025-10-23 19:57:16,372 - INFO - whatsapp_bot - Successfully loaded persona: Pedro
+2025-10-23 19:57:16,372 - INFO - whatsapp_bot - Loaded 47 few-shot examples
+2025-10-23 19:57:16,372 - INFO - whatsapp_bot - Interactive menu: Enabled
+2025-10-23 20:24:38,280 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-23 20:24:38,280 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-23 20:24:38,293 - INFO - whatsapp_bot - Successfully loaded persona: Pedro
+2025-10-23 20:24:38,293 - INFO - whatsapp_bot - Loaded 47 few-shot examples
+2025-10-23 20:24:38,294 - INFO - whatsapp_bot - Interactive menu: Enabled
+2025-10-23 20:24:38,294 - INFO - whatsapp_bot - Using persona 'Pedro' with 47 training examples
+2025-10-23 20:24:38,294 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-23 20:24:38,294 - INFO - whatsapp_bot - Few-shot learning: Enabled (47 examples)
+2025-10-23 20:24:38,296 - INFO - whatsapp_bot - ======================================================
+2025-10-23 20:24:38,296 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-23 20:24:38,296 - INFO - whatsapp_bot - ======================================================
+2025-10-23 20:24:38,297 - INFO - whatsapp_bot - Persona: Pedro
+2025-10-23 20:24:38,297 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-23 20:24:38,297 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-23 20:24:38,297 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-23 20:24:38,297 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-23 20:24:38,298 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-23 20:24:38,298 - INFO - whatsapp_bot - ======================================================
+2025-10-23 20:24:38,335 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-23 20:24:38,335 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
