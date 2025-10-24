@@ -1763,8 +1763,8 @@ def webhook():
                             start_customer_form(safe_sender_id, selected_menu_option)
                             logger.info(f"Started customer form for menu option {option_key}")
                             
-                            # Add consultant selection prompt - single unified message
-                            response_text += "\n\nCom quem você prefere conversar?\n\n*01* - Josimar\n*02* - Jailson\n\nDigita o número aí! 😊"
+                            # NOTE: DON'T add consultant selection here - persona.json already includes it!
+                            # The response_text from menu already has the consultant question
                 
                 # If no menu response, use Gemini AI
                 if not response_text:

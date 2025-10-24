@@ -11,11 +11,11 @@
     },
     "2": {
       "title": "Fazer orçamento de óculos",
-      "response": "💰 Ótimo! Vou te conectar com um consultor que vai fazer um orçamento personalizado pra você! 😊\n\nCom quem você prefere conversar?\n• *Jailson*\n• *Josimar*\n\nEles são especialistas e vão te ajudar com todas as opções!"
+      "response": "💰 Ótimo! Vou te conectar com um consultor que vai fazer um orçamento personalizado pra você! 😊\n\nCom quem você prefere conversar?\n\n*01* - Josimar\n*02* - Jailson\n\nDigita o número aí!"
     },
     "3": {
       "title": "Ajustes e reparos",
-      "response": "🔧 Entendi! Nossos consultores são experts em ajustes e reparos.\n\nQuem você prefere que te ajude?\n• *Jailson*\n• *Josimar*\n\nEles vão resolver isso pra você rapidinho! 😊"
+      "response": "🔧 Entendi! Nossos consultores são experts em ajustes e reparos.\n\nCom quem você prefere falar?\n\n*01* - Josimar\n*02* - Jailson\n\nDigita o número!"
     },
     "4": {
       "title": "Formas de pagamento",
