@@ -12,6 +12,11 @@ import asyncio
 import time
 from functools import wraps
 from message_splitter import split_message
+import base64
+import requests
+from datetime import datetime, timedelta
+import mimetypes
+import shutil
 
 # Load environment variables
 load_dotenv()
@@ -33,6 +38,7 @@ logger = logging.getLogger("whatsapp_bot")
 # Application configuration
 CONFIG = {
     "CONVERSATIONS_DIR": os.getenv('CONVERSATIONS_DIR', 'conversations'),
+    "TEMP_MEDIA_DIR": os.getenv('TEMP_MEDIA_DIR', 'temp_media'),
     "GEMINI_API_KEY": os.getenv('GEMINI_API_KEY'),
     "WASENDER_API_TOKEN": os.getenv('WASENDER_API_TOKEN'),
     "GEMINI_MODEL": os.getenv('GEMINI_MODEL', 'gemini-2.0-flash'),
@@ -43,12 +49,18 @@ CONFIG = {
     "MESSAGE_DELAY_MIN": float(os.getenv('MESSAGE_DELAY_MIN', '0.55')),
     "MESSAGE_DELAY_MAX": float(os.getenv('MESSAGE_DELAY_MAX', '1.5')),
     "NOTIFICATION_GROUP_ID": os.getenv('NOTIFICATION_GROUP_ID'),
+    "MEDIA_CLEANUP_HOURS": int(os.getenv('MEDIA_CLEANUP_HOURS', '24')),
 }
 
 # Directory for storing conversations
 if not os.path.exists(CONFIG["CONVERSATIONS_DIR"]):
     os.makedirs(CONFIG["CONVERSATIONS_DIR"])
     logger.info(f"Created conversations directory at {CONFIG['CONVERSATIONS_DIR']}")
+
+# Directory for temporary media storage
+if not os.path.exists(CONFIG["TEMP_MEDIA_DIR"]):
+    os.makedirs(CONFIG["TEMP_MEDIA_DIR"])
+    logger.info(f"Created temporary media directory at {CONFIG['TEMP_MEDIA_DIR']}")
 
 # Configure retry options for WaSenderAPI
 retry_config = RetryConfig(
@@ -551,6 +563,116 @@ def cleanup_customer_forms():
         del customer_forms[user_id]
         logger.info(f"Expired customer form for {user_id}")
 
+# ==================== TEMPORARY MEDIA STORAGE ====================
+
+def save_media_from_base64(base64_data, sender_id, media_type='image', extension='jpg'):
+    """
+    Save media from base64 data to temporary storage.
+    
+    Args:
+        base64_data: Base64 encoded media data
+        sender_id: User identifier
+        media_type: Type of media (image, document)
+        extension: File extension
+        
+    Returns:
+        Path to saved file or None if failed
+    """
+    try:
+        # Create filename with timestamp
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"{media_type}_{sender_id}_{timestamp}.{extension}"
+        filepath = os.path.join(CONFIG["TEMP_MEDIA_DIR"], filename)
+        
+        # Decode and save
+        media_bytes = base64.b64decode(base64_data)
+        with open(filepath, 'wb') as f:
+            f.write(media_bytes)
+        
+        logger.info(f"✅ Media saved: {filepath} ({len(media_bytes)} bytes)")
+        return filepath
+        
+    except Exception as e:
+        logger.error(f"❌ Error saving media from base64: {e}", exc_info=True)
+        return None
+
+def download_and_save_media(url, sender_id, media_type='image', extension='jpg'):
+    """
+    Download media from URL and save to temporary storage.
+    
+    Args:
+        url: Media URL to download
+        sender_id: User identifier
+        media_type: Type of media (image, document)
+        extension: File extension
+        
+    Returns:
+        Path to saved file or None if failed
+    """
+    try:
+        # Create filename with timestamp
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"{media_type}_{sender_id}_{timestamp}.{extension}"
+        filepath = os.path.join(CONFIG["TEMP_MEDIA_DIR"], filename)
+        
+        # Download media
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+        
+        # Save to file
+        with open(filepath, 'wb') as f:
+            f.write(response.content)
+        
+        logger.info(f"✅ Media downloaded: {filepath} ({len(response.content)} bytes)")
+        return filepath
+        
+    except Exception as e:
+        logger.error(f"❌ Error downloading media from {url}: {e}", exc_info=True)
+        return None
+
+def cleanup_old_media():
+    """Remove media files older than configured hours."""
+    try:
+        media_dir = CONFIG["TEMP_MEDIA_DIR"]
+        if not os.path.exists(media_dir):
+            return
+        
+        cutoff_time = datetime.now() - timedelta(hours=CONFIG["MEDIA_CLEANUP_HOURS"])
+        removed_count = 0
+        
+        for filename in os.listdir(media_dir):
+            filepath = os.path.join(media_dir, filename)
+            
+            # Check if it's a file and get its modification time
+            if os.path.isfile(filepath):
+                file_mtime = datetime.fromtimestamp(os.path.getmtime(filepath))
+                
+                if file_mtime < cutoff_time:
+                    os.remove(filepath)
+                    removed_count += 1
+                    logger.info(f"🗑️ Removed old media: {filename}")
+        
+        if removed_count > 0:
+            logger.info(f"🧹 Cleanup complete: {removed_count} old media files removed")
+            
+    except Exception as e:
+        logger.error(f"❌ Error during media cleanup: {e}", exc_info=True)
+
+def get_extension_from_mimetype(mimetype):
+    """Get file extension from mimetype."""
+    extension_map = {
+        'image/jpeg': 'jpg',
+        'image/jpg': 'jpg',
+        'image/png': 'png',
+        'image/webp': 'webp',
+        'application/pdf': 'pdf',
+        'application/msword': 'doc',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+    }
+    return extension_map.get(mimetype, 'bin')
+
+# ==================== END TEMPORARY MEDIA STORAGE ====================
+
 def process_customer_form_step(safe_sender_id, sender_number, message_text, message_info):
     """
     Process one step of the customer form collection.
@@ -659,34 +781,37 @@ _Seus dados estão corretos?_
     elif current_step == 'prescription':
         has_prescription = False
         prescription_info = "Não possui receita"
-        prescription_media_url = None
-        prescription_media_type = None
+        prescription_file_path = None
         
         # Check if message has image
         if message_info.get('message', {}).get('imageMessage'):
             has_prescription = True
             image_data = message_info['message']['imageMessage']
             
-            # Try to get URL from different possible fields
-            image_url = (
-                image_data.get('url') or 
-                image_data.get('directPath') or 
-                image_data.get('mediaKey') or
-                'URL não disponível'
-            )
-            
-            # Store media info for forwarding
-            prescription_media_url = image_url if image_url != 'URL não disponível' else None
-            prescription_media_type = 'image'
-            
             # Get additional info
             caption = image_data.get('caption', '')
             mimetype = image_data.get('mimetype', 'image/jpeg')
+            extension = get_extension_from_mimetype(mimetype)
             
-            logger.info(f"Image data received: {image_data}")
-            prescription_info = f"📷 Receita enviada (imagem - {mimetype})"
+            # Try to save the image from jpegThumbnail (base64)
+            jpeg_thumbnail = image_data.get('jpegThumbnail')
+            if jpeg_thumbnail:
+                prescription_file_path = save_media_from_base64(
+                    jpeg_thumbnail, 
+                    safe_sender_id, 
+                    'prescription', 
+                    extension
+                )
+            
+            logger.info(f"📸 Image received - mimetype: {mimetype}, saved: {prescription_file_path is not None}")
+            
+            if prescription_file_path:
+                prescription_info = f"✅ Cliente enviou FOTO da receita (salva localmente)"
+            else:
+                prescription_info = f"✅ Cliente enviou FOTO da receita"
+            
             if caption:
-                prescription_info += f"\nLegenda: {caption}"
+                prescription_info += f" (legenda: {caption})"
         
         # Check if message has document/PDF
         elif message_info.get('message', {}).get('documentMessage'):
@@ -694,36 +819,26 @@ _Seus dados estão corretos?_
             doc_data = message_info['message']['documentMessage']
             
             doc_name = doc_data.get('fileName', 'documento.pdf')
-            
-            # Try to get URL from different possible fields
-            doc_url = (
-                doc_data.get('url') or 
-                doc_data.get('directPath') or 
-                doc_data.get('mediaKey') or
-                'URL não disponível'
-            )
-            
-            # Store media info for forwarding
-            prescription_media_url = doc_url if doc_url != 'URL não disponível' else None
-            prescription_media_type = 'document'
-            
             mimetype = doc_data.get('mimetype', 'application/pdf')
+            extension = get_extension_from_mimetype(mimetype)
             
-            logger.info(f"Document data received: {doc_data}")
-            prescription_info = f"📄 Receita enviada ({doc_name})"
+            # Note: Documents usually don't have thumbnails, would need actual download
+            logger.info(f"📄 Document received - filename: {doc_name}, mimetype: {mimetype}")
+            prescription_info = f"✅ Cliente enviou ARQUIVO da receita: {doc_name}"
         
         # Check for text response
         elif message_text.lower().strip() in ['não', 'nao', 'n', 'sem receita', 'não tenho', 'nao tenho']:
-            prescription_info = "Cliente informou que não possui receita"
+            prescription_info = "❌ Cliente informou que NÃO possui receita"
         
         elif message_text.lower().strip() in ['sim', 's', 'tenho', 'possuo']:
             return "Por favor, *envie a foto ou PDF* da sua receita de óculos 📸"
         
         form_data['prescription'] = prescription_info
         form_data['has_prescription'] = has_prescription
-        form_data['prescription_media_url'] = prescription_media_url
-        form_data['prescription_media_type'] = prescription_media_type
+        form_data['prescription_file_path'] = prescription_file_path
         update_customer_form(safe_sender_id, 'confirm', 'prescription', prescription_info)
+        if prescription_file_path:
+            update_customer_form(safe_sender_id, 'confirm', 'prescription_file_path', prescription_file_path)
         
         # Show summary for confirmation
         summary = f"""
@@ -806,18 +921,19 @@ def send_customer_form_to_group(customer_number, form):
     
     # Add prescription info (only if it was collected - budget requests)
     prescription_info = form_data.get('prescription', 'Não solicitado')
-    prescription_media_url = form_data.get('prescription_media_url')
-    prescription_media_type = form_data.get('prescription_media_type')
+    prescription_file_path = form_data.get('prescription_file_path')
     
     # Check if prescription was actually collected (not skipped)
     if form_data.get('has_prescription', False):
         notification_parts.append("💊 *RECEITA DE ÓCULOS*")
-        if prescription_media_url:
-            notification_parts.append("📎 _Receita de óculos anexada abaixo_")
+        notification_parts.append(prescription_info)
+        
+        if prescription_file_path:
+            notification_parts.append("📎 _Arquivo da receita será enviado a seguir_")
         else:
-            notification_parts.append(prescription_info)
+            notification_parts.append("⚠️ _Arquivo não disponível - solicite ao cliente_")
+        
         notification_parts.append("")
-        notification_parts.append("⚠️ _Verifique a receita de óculos antes de confirmar o atendimento_")
     elif prescription_info and prescription_info != "Não solicitado (apenas para orçamentos)":
         # Prescription was asked but customer doesn't have one
         notification_parts.append(f"💊 *Receita de óculos:* {prescription_info}")
@@ -842,21 +958,57 @@ def send_customer_form_to_group(customer_number, form):
         if result:
             logger.info(f"✅ Customer form sent to group for {display_number}")
             
-            # If there's a prescription media, forward it to the group
-            if prescription_media_url and prescription_media_type:
-                logger.info(f"📎 Forwarding prescription media to group: {prescription_media_type}")
+            # If there's a saved prescription file, send it to the group
+            if prescription_file_path and os.path.exists(prescription_file_path):
+                logger.info(f"📎 Sending prescription file to group: {prescription_file_path}")
                 
-                media_result = send_whatsapp_message(
-                    CONFIG["NOTIFICATION_GROUP_ID"],
-                    f"💊 *Receita de óculos de {form_data.get('name', 'Cliente')}*",
-                    message_type=prescription_media_type,
-                    media_url=prescription_media_url
-                )
-                
-                if media_result:
-                    logger.info(f"✅ Prescription media forwarded to group")
+                # Determine message type based on file extension
+                file_ext = os.path.splitext(prescription_file_path)[1].lower()
+                if file_ext in ['.jpg', '.jpeg', '.png', '.webp']:
+                    media_type = 'image'
+                elif file_ext == '.pdf':
+                    media_type = 'document'
                 else:
-                    logger.warning(f"⚠️ Failed to forward prescription media to group")
+                    media_type = 'document'
+                
+                # Upload file to a public URL first (WaSender needs public URLs)
+                # For now, we'll try sending with file:// protocol or convert to base64
+                try:
+                    # Read file as bytes
+                    with open(prescription_file_path, 'rb') as f:
+                        file_data = f.read()
+                    
+                    # Convert to base64 for data URL
+                    file_base64 = base64.b64encode(file_data).decode('utf-8')
+                    
+                    # Create data URL
+                    mimetype = mimetypes.guess_type(prescription_file_path)[0] or 'application/octet-stream'
+                    data_url = f"data:{mimetype};base64,{file_base64}"
+                    
+                    media_result = send_whatsapp_message(
+                        CONFIG["NOTIFICATION_GROUP_ID"],
+                        f"💊 *Receita de óculos de {form_data.get('name', 'Cliente')}*",
+                        message_type=media_type,
+                        media_url=data_url
+                    )
+                    
+                    if media_result:
+                        logger.info(f"✅ Prescription file sent to group")
+                    else:
+                        logger.warning(f"⚠️ Failed to send prescription file - informing group")
+                        send_whatsapp_message(
+                            CONFIG["NOTIFICATION_GROUP_ID"],
+                            f"⚠️ Não foi possível enviar o arquivo automaticamente.\n📁 Arquivo salvo em: {prescription_file_path}\n\n_Solicite a receita diretamente ao cliente: {display_number}_",
+                            message_type='text'
+                        )
+                        
+                except Exception as e:
+                    logger.error(f"❌ Error processing prescription file: {e}")
+                    send_whatsapp_message(
+                        CONFIG["NOTIFICATION_GROUP_ID"],
+                        f"⚠️ Erro ao enviar arquivo da receita.\n_Solicite diretamente ao cliente: {display_number}_",
+                        message_type='text'
+                    )
         
         return result
     except Exception as e:
@@ -1120,6 +1272,9 @@ def webhook():
     """Handles incoming WhatsApp messages via webhook using the WaSenderAPI SDK."""
     try:        
         logger.info("=== WEBHOOK CALLED ===")
+        
+        # Run media cleanup periodically (every webhook call)
+        cleanup_old_media()
         
         if not wasender_client:
             logger.error("WaSender API client is not initialized. Cannot process webhook.")

@@ -14,9 +14,13 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
 - **WhatsApp Integration**: Receives and sends messages through WaSenderAPI
 - **AI-Powered Responses**: Generates intelligent replies using Google's Gemini AI
 - **Media Support**: Handles text, images, audio, video, and document messages
+- **📦 Temporary Media Storage**: Automatically saves and forwards prescription images/PDFs to consultants
 - **Smart Message Splitting**: Automatically breaks long responses into multiple messages for better readability
 - **Customizable AI Persona**: Tailor the bot's personality and behavior via simple JSON configuration
 - **Conversation History**: Maintains context between messages for natural conversations
+- **Interactive Menu System**: Guided customer service with menu options
+- **Customer Form Collection**: Collects customer information before connecting to consultants
+- **🗑️ Auto-Cleanup**: Removes old media files after 24 hours (configurable)
 - **Error Handling**: Robust logging and error management for reliable operation
 - **Easy Configuration**: Simple setup with environment variables
 
@@ -24,11 +28,15 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
 
 ```
 /whatsapp-python-chatbot/
-├── script.py         # Main Flask application and bot logic
-├── requirements.txt  # Python dependencies
-├── .env              # Environment variables (API keys, etc.)
-├── persona.json      # Customizable AI personality settings
-└── README.md         # This file
+├── script.py                           # Main Flask application and bot logic
+├── message_splitter.py                 # Message splitting utility
+├── requirements.txt                    # Python dependencies
+├── .env                                # Environment variables (API keys, etc.)
+├── persona.json                        # Customizable AI personality settings
+├── README.md                           # This file
+├── SISTEMA_ARMAZENAMENTO_TEMPORARIO.md # Media storage documentation
+├── conversations/                      # Conversation history storage
+└── temp_media/                         # Temporary media storage (auto-cleanup)
 ```
 
 ## 🚀 Setup and Installation
@@ -54,14 +62,22 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
     ```env
     GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"  # Free tier: 1500 requests/month
     WASENDER_API_TOKEN="YOUR_WASENDER_API_TOKEN_HERE"  # $6/month subscription
-    # Optional: If you change the port in script.py, update it here too for ngrok or other services
-    # FLASK_RUN_PORT=5000
+    NOTIFICATION_GROUP_ID="YOUR_GROUP_ID"  # WhatsApp group for consultant notifications
+    
+    # Optional configurations
+    TEMP_MEDIA_DIR=temp_media  # Directory for temporary media storage
+    MEDIA_CLEANUP_HOURS=24     # Hours before cleaning old media files
+    CONVERSATIONS_DIR=conversations  # Directory for conversation history
+    # FLASK_RUN_PORT=5001
     ```
 
     Replace the placeholder values with your actual API keys:
 
     - `GEMINI_API_KEY`: Your API key for the Gemini API (free tier available)
     - `WASENDER_API_TOKEN`: Your API token from WaSenderAPI ($6/month subscription)
+    - `NOTIFICATION_GROUP_ID`: WhatsApp group ID for consultant notifications
+    - `TEMP_MEDIA_DIR`: Folder for temporary media storage (default: temp_media)
+    - `MEDIA_CLEANUP_HOURS`: Hours before auto-cleanup (default: 24)
 
 ## 🏃‍♂️ Running the Application
 
