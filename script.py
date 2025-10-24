@@ -38,8 +38,8 @@ CONFIG = {
     "GEMINI_MODEL": os.getenv('GEMINI_MODEL', 'gemini-2.0-flash'),
     "WEBHOOK_SECRET": os.getenv('WEBHOOK_SECRET'),
     "MAX_RETRIES": int(os.getenv('MAX_RETRIES', '3')),
-    "MESSAGE_CHUNK_MAX_LINES": int(os.getenv('MESSAGE_CHUNK_MAX_LINES', '3')),
-    "MESSAGE_CHUNK_MAX_CHARS": int(os.getenv('MESSAGE_CHUNK_MAX_CHARS', '100')),
+    "MESSAGE_CHUNK_MAX_LINES": int(os.getenv('MESSAGE_CHUNK_MAX_LINES', '10')),
+    "MESSAGE_CHUNK_MAX_CHARS": int(os.getenv('MESSAGE_CHUNK_MAX_CHARS', '400')),
     "MESSAGE_DELAY_MIN": float(os.getenv('MESSAGE_DELAY_MIN', '0.55')),
     "MESSAGE_DELAY_MAX": float(os.getenv('MESSAGE_DELAY_MAX', '1.5')),
     "NOTIFICATION_GROUP_ID": os.getenv('NOTIFICATION_GROUP_ID'),
@@ -1266,35 +1266,47 @@ def webhook():
                     response_text = get_gemini_response(incoming_message_text, conversation_history)
                     logger.info(f"Gemini reply: {response_text}")
                     
-                    # Detect intent from user's original message to determine form reason
+                    # Detect intent from user's original message to determine if form is needed
                     user_message_lower = incoming_message_text.lower()
                     form_reason = None
+                    should_start_form = False
+                    
+                    # Check for EXPLICIT request to speak with consultant
+                    explicit_consultant_request = [
+                        'quero falar com', 'prefiro falar com', 'falar com o', 'falar com a',
+                        'quero o', 'quero a', 'preciso falar', 'gostaria de falar',
+                        'pode chamar', 'chama o', 'chama a', 'contato do', 'contato da'
+                    ]
+                    
+                    # Check if user is explicitly asking to speak with specific consultant
+                    is_explicit_request = any(phrase in user_message_lower for phrase in explicit_consultant_request)
+                    mentions_consultant = 'jailson' in user_message_lower or 'josimar' in user_message_lower
+                    
+                    # Only start form if user explicitly asks to speak with consultant
+                    if is_explicit_request and mentions_consultant:
+                        should_start_form = True
+                        form_reason = "5 - Falar com consultor (solicitação direta)"
+                        logger.info(f"User EXPLICITLY requested to speak with consultant")
                     
                     # Check for budget/quote request (should ask for prescription)
-                    budget_keywords = ['orçamento', 'orcamento', 'orçar', 'preço', 'preco', 'valor', 'quanto custa', 'comprar óculos', 'fazer óculos']
-                    if any(keyword in user_message_lower for keyword in budget_keywords):
+                    elif any(keyword in user_message_lower for keyword in ['orçamento', 'orcamento', 'orçar', 'fazer óculos', 'comprar óculos']):
+                        should_start_form = True
                         form_reason = "2 - Fazer orçamento de óculos (solicitação via conversa)"
                         logger.info(f"Detected BUDGET request from user message")
                     
                     # Check for repair/adjustment request (no prescription needed)
                     elif any(keyword in user_message_lower for keyword in ['ajuste', 'ajustar', 'reparo', 'reparar', 'consertar', 'conserto', 'quebrou', 'quebrado']):
+                        should_start_form = True
                         form_reason = "3 - Ajustes e reparos (solicitação via conversa)"
                         logger.info(f"Detected REPAIR request from user message")
                     
-                    # Check if AI response suggests contacting specialist
-                    ai_keywords = ['jailson', 'josimar', 'consultor', 'especialista', 'atendimento']
-                    if any(keyword in response_text.lower() for keyword in ai_keywords):
-                        should_start_form = True
-                        
-                        # If no specific reason detected yet, use generic
-                        if not form_reason:
-                            form_reason = "Cliente solicitou contato com consultor"
-                        
+                    # Start form ONLY if we detected an explicit request
+                    if should_start_form and form_reason:
                         selected_menu_option = form_reason
                         
                         # Start collecting customer information
                         start_customer_form(safe_sender_id, form_reason)
-                        logger.info(f"Started customer form based on AI response - reason: {form_reason}")
+                        logger.info(f"Started customer form - reason: {form_reason}")
                         
                         # Add prompt to start form - ask for consultant first
                         response_text += "\n\n📋 Primeiro, escolha com qual *consultor* você prefere falar:\n\n*01* - Josimar (81) 99974-5545\n*02* - Jailson (81) 99750-7161\n\n_Digite 01 ou 02_"
