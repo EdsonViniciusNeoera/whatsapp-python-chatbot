@@ -353,14 +353,21 @@
                 const result = await response.json();
                 
                 if (response.ok) {
-                    showMessage('✅ Receita enviada com sucesso! Nosso consultor receberá sua receita em breve.', 'success');
+                    showMessage('✅ Receita enviada com sucesso! Você receberá uma confirmação no WhatsApp em instantes.', 'success');
                     form.reset();
                     filePreview.classList.remove('show');
                     
-                    // Redirecionar após 3 segundos
+                    // Mostrar mensagem adicional
                     setTimeout(() => {
-                        window.location.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent('✅ Receita enviada com sucesso!');
-                    }, 3000);
+                        showMessage('📱 Aguarde a confirmação no WhatsApp. Nosso consultor entrará em contato em breve!', 'success');
+                    }, 2000);
+                    
+                    // Redirecionar para WhatsApp após 5 segundos (opcional)
+                    setTimeout(() => {
+                        if (confirm('Deseja voltar ao WhatsApp agora?')) {
+                            window.location.href = 'https://wa.me/' + phone;
+                        }
+                    }, 5000);
                 } else {
                     showMessage('❌ Erro: ' + (result.message || 'Erro ao enviar receita.'), 'error');
                 }

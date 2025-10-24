@@ -248,6 +248,71 @@ _Arquivo será enviado a seguir_
             except Exception as e:
                 logger.error(f"❌ Error sending notification: {e}")
         
+        # **NEW: Send automatic confirmation to customer via WhatsApp**
+        try:
+            customer_whatsapp = f"{phone_digits}@s.whatsapp.net"
+            confirmation_message = f"""
+✅ *Receita recebida com sucesso!*
+
+Obrigado, *{name}*! 😊
+
+Sua receita foi recebida e enviada para nosso consultor.
+Ele entrará em contato com você em breve!
+
+_Posso ajudar com mais alguma coisa?_
+"""
+            send_whatsapp_message(
+                customer_whatsapp,
+                confirmation_message.strip(),
+                message_type='text'
+            )
+            logger.info(f"✅ Automatic confirmation sent to customer {phone_digits}")
+            
+            # **NEW: Auto-advance customer form to next step**
+            # Mark prescription as received and move to confirmation
+            form = get_customer_form(safe_sender_id)
+            if form:
+                form_data = form.get('data', {})
+                form_data['prescription'] = f"✅ Cliente enviou receita via FORMULÁRIO ONLINE"
+                form_data['has_prescription'] = True
+                form_data['prescription_file_path'] = filepath
+                
+                # Update form with prescription data and move to confirm step
+                update_customer_form(safe_sender_id, 'confirm', 'prescription', form_data['prescription'])
+                update_customer_form(safe_sender_id, 'confirm', 'prescription_file_path', filepath)
+                update_customer_form(safe_sender_id, 'confirm', 'has_prescription', True)
+                
+                logger.info(f"✅ Customer form auto-advanced to confirmation step")
+                
+                # Send confirmation summary to customer
+                summary_message = f"""
+📋 *Confirmação dos Dados*
+
+👨‍💼 *Consultor:* {form_data.get('consultant_name')} - {form_data.get('consultant_phone')}
+👤 *Nome:* {form_data.get('name')}
+📱 *Telefone:* {form_data.get('phone')}
+🆔 *CPF:* {form_data.get('cpf')}
+💊 *Receita:* ✅ Recebida via formulário online
+
+*Motivo do contato:* {form.get('reason')}
+
+_Seus dados estão corretos?_
+
+✅ Digite *SIM* para confirmar
+❌ Digite *NÃO* para recomeçar
+"""
+                send_whatsapp_message(
+                    customer_whatsapp,
+                    summary_message.strip(),
+                    message_type='text'
+                )
+                logger.info(f"✅ Confirmation summary sent to customer")
+            else:
+                logger.warning(f"⚠️ No active customer form found for {safe_sender_id}")
+                
+        except Exception as e:
+            logger.error(f"❌ Error sending automatic confirmation: {e}", exc_info=True)
+        
         # Return success
         return jsonify({
             'status': 'success',
@@ -1057,10 +1122,11 @@ Pra garantir a melhor qualidade, vou te mandar um link pra você enviar a receit
 ✅ Pode ser foto ou PDF
 ✅ Super seguro
 
-Depois de enviar lá, volta aqui e digita *"enviado"* pra eu continuar! 😊
+*IMPORTANTE:* Depois que você enviar lá, eu te mando uma confirmação *automática* aqui no WhatsApp! Não precisa fazer mais nada! 😊
 """
         
-        # Check if user confirmed they uploaded via form
+        # NOTE: The "enviado" check is kept for backward compatibility,
+        # but now the upload form automatically advances the conversation
         elif message_text.lower().strip() in ['enviado', 'enviado!', 'enviei', 'já enviei', 'ja enviei', 'pronto']:
             # Check if there's an uploaded file for this customer
             uploaded_file = check_uploaded_prescription(safe_sender_id)
@@ -1077,7 +1143,7 @@ Tenta assim:
 1. Abre o link de novo: {CONFIG['WEBHOOK_BASE_URL']}/upload?phone={safe_sender_id.replace('_', '')}
 2. Faz o upload da foto/PDF
 3. Espera aparecer a confirmação na tela
-4. Volta aqui e digita *"enviado"*
+4. Você vai receber uma confirmação automática aqui!
 
 Ou se preferir, digita *"não tenho"* pra gente continuar sem a receita! 😊
 """
