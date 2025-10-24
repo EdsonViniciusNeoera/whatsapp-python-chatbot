@@ -843,15 +843,28 @@ _Seus dados estão corretos?_
             mimetype = image_data.get('mimetype', 'image/jpeg')
             extension = get_extension_from_mimetype(mimetype)
             
-            # Try to save the image from jpegThumbnail (base64)
-            jpeg_thumbnail = image_data.get('jpegThumbnail')
-            if jpeg_thumbnail:
-                prescription_file_path = save_media_from_base64(
-                    jpeg_thumbnail, 
-                    safe_sender_id, 
-                    'prescription', 
+            # Try to download the FULL RESOLUTION image from URL first (best quality!)
+            image_url = image_data.get('url')
+            if image_url:
+                logger.info(f"📥 Downloading full resolution image from URL: {image_url}")
+                prescription_file_path = download_and_save_media(
+                    image_url,
+                    safe_sender_id,
+                    'prescription',
                     extension
                 )
+            
+            # Fallback: If URL download failed, try jpegThumbnail (lower quality)
+            if not prescription_file_path:
+                jpeg_thumbnail = image_data.get('jpegThumbnail')
+                if jpeg_thumbnail:
+                    logger.info("⚠️ Full resolution download failed, using jpegThumbnail (lower quality)")
+                    prescription_file_path = save_media_from_base64(
+                        jpeg_thumbnail, 
+                        safe_sender_id, 
+                        'prescription', 
+                        extension
+                    )
             
             logger.info(f"📸 Image received - mimetype: {mimetype}, saved: {prescription_file_path is not None}")
             

@@ -49,6 +49,23 @@ public_url = f"{CONFIG['WEBHOOK_BASE_URL']}/media/{filename}"
 **Fluxo Completo:**
 1. Cliente envia receita 📸
 2. Bot salva em `temp_media/prescription_xxx.jpg` 💾
+
+#### 🧹 **Limpeza de Documentação**
+
+**Arquivos removidos (6 redundantes):**
+- ❌ `SISTEMA_ARMAZENAMENTO_TEMPORARIO.md` - Substituído por `GUIA_ENVIO_IMAGENS.md`
+- ❌ `RESUMO_ARMAZENAMENTO_TEMPORARIO.md` - Duplicado
+- ❌ `FLUXO_VISUAL_ARMAZENAMENTO.md` - Conteúdo incluído no guia principal
+- ❌ `FAQ_ARMAZENAMENTO.md` - FAQ incluído no guia principal
+- ❌ `CORRECAO_SISTEMA_IMAGENS.md` - Histórico antigo (v2.0.0)
+- ❌ `CORRECAO_ENVIO_IMAGENS.md` - Duplicado do guia principal
+
+**Arquivos mantidos (3 essenciais):**
+- ✅ `README.md` - Documentação principal do projeto
+- ✅ `CHANGELOG.md` - Histórico de versões (este arquivo)
+- ✅ `GUIA_ENVIO_IMAGENS.md` - Guia completo e atualizado
+
+**Resultado:** Redução de 67% nos arquivos de documentação (9 → 3)
 3. Bot cria URL pública: `https://ngrok.../media/prescription_xxx.jpg` 🌐
 4. Bot envia URL ao grupo via WaSender API 📤
 5. WaSender baixa imagem da URL ⬇️
