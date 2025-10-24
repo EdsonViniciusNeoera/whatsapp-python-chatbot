@@ -843,35 +843,58 @@ _Seus dados estão corretos?_
             mimetype = image_data.get('mimetype', 'image/jpeg')
             extension = get_extension_from_mimetype(mimetype)
             
-            # Try to download the FULL RESOLUTION image from URL first (best quality!)
+            logger.info(f"📸 Processing image message:")
+            logger.info(f"   - MIME type: {mimetype}")
+            logger.info(f"   - Caption: {caption if caption else 'N/A'}")
+            
+            # Strategy 1: Try to download the FULL RESOLUTION image from URL first (best quality!)
             image_url = image_data.get('url')
             if image_url:
-                logger.info(f"📥 Downloading full resolution image from URL: {image_url}")
+                logger.info(f"📥 Strategy 1: Attempting to download full resolution image from URL")
+                logger.info(f"   - URL: {image_url[:100]}..." if len(image_url) > 100 else f"   - URL: {image_url}")
                 prescription_file_path = download_and_save_media(
                     image_url,
                     safe_sender_id,
                     'prescription',
                     extension
                 )
+                if prescription_file_path:
+                    logger.info(f"✅ SUCCESS: Full resolution image downloaded and saved!")
+                else:
+                    logger.warning(f"⚠️ FAILED: Could not download from URL, trying fallback...")
+            else:
+                logger.warning(f"⚠️ No 'url' field in imageMessage, skipping URL download")
             
-            # Fallback: If URL download failed, try jpegThumbnail (lower quality)
+            # Strategy 2: Fallback to jpegThumbnail (lower quality but more reliable)
             if not prescription_file_path:
                 jpeg_thumbnail = image_data.get('jpegThumbnail')
                 if jpeg_thumbnail:
-                    logger.info("⚠️ Full resolution download failed, using jpegThumbnail (lower quality)")
+                    logger.info(f"📥 Strategy 2: Using jpegThumbnail (base64 encoded)")
+                    logger.info(f"   - Thumbnail size: {len(jpeg_thumbnail)} characters (base64)")
                     prescription_file_path = save_media_from_base64(
                         jpeg_thumbnail, 
                         safe_sender_id, 
                         'prescription', 
                         extension
                     )
+                    if prescription_file_path:
+                        logger.info(f"✅ SUCCESS: Thumbnail image saved (lower quality)")
+                    else:
+                        logger.error(f"❌ FAILED: Could not save thumbnail image")
+                else:
+                    logger.error(f"❌ CRITICAL: No 'jpegThumbnail' available - cannot save image!")
             
-            logger.info(f"📸 Image received - mimetype: {mimetype}, saved: {prescription_file_path is not None}")
+            # Log final status
+            logger.info(f"📊 Final image processing status:")
+            logger.info(f"   - File saved: {prescription_file_path is not None}")
+            if prescription_file_path:
+                logger.info(f"   - File path: {prescription_file_path}")
+                logger.info(f"   - File size: {os.path.getsize(prescription_file_path)} bytes")
             
             if prescription_file_path:
                 prescription_info = f"✅ Cliente enviou FOTO da receita (salva localmente)"
             else:
-                prescription_info = f"✅ Cliente enviou FOTO da receita"
+                prescription_info = f"⚠️ Cliente enviou FOTO da receita (falha ao salvar)"
             
             if caption:
                 prescription_info += f" (legenda: {caption})"
@@ -1023,7 +1046,10 @@ def send_customer_form_to_group(customer_number, form):
             
             # If there's a saved prescription file, send it to the group
             if prescription_file_path and os.path.exists(prescription_file_path):
-                logger.info(f"📎 Sending prescription file to group: {prescription_file_path}")
+                logger.info(f"📎 === SENDING PRESCRIPTION FILE TO GROUP ===")
+                logger.info(f"📎 File path: {prescription_file_path}")
+                logger.info(f"📎 File exists: {os.path.exists(prescription_file_path)}")
+                logger.info(f"📎 File size: {os.path.getsize(prescription_file_path)} bytes")
                 
                 # Determine message type based on file extension
                 file_ext = os.path.splitext(prescription_file_path)[1].lower()
@@ -1034,14 +1060,37 @@ def send_customer_form_to_group(customer_number, form):
                 else:
                     media_type = 'document'
                 
+                logger.info(f"📎 Media type determined: {media_type}")
+                
                 # Build public URL for WaSender API to download the file
                 # Format: https://your-ngrok-url.com/media/prescription_xxx.jpg
                 filename = os.path.basename(prescription_file_path)
                 public_url = f"{CONFIG['WEBHOOK_BASE_URL']}/media/{filename}"
                 
-                logger.info(f"🌐 Public media URL: {public_url}")
+                logger.info(f"🌐 === CONSTRUCTING PUBLIC URL ===")
+                logger.info(f"🌐 WEBHOOK_BASE_URL: {CONFIG['WEBHOOK_BASE_URL']}")
+                logger.info(f"🌐 Filename: {filename}")
+                logger.info(f"🌐 Complete public URL: {public_url}")
+                
+                # Validate URL before sending
+                if not CONFIG['WEBHOOK_BASE_URL'] or CONFIG['WEBHOOK_BASE_URL'] == 'http://localhost:5001':
+                    logger.error(f"❌ CRITICAL: WEBHOOK_BASE_URL is not configured correctly!")
+                    logger.error(f"❌ Current value: {CONFIG['WEBHOOK_BASE_URL']}")
+                    logger.error(f"❌ WhatsApp API requires HTTPS public URL (use ngrok for dev)")
+                    send_whatsapp_message(
+                        CONFIG["NOTIFICATION_GROUP_ID"],
+                        f"⚠️ *ERRO DE CONFIGURAÇÃO*\n\nWebhook URL não configurada corretamente.\nArquivo salvo localmente: {filename}\n\n_Solicite a receita diretamente ao cliente: {display_number}_",
+                        message_type='text'
+                    )
+                    return result
                 
                 try:
+                    logger.info(f"📤 === CALLING WASENDER API ===")
+                    logger.info(f"📤 Sending to group: {CONFIG['NOTIFICATION_GROUP_ID']}")
+                    logger.info(f"📤 Message type: {media_type}")
+                    logger.info(f"📤 Media URL: {public_url}")
+                    logger.info(f"📤 Caption: 💊 *Receita de óculos de {form_data.get('name', 'Cliente')}*")
+                    
                     media_result = send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
                         f"💊 *Receita de óculos de {form_data.get('name', 'Cliente')}*",
@@ -1050,9 +1099,14 @@ def send_customer_form_to_group(customer_number, form):
                     )
                     
                     if media_result:
-                        logger.info(f"✅ Prescription file sent to group successfully")
+                        logger.info(f"✅ === SUCCESS: Prescription file sent to group! ===")
                     else:
-                        logger.warning(f"⚠️ Failed to send prescription file - informing group")
+                        logger.warning(f"⚠️ === FAILED: WaSender API returned False ===")
+                        logger.warning(f"⚠️ Possible causes:")
+                        logger.warning(f"   1. URL is not publicly accessible")
+                        logger.warning(f"   2. WaSender API key is invalid")
+                        logger.warning(f"   3. File format not supported")
+                        logger.warning(f"   4. Network/firewall issue")
                         send_whatsapp_message(
                             CONFIG["NOTIFICATION_GROUP_ID"],
                             f"⚠️ Não foi possível enviar o arquivo automaticamente.\n📁 Arquivo salvo localmente: {filename}\n\n_Solicite a receita diretamente ao cliente: {display_number}_",
@@ -1060,12 +1114,20 @@ def send_customer_form_to_group(customer_number, form):
                         )
                         
                 except Exception as e:
-                    logger.error(f"❌ Error processing prescription file: {e}")
+                    logger.error(f"❌ === EXCEPTION while sending prescription file ===")
+                    logger.error(f"❌ Exception type: {type(e).__name__}")
+                    logger.error(f"❌ Exception message: {str(e)}")
+                    logger.error(f"❌ Full traceback:", exc_info=True)
                     send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
                         f"⚠️ Erro ao enviar arquivo da receita.\n_Solicite diretamente ao cliente: {display_number}_",
                         message_type='text'
                     )
+            else:
+                if prescription_file_path:
+                    logger.warning(f"⚠️ Prescription file path exists but file not found: {prescription_file_path}")
+                else:
+                    logger.info(f"ℹ️ No prescription file to send (customer doesn't have one or upload failed)")
         
         return result
     except Exception as e:
