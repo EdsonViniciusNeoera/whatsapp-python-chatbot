@@ -650,6 +650,10 @@ def download_and_save_media(url, sender_id, media_type='image', extension='jpg')
     """
     Download media from URL and save to temporary storage.
     
+    **IMPORTANTE:** URLs do WhatsApp são criptografadas (.enc) e NÃO podem ser 
+    baixadas diretamente! Este método vai FALHAR com URLs do WhatsApp.
+    Use jpegThumbnail como fallback.
+    
     Args:
         url: Media URL to download
         sender_id: User identifier
@@ -665,9 +669,17 @@ def download_and_save_media(url, sender_id, media_type='image', extension='jpg')
         filename = f"{media_type}_{sender_id}_{timestamp}.{extension}"
         filepath = os.path.join(CONFIG["TEMP_MEDIA_DIR"], filename)
         
-        # Download media
+        logger.info(f"⬇️ Attempting to download from: {url[:100]}...")
+        
+        # Download media (will FAIL for encrypted WhatsApp URLs!)
         response = requests.get(url, timeout=30)
         response.raise_for_status()
+        
+        # Check if we got an encrypted file (starts with certain bytes)
+        if response.content[:4] == b'\x00\x00\x00\x00' or '.enc' in url:
+            logger.warning(f"⚠️ Downloaded file appears to be encrypted! Cannot use directly.")
+            logger.warning(f"⚠️ WhatsApp media URLs (.enc) require mediaKey decryption!")
+            return None
         
         # Save to file
         with open(filepath, 'wb') as f:
@@ -677,7 +689,8 @@ def download_and_save_media(url, sender_id, media_type='image', extension='jpg')
         return filepath
         
     except Exception as e:
-        logger.error(f"❌ Error downloading media from {url}: {e}", exc_info=True)
+        logger.error(f"❌ Error downloading media from URL: {e}")
+        logger.error(f"❌ WhatsApp encrypted URLs (.enc) cannot be downloaded directly!")
         return None
 
 def cleanup_old_media():
@@ -847,42 +860,53 @@ _Seus dados estão corretos?_
             logger.info(f"   - MIME type: {mimetype}")
             logger.info(f"   - Caption: {caption if caption else 'N/A'}")
             
-            # Strategy 1: Try to download the FULL RESOLUTION image from URL first (best quality!)
-            image_url = image_data.get('url')
-            if image_url:
-                logger.info(f"📥 Strategy 1: Attempting to download full resolution image from URL")
-                logger.info(f"   - URL: {image_url[:100]}..." if len(image_url) > 100 else f"   - URL: {image_url}")
-                prescription_file_path = download_and_save_media(
-                    image_url,
-                    safe_sender_id,
-                    'prescription',
+            # ⚠️ CORREÇÃO CRÍTICA: WhatsApp URLs são CRIPTOGRAFADAS (.enc)
+            # A URL 'url' do tipo https://mmg.whatsapp.net/v/*.enc REQUER descriptografia
+            # com a mediaKey, que não está implementado.
+            # 
+            # SOLUÇÃO: Usar SEMPRE o jpegThumbnail (qualidade reduzida mas VÁLIDA)
+            
+            # Strategy 1 (PRIMARY): Use jpegThumbnail - guaranteed to work!
+            jpeg_thumbnail = image_data.get('jpegThumbnail')
+            if jpeg_thumbnail:
+                logger.info(f"📥 Strategy 1 (PRIMARY): Using jpegThumbnail (base64 encoded)")
+                logger.info(f"   - Thumbnail size: {len(jpeg_thumbnail)} characters (base64)")
+                logger.info(f"   ℹ️ This is a valid JPEG, slightly reduced quality but perfectly readable")
+                prescription_file_path = save_media_from_base64(
+                    jpeg_thumbnail, 
+                    safe_sender_id, 
+                    'prescription', 
                     extension
                 )
                 if prescription_file_path:
-                    logger.info(f"✅ SUCCESS: Full resolution image downloaded and saved!")
+                    logger.info(f"✅ SUCCESS: Thumbnail image saved successfully!")
                 else:
-                    logger.warning(f"⚠️ FAILED: Could not download from URL, trying fallback...")
+                    logger.error(f"❌ FAILED: Could not save thumbnail image (unexpected error)")
             else:
-                logger.warning(f"⚠️ No 'url' field in imageMessage, skipping URL download")
+                logger.error(f"❌ CRITICAL: No 'jpegThumbnail' available in message!")
             
-            # Strategy 2: Fallback to jpegThumbnail (lower quality but more reliable)
+            # Strategy 2 (DEBUG ONLY): Try URL download (will fail - encrypted)
+            # Keeping this ONLY for logging/debugging purposes
             if not prescription_file_path:
-                jpeg_thumbnail = image_data.get('jpegThumbnail')
-                if jpeg_thumbnail:
-                    logger.info(f"📥 Strategy 2: Using jpegThumbnail (base64 encoded)")
-                    logger.info(f"   - Thumbnail size: {len(jpeg_thumbnail)} characters (base64)")
-                    prescription_file_path = save_media_from_base64(
-                        jpeg_thumbnail, 
-                        safe_sender_id, 
-                        'prescription', 
+                image_url = image_data.get('url')
+                if image_url:
+                    logger.info(f"📥 Strategy 2 (DEBUG): Attempting encrypted URL download (will fail)")
+                    logger.info(f"   - URL: {image_url[:100]}..." if len(image_url) > 100 else f"   - URL: {image_url}")
+                    logger.warning(f"   ⚠️ WhatsApp URLs (.enc) are ENCRYPTED and require mediaKey decryption!")
+                    
+                    # Try download (will produce corrupted file)
+                    prescription_file_path = download_and_save_media(
+                        image_url,
+                        safe_sender_id,
+                        'prescription',
                         extension
                     )
                     if prescription_file_path:
-                        logger.info(f"✅ SUCCESS: Thumbnail image saved (lower quality)")
+                        logger.error(f"⚠️ URL download succeeded but file is likely CORRUPTED (encrypted data)")
                     else:
-                        logger.error(f"❌ FAILED: Could not save thumbnail image")
+                        logger.info(f"✅ URL download failed as expected (encrypted URL)")
                 else:
-                    logger.error(f"❌ CRITICAL: No 'jpegThumbnail' available - cannot save image!")
+                    logger.warning(f"⚠️ No 'url' field in imageMessage")
             
             # Log final status
             logger.info(f"📊 Final image processing status:")

@@ -6907,3 +6907,26 @@ Eles vão te ajudar a encontrar as melhores opções...
 2025-10-24 17:40:54,991 - INFO - whatsapp_bot - === WEBHOOK CALLED ===
 2025-10-24 17:40:54,998 - INFO - whatsapp_bot - Ignoring self-sent message: 3EB0778A14F45530B20DBD
 2025-10-24 17:40:54,998 - INFO - werkzeug - 127.0.0.1 - - [24/Oct/2025 17:40:54] "POST /webhook HTTP/1.1" 200 -
+2025-10-24 17:59:44,311 - INFO - whatsapp_bot - WaSenderAPI client initialized successfully with retry support
+2025-10-24 17:59:44,311 - INFO - whatsapp_bot - Gemini API client initialized successfully
+2025-10-24 17:59:44,313 - INFO - whatsapp_bot - Successfully loaded persona: Pedro
+2025-10-24 17:59:44,314 - INFO - whatsapp_bot - Loaded 47 few-shot examples
+2025-10-24 17:59:44,314 - INFO - whatsapp_bot - Interactive menu: Enabled
+2025-10-24 17:59:44,314 - INFO - whatsapp_bot - Using persona 'Pedro' with 47 training examples
+2025-10-24 17:59:44,314 - INFO - whatsapp_bot - Gemini client initialized with model: gemini-2.0-flash
+2025-10-24 17:59:44,315 - INFO - whatsapp_bot - Few-shot learning: Enabled (47 examples)
+2025-10-24 17:59:44,316 - INFO - whatsapp_bot - ======================================================
+2025-10-24 17:59:44,317 - INFO - whatsapp_bot -   WhatsApp Gemini Chatbot Starting
+2025-10-24 17:59:44,317 - INFO - whatsapp_bot - ======================================================
+2025-10-24 17:59:44,317 - INFO - whatsapp_bot - Persona: Pedro
+2025-10-24 17:59:44,318 - INFO - whatsapp_bot - Gemini Model: gemini-2.0-flash
+2025-10-24 17:59:44,318 - INFO - whatsapp_bot - Conversations Directory: conversations
+2025-10-24 17:59:44,318 - INFO - whatsapp_bot - WaSender API Client: Initialized
+2025-10-24 17:59:44,318 - INFO - whatsapp_bot - Gemini API Client: Initialized
+2025-10-24 17:59:44,319 - INFO - whatsapp_bot - Starting Flask server on port 5001...
+2025-10-24 17:59:44,319 - INFO - whatsapp_bot - ======================================================
+2025-10-24 17:59:44,376 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.107:5001
+2025-10-24 17:59:44,376 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
