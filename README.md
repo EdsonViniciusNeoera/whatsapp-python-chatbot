@@ -14,7 +14,8 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
 - **WhatsApp Integration**: Receives and sends messages through WaSenderAPI
 - **AI-Powered Responses**: Generates intelligent replies using Google's Gemini AI
 - **Media Support**: Handles text, images, audio, video, and document messages
-- **� Image Forwarding to Consultants**: Automatically sends prescription images/PDFs to consultant group via public URLs
+- **📤 External Upload Form**: Secure web form for customers to upload prescription images/PDFs (bypasses WhatsApp encryption)
+- **📸 Image Forwarding to Consultants**: Automatically sends prescription files to consultant group
 - **Smart Message Splitting**: Automatically breaks long responses into multiple messages for better readability
 - **Customizable AI Persona**: Tailor the bot's personality and behavior via simple JSON configuration
 - **Conversation History**: Maintains context between messages for natural conversations
@@ -37,7 +38,10 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
 ├── persona.json                        # Customizable AI personality settings
 ├── README.md                           # This file
 ├── GUIA_ENVIO_IMAGENS.md               # Complete guide for image forwarding
+├── GUIA_UPLOAD_RECEITAS.md             # 📤 NEW: External upload form guide
 ├── SISTEMA_ARMAZENAMENTO_TEMPORARIO.md # Media storage documentation
+├── templates/
+│   └── upload_prescription.html        # 📤 NEW: Upload form page
 ├── conversations/                      # Conversation history storage
 └── temp_media/                         # Temporary media storage (auto-cleanup)
 ```
@@ -82,9 +86,52 @@ Create a powerful WhatsApp chatbot powered by Google's Gemini AI for just $6/mon
     - `GEMINI_API_KEY`: Your API key for the Gemini API (free tier available)
     - `WASENDER_API_TOKEN`: Your API token from WaSenderAPI ($6/month subscription)
     - `NOTIFICATION_GROUP_ID`: WhatsApp group ID for consultant notifications
-    - `WEBHOOK_BASE_URL`: **Public URL of your server (ngrok or domain)** - REQUIRED for image forwarding!
+    - `WEBHOOK_BASE_URL`: **Public URL of your server (ngrok or domain)** - REQUIRED for image forwarding and upload form!
     - `TEMP_MEDIA_DIR`: Folder for temporary media storage (default: temp_media)
     - `MEDIA_CLEANUP_HOURS`: Hours before auto-cleanup (default: 24)
+
+## 📤 Upload Form for Prescriptions
+
+**NEW!** Due to WhatsApp encryption limitations, customers can now upload prescription images/PDFs through a secure web form instead of sending them directly via WhatsApp.
+
+### Why Use the Upload Form?
+
+- ✅ **Bypasses encryption**: WaSender API cannot decrypt WhatsApp images
+- ✅ **Better quality**: No WhatsApp compression
+- ✅ **Supports PDFs**: Accepts both images and PDF files
+- ✅ **Automatic notifications**: Consultants receive uploaded files instantly
+- ✅ **Mobile-friendly**: Works on any device
+
+### How It Works
+
+1. **Bot asks for prescription** during customer form collection
+2. **Bot sends upload link**: `https://your-domain.com/upload?phone=81999887766`
+3. **Customer fills form**: Name, phone (pre-filled), uploads file
+4. **Bot receives notification**: File saved in `temp_media/`
+5. **Customer confirms**: Types "enviado" to continue
+6. **Bot verifies**: Checks if file was uploaded
+7. **Consultants notified**: Group receives complete customer data + file
+
+### Configuration
+
+Set your public URL in `.env`:
+
+```env
+WEBHOOK_BASE_URL=https://your-ngrok-url.ngrok-free.app
+# or for production:
+WEBHOOK_BASE_URL=https://bot.yourcompany.com
+```
+
+### Available Endpoints
+
+- **GET `/upload`** - Upload form page (optional `?phone=` parameter)
+- **POST `/upload_prescription`** - Receives uploaded files
+- **GET `/media/{filename}`** - Serves files to WhatsApp API
+
+### Complete Documentation
+
+For detailed setup and usage instructions:
+📖 **[GUIA_UPLOAD_RECEITAS.md](GUIA_UPLOAD_RECEITAS.md)** - Complete upload form guide (Portuguese)
 
 ## 🏃‍♂️ Running the Application
 

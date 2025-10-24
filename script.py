@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from dotenv import load_dotenv
 import google.generativeai as genai
 import json
@@ -106,11 +106,158 @@ def index():
             '/status': 'Detailed bot status',
             '/webhook': 'Webhook endpoint for WhatsApp messages (POST only)',
             '/clear_history/<user_id>': 'Clear conversation history for a user (POST only)',
-            '/media/<filename>': 'Serve temporary media files (GET only)'
+            '/media/<filename>': 'Serve temporary media files (GET only)',
+            '/upload': 'Upload prescription form page (GET only)',
+            '/upload_prescription': 'Upload prescription endpoint (POST only)'
         },
         'documentation': 'Send POST requests to /webhook for WhatsApp integration',
         'version': '1.0.0'
     })
+
+@app.route('/upload', methods=['GET'])
+def upload_form():
+    """
+    Serve the prescription upload form.
+    
+    This page allows customers to upload their prescription images/PDFs
+    when WhatsApp encryption prevents direct image sharing.
+    
+    Query params:
+        phone: Optional - Pre-fill customer phone number
+        
+    Returns:
+        HTML upload form
+    """
+    return render_template('upload_prescription.html')
+
+@app.route('/upload_prescription', methods=['POST'])
+def upload_prescription():
+    """
+    Handle prescription file uploads from the external form.
+    
+    This endpoint receives prescription images/PDFs uploaded by customers
+    through the web form and saves them to the temp_media directory.
+    
+    Form data:
+        phone: Customer's WhatsApp number (required)
+        name: Customer's name (required)
+        prescription: Image or PDF file (required, max 10MB)
+        
+    Returns:
+        JSON with success/error status
+    """
+    try:
+        # Validate required fields
+        if 'phone' not in request.form or 'name' not in request.form:
+            return jsonify({'error': 'Phone and name are required'}), 400
+        
+        if 'prescription' not in request.files:
+            return jsonify({'error': 'Prescription file is required'}), 400
+        
+        phone = request.form['phone'].strip()
+        name = request.form['name'].strip()
+        file = request.files['prescription']
+        
+        # Validate phone format (10-11 digits)
+        phone_digits = ''.join(filter(str.isdigit, phone))
+        if len(phone_digits) < 10 or len(phone_digits) > 11:
+            return jsonify({'error': 'Invalid phone number format'}), 400
+        
+        # Validate name
+        if len(name) < 2:
+            return jsonify({'error': 'Name is too short'}), 400
+        
+        # Validate file
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+        
+        # Validate file size (10MB max)
+        file.seek(0, os.SEEK_END)
+        file_size = file.tell()
+        file.seek(0)
+        
+        if file_size > 10 * 1024 * 1024:  # 10MB
+            return jsonify({'error': 'File too large (max 10MB)'}), 400
+        
+        # Validate file type
+        allowed_extensions = {'jpg', 'jpeg', 'png', 'webp', 'pdf'}
+        file_ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
+        
+        if file_ext not in allowed_extensions:
+            return jsonify({'error': 'Invalid file type (use JPG, PNG, WEBP or PDF)'}), 400
+        
+        # Create safe sender ID
+        safe_sender_id = phone_digits.replace('@s.whatsapp.net', '').replace('@g.us', '')
+        safe_sender_id = "".join(c if c.isalnum() else '_' for c in safe_sender_id)
+        
+        # Generate unique filename
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        safe_name = "".join(c if c.isalnum() or c in (' ', '-', '_') else '' for c in name)
+        safe_name = safe_name.replace(' ', '_')[:30]  # Limit name length
+        
+        filename = f"prescription_upload_{safe_sender_id}_{safe_name}_{timestamp}.{file_ext}"
+        filepath = os.path.join(CONFIG["TEMP_MEDIA_DIR"], filename)
+        
+        # Save file
+        file.save(filepath)
+        logger.info(f"✅ Prescription uploaded via form: {filename} ({file_size} bytes)")
+        logger.info(f"   Customer: {name} ({phone_digits})")
+        
+        # Send notification to group if configured
+        if CONFIG["NOTIFICATION_GROUP_ID"]:
+            notification_message = f"""
+🔔 *RECEITA ENVIADA VIA FORMULÁRIO*
+
+👤 *Cliente:* {name}
+📱 *WhatsApp:* {phone_digits}
+⏰ *Horário:* {datetime.now().strftime('%d/%m/%Y às %H:%M')}
+
+📎 *Arquivo:* {file.filename}
+💾 *Tamanho:* {file_size / 1024:.1f} KB
+
+---
+_Arquivo será enviado a seguir_
+"""
+            try:
+                # Send text notification
+                send_whatsapp_message(
+                    CONFIG["NOTIFICATION_GROUP_ID"],
+                    notification_message.strip(),
+                    message_type='text'
+                )
+                
+                # Send the prescription file
+                public_url = f"{CONFIG['WEBHOOK_BASE_URL']}/media/{filename}"
+                
+                if file_ext == 'pdf':
+                    send_whatsapp_message(
+                        CONFIG["NOTIFICATION_GROUP_ID"],
+                        f"💊 *Receita de {name}*",
+                        message_type='document',
+                        media_url=public_url
+                    )
+                else:
+                    send_whatsapp_message(
+                        CONFIG["NOTIFICATION_GROUP_ID"],
+                        f"💊 *Receita de {name}*",
+                        message_type='image',
+                        media_url=public_url
+                    )
+                
+                logger.info(f"✅ Prescription notification sent to group")
+            except Exception as e:
+                logger.error(f"❌ Error sending notification: {e}")
+        
+        # Return success
+        return jsonify({
+            'status': 'success',
+            'message': 'Receita enviada com sucesso!',
+            'filename': filename
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"❌ Error processing prescription upload: {e}", exc_info=True)
+        return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/media/<filename>', methods=['GET'])
 def serve_media(filename):
@@ -734,6 +881,49 @@ def get_extension_from_mimetype(mimetype):
     }
     return extension_map.get(mimetype, 'bin')
 
+def check_uploaded_prescription(safe_sender_id):
+    """
+    Check if customer has uploaded a prescription via the web form.
+    
+    Looks for files matching pattern: prescription_upload_{safe_sender_id}_*
+    
+    Args:
+        safe_sender_id: The safe sender identifier
+        
+    Returns:
+        Path to the most recent uploaded file or None if not found
+    """
+    try:
+        media_dir = CONFIG["TEMP_MEDIA_DIR"]
+        if not os.path.exists(media_dir):
+            return None
+        
+        # Look for files matching the pattern
+        pattern = f"prescription_upload_{safe_sender_id}_"
+        matching_files = []
+        
+        for filename in os.listdir(media_dir):
+            if filename.startswith(pattern):
+                filepath = os.path.join(media_dir, filename)
+                # Get file modification time
+                mtime = os.path.getmtime(filepath)
+                matching_files.append((filepath, mtime))
+        
+        # Return most recent file if any found
+        if matching_files:
+            # Sort by modification time (most recent first)
+            matching_files.sort(key=lambda x: x[1], reverse=True)
+            most_recent = matching_files[0][0]
+            logger.info(f"✅ Found uploaded prescription: {most_recent}")
+            return most_recent
+        
+        logger.info(f"ℹ️ No uploaded prescription found for {safe_sender_id}")
+        return None
+        
+    except Exception as e:
+        logger.error(f"❌ Error checking uploaded prescription: {e}", exc_info=True)
+        return None
+
 # ==================== END TEMPORARY MEDIA STORAGE ====================
 
 def process_customer_form_step(safe_sender_id, sender_number, message_text, message_info):
@@ -846,102 +1036,55 @@ _Seus dados estão corretos?_
         prescription_info = "Não possui receita"
         prescription_file_path = None
         
-        # Check if message has image
-        if message_info.get('message', {}).get('imageMessage'):
-            has_prescription = True
-            image_data = message_info['message']['imageMessage']
-            
-            # Get additional info
-            caption = image_data.get('caption', '')
-            mimetype = image_data.get('mimetype', 'image/jpeg')
-            extension = get_extension_from_mimetype(mimetype)
-            
-            logger.info(f"📸 Processing image message:")
-            logger.info(f"   - MIME type: {mimetype}")
-            logger.info(f"   - Caption: {caption if caption else 'N/A'}")
-            
-            # ⚠️ CORREÇÃO CRÍTICA: WhatsApp URLs são CRIPTOGRAFADAS (.enc)
-            # A URL 'url' do tipo https://mmg.whatsapp.net/v/*.enc REQUER descriptografia
-            # com a mediaKey, que não está implementado.
-            # 
-            # SOLUÇÃO: Usar SEMPRE o jpegThumbnail (qualidade reduzida mas VÁLIDA)
-            
-            # Strategy 1 (PRIMARY): Use jpegThumbnail - guaranteed to work!
-            jpeg_thumbnail = image_data.get('jpegThumbnail')
-            if jpeg_thumbnail:
-                logger.info(f"📥 Strategy 1 (PRIMARY): Using jpegThumbnail (base64 encoded)")
-                logger.info(f"   - Thumbnail size: {len(jpeg_thumbnail)} characters (base64)")
-                logger.info(f"   ℹ️ This is a valid JPEG, slightly reduced quality but perfectly readable")
-                prescription_file_path = save_media_from_base64(
-                    jpeg_thumbnail, 
-                    safe_sender_id, 
-                    'prescription', 
-                    extension
-                )
-                if prescription_file_path:
-                    logger.info(f"✅ SUCCESS: Thumbnail image saved successfully!")
-                else:
-                    logger.error(f"❌ FAILED: Could not save thumbnail image (unexpected error)")
-            else:
-                logger.error(f"❌ CRITICAL: No 'jpegThumbnail' available in message!")
-            
-            # Strategy 2 (DEBUG ONLY): Try URL download (will fail - encrypted)
-            # Keeping this ONLY for logging/debugging purposes
-            if not prescription_file_path:
-                image_url = image_data.get('url')
-                if image_url:
-                    logger.info(f"📥 Strategy 2 (DEBUG): Attempting encrypted URL download (will fail)")
-                    logger.info(f"   - URL: {image_url[:100]}..." if len(image_url) > 100 else f"   - URL: {image_url}")
-                    logger.warning(f"   ⚠️ WhatsApp URLs (.enc) are ENCRYPTED and require mediaKey decryption!")
-                    
-                    # Try download (will produce corrupted file)
-                    prescription_file_path = download_and_save_media(
-                        image_url,
-                        safe_sender_id,
-                        'prescription',
-                        extension
-                    )
-                    if prescription_file_path:
-                        logger.error(f"⚠️ URL download succeeded but file is likely CORRUPTED (encrypted data)")
-                    else:
-                        logger.info(f"✅ URL download failed as expected (encrypted URL)")
-                else:
-                    logger.warning(f"⚠️ No 'url' field in imageMessage")
-            
-            # Log final status
-            logger.info(f"📊 Final image processing status:")
-            logger.info(f"   - File saved: {prescription_file_path is not None}")
-            if prescription_file_path:
-                logger.info(f"   - File path: {prescription_file_path}")
-                logger.info(f"   - File size: {os.path.getsize(prescription_file_path)} bytes")
-            
-            if prescription_file_path:
-                prescription_info = f"✅ Cliente enviou FOTO da receita (salva localmente)"
-            else:
-                prescription_info = f"⚠️ Cliente enviou FOTO da receita (falha ao salvar)"
-            
-            if caption:
-                prescription_info += f" (legenda: {caption})"
-        
-        # Check if message has document/PDF
-        elif message_info.get('message', {}).get('documentMessage'):
-            has_prescription = True
-            doc_data = message_info['message']['documentMessage']
-            
-            doc_name = doc_data.get('fileName', 'documento.pdf')
-            mimetype = doc_data.get('mimetype', 'application/pdf')
-            extension = get_extension_from_mimetype(mimetype)
-            
-            # Note: Documents usually don't have thumbnails, would need actual download
-            logger.info(f"📄 Document received - filename: {doc_name}, mimetype: {mimetype}")
-            prescription_info = f"✅ Cliente enviou ARQUIVO da receita: {doc_name}"
-        
-        # Check for text response
-        elif message_text.lower().strip() in ['não', 'nao', 'n', 'sem receita', 'não tenho', 'nao tenho']:
+        # Check for text response about prescription availability
+        if message_text.lower().strip() in ['não', 'nao', 'n', 'sem receita', 'não tenho', 'nao tenho']:
             prescription_info = "❌ Cliente informou que NÃO possui receita"
         
         elif message_text.lower().strip() in ['sim', 's', 'tenho', 'possuo']:
-            return "Por favor, *envie a foto ou PDF* da sua receita de óculos 📸"
+            # Send link to upload form instead of asking for WhatsApp image
+            phone_number = safe_sender_id.replace('_', '')  # Get clean phone number
+            upload_url = f"{CONFIG['WEBHOOK_BASE_URL']}/upload?phone={phone_number}"
+            
+            return f"""
+Perfeito! 📸
+
+Por questões de segurança e qualidade, pedimos que você envie sua receita através do nosso formulário online:
+
+🔗 *Link para envio:*
+{upload_url}
+
+✅ É rápido e seguro!
+✅ Pode enviar foto ou PDF
+✅ Receberemos em alta qualidade
+
+Após enviar pelo link, digite *"enviado"* aqui para continuar.
+"""
+        
+        # Check if user confirmed they uploaded via form
+        elif message_text.lower().strip() in ['enviado', 'enviado!', 'enviei', 'já enviei', 'ja enviei', 'pronto']:
+            # Check if there's an uploaded file for this customer
+            uploaded_file = check_uploaded_prescription(safe_sender_id)
+            
+            if uploaded_file:
+                has_prescription = True
+                prescription_file_path = uploaded_file
+                prescription_info = "✅ Cliente enviou receita via FORMULÁRIO ONLINE"
+            else:
+                return f"""
+⚠️ Ainda não encontrei sua receita no sistema.
+
+Por favor:
+1. Acesse o link novamente: {CONFIG['WEBHOOK_BASE_URL']}/upload?phone={safe_sender_id.replace('_', '')}
+2. Faça o upload da foto/PDF
+3. Aguarde a confirmação na tela
+4. Digite *"enviado"* aqui novamente
+
+_Caso tenha dificuldades, digite *"não tenho"* para prosseguir sem receita_
+"""
+        
+        else:
+            # User sent something unexpected
+            return "Por favor, responda:\n\n✅ *SIM* - se você possui receita (enviaremos link para upload)\n❌ *NÃO* - se você não possui receita"
         
         form_data['prescription'] = prescription_info
         form_data['has_prescription'] = has_prescription
