@@ -227,8 +227,8 @@ def upload_prescription():
                 consultant_name = form_data.get('consultant_name', 'Não especificado')
                 reason = form.get('reason', 'Upload de receita via formulário')
             
-            # Format notification with complete customer data
-            notification_message = f"""
+            # Format complete message as caption
+            complete_message = f"""
 🆕 *NOVA SOLICITAÇÃO DE ATENDIMENTO*
 
 ⏰ *Horário:* {datetime.now().strftime('%d/%m/%Y às %H:%M')}
@@ -248,38 +248,28 @@ def upload_prescription():
 
 📎 *Arquivo:* {file.filename}
 💾 *Tamanho:* {file_size / 1024:.1f} KB
-
----
-_Receita será enviada a seguir_
 """
             
             try:
-                # Send text notification with complete data
-                send_whatsapp_message(
-                    CONFIG["NOTIFICATION_GROUP_ID"],
-                    notification_message.strip(),
-                    message_type='text'
-                )
-                
-                # Send the prescription file
+                # Send the prescription file with complete caption
                 public_url = f"{CONFIG['WEBHOOK_BASE_URL']}/media/{filename}"
                 
                 if file_ext == 'pdf':
                     send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
-                        f"💊 *Receita de {form_data.get('name', customer_name)}*",
+                        complete_message.strip(),
                         message_type='document',
                         media_url=public_url
                     )
                 else:
                     send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
-                        f"💊 *Receita de {form_data.get('name', customer_name)}*",
+                        complete_message.strip(),
                         message_type='image',
                         media_url=public_url
                     )
                 
-                logger.info(f"✅ Complete prescription notification sent to group")
+                logger.info(f"✅ Complete prescription notification sent to group with media")
             except Exception as e:
                 logger.error(f"❌ Error sending notification: {e}")
         
