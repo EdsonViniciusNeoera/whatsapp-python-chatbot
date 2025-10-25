@@ -323,7 +323,7 @@ def upload_prescription():
             
             # Format complete message as caption
             complete_message = f"""
-🆕 *NOVA SOLICITAÇÃO DE ATENDIMENTO*
+*NOVA SOLICITAÇÃO DE ATENDIMENTO*
 
 ⏰ *Horário:* {datetime.now().strftime('%d/%m/%Y às %H:%M')}
 📋 *Motivo:* {reason}
