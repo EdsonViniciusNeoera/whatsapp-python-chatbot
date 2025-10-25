@@ -149,32 +149,32 @@ def upload_prescription():
     """
     try:
         # Validate required fields
-        if 'phone' not in request.form:
-            return jsonify({'error': 'Phone is required'}), 400
-        
         if 'token' not in request.form:
-            return jsonify({'error': 'Token is required'}), 400
+            return jsonify({'error': 'Token é obrigatório'}), 400
         
         if 'prescription' not in request.files:
-            return jsonify({'error': 'Prescription file is required'}), 400
+            return jsonify({'error': 'Arquivo de receita é obrigatório'}), 400
         
-        phone = request.form['phone'].strip()
         token = request.form['token'].strip()
-        name = request.form.get('name', 'Cliente').strip()  # Default to 'Cliente' if not provided
         file = request.files['prescription']
         
-        # Validate phone format (10-11 digits)
-        phone_digits = ''.join(filter(str.isdigit, phone))
-        if len(phone_digits) < 10 or len(phone_digits) > 11:
-            return jsonify({'error': 'Invalid phone number format'}), 400
-        
-        # Validate token
-        if not validate_token(phone_digits, token):
+        # Validate token and get phone
+        phone_digits = validate_token(token)
+        if not phone_digits:
             return jsonify({'error': 'Código inválido ou expirado! Solicite um novo código pelo WhatsApp.'}), 400
         
         # Remove token após validação bem-sucedida
-        if phone_digits in customer_tokens:
-            del customer_tokens[phone_digits]
+        if token in customer_tokens:
+            del customer_tokens[token]
+        
+        # Get customer name from form data if available
+        safe_sender_id = phone_digits.replace('@s.whatsapp.net', '').replace('@g.us', '')
+        safe_sender_id = "".join(c if c.isalnum() else '_' for c in safe_sender_id)
+        
+        form = get_customer_form(safe_sender_id)
+        customer_name = "Cliente"
+        if form and form.get('data', {}).get('name'):
+            customer_name = form['data']['name']
         
         # Name validation is optional now (defaults to 'Cliente')
         # Skip name length validation since it might be default value
@@ -204,7 +204,7 @@ def upload_prescription():
         
         # Generate unique filename
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        safe_name = "".join(c if c.isalnum() or c in (' ', '-', '_') else '' for c in name)
+        safe_name = "".join(c if c.isalnum() or c in (' ', '-', '_') else '' for c in customer_name)
         safe_name = safe_name.replace(' ', '_')[:30]  # Limit name length
         
         filename = f"prescription_upload_{safe_sender_id}_{safe_name}_{timestamp}.{file_ext}"
@@ -213,14 +213,14 @@ def upload_prescription():
         # Save file
         file.save(filepath)
         logger.info(f"✅ Prescription uploaded via form: {filename} ({file_size} bytes)")
-        logger.info(f"   Customer: {name} ({phone_digits})")
+        logger.info(f"   Customer: {customer_name} ({phone_digits})")
         
         # Send notification to group if configured
         if CONFIG["NOTIFICATION_GROUP_ID"]:
             notification_message = f"""
 🔔 *RECEITA ENVIADA VIA FORMULÁRIO*
 
-👤 *Cliente:* {name}
+👤 *Cliente:* {customer_name}
 📱 *WhatsApp:* {phone_digits}
 ⏰ *Horário:* {datetime.now().strftime('%d/%m/%Y às %H:%M')}
 
@@ -244,14 +244,14 @@ _Arquivo será enviado a seguir_
                 if file_ext == 'pdf':
                     send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
-                        f"💊 *Receita de {name}*",
+                        f"💊 *Receita de {customer_name}*",
                         message_type='document',
                         media_url=public_url
                     )
                 else:
                     send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
-                        f"💊 *Receita de {name}*",
+                        f"💊 *Receita de {customer_name}*",
                         message_type='image',
                         media_url=public_url
                     )
@@ -266,7 +266,7 @@ _Arquivo será enviado a seguir_
             confirmation_message = f"""
 ✅ *Receita recebida com sucesso!*
 
-Obrigado, *{name}*! 😊
+Obrigado, *{customer_name}*! 😊
 
 Sua receita foi recebida e enviada para nosso consultor.
 Ele entrará em contato com você em breve!
@@ -688,8 +688,8 @@ SENDING_SESSION_TTL = 60  # Keep session info for 1 minute
 customer_forms = {}  # {safe_sender_id: {'step': str, 'data': {}, 'timestamp': time, 'reason': str}}
 CUSTOMER_FORM_TTL = 600  # Keep form data for 10 minutes
 
-# Token storage: {phone: token}
-customer_tokens = {}  # {phone: token}
+# Token storage: {token: {phone, timestamp}}
+customer_tokens = {}  # {token: {phone: phone, timestamp: timestamp}}
 TOKEN_TTL = 600  # Token válido por 10 minutos
 
 def generate_token(phone):
@@ -697,41 +697,38 @@ def generate_token(phone):
     Gera um token aleatório de 6 dígitos e armazena junto ao telefone.
     """
     token = str(random.randint(100000, 999999))
-    customer_tokens[phone] = {
-        'token': token,
+    customer_tokens[token] = {
+        'phone': phone,
         'timestamp': time.time()
     }
-    logger.info(f"✅ Token gerado para {phone}: {token}")
+    logger.info(f"✅ Token gerado: {token} para telefone {phone}")
     return token
 
-def validate_token(phone, token):
+def validate_token(token):
     """
-    Valida se o token informado é válido para o telefone.
+    Valida se o token informado é válido e retorna o telefone associado.
     """
-    logger.info(f"🔍 Validando token {token} para telefone {phone}")
-    entry = customer_tokens.get(phone)
+    logger.info(f"🔍 Validando token {token}")
+    entry = customer_tokens.get(token)
     if not entry:
-        logger.warning(f"❌ Nenhum token encontrado para {phone}")
-        return False
-    if entry['token'] != token:
-        logger.warning(f"❌ Token incorreto para {phone}. Esperado: {entry['token']}, Recebido: {token}")
-        return False
+        logger.warning(f"❌ Token não encontrado: {token}")
+        return None
     # Verifica validade
     if time.time() - entry['timestamp'] > TOKEN_TTL:
-        logger.warning(f"❌ Token expirado para {phone}")
-        del customer_tokens[phone]
-        return False
-    logger.info(f"✅ Token válido para {phone}")
-    return True
+        logger.warning(f"❌ Token expirado: {token}")
+        del customer_tokens[token]
+        return None
+    logger.info(f"✅ Token válido: {token} para telefone {entry['phone']}")
+    return entry['phone']
 
 def cleanup_tokens():
     """
     Remove tokens expirados.
     """
     now = time.time()
-    expired = [phone for phone, entry in customer_tokens.items() if now - entry['timestamp'] > TOKEN_TTL]
-    for phone in expired:
-        del customer_tokens[phone]
+    expired = [token for token, entry in customer_tokens.items() if now - entry['timestamp'] > TOKEN_TTL]
+    for token in expired:
+        del customer_tokens[token]
 
 def cleanup_processed_messages():
     """Remove old message IDs from the processed messages cache."""
