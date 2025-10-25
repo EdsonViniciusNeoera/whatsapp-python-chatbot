@@ -285,10 +285,9 @@
         if (phoneParam) {
             document.getElementById('phone').value = phoneParam;
             document.getElementById('name').value = nameParam;
-        } else {
-            showMessage('❌ Link inválido. Por favor, use o link enviado pelo WhatsApp.', 'error');
-            submitBtn.disabled = true;
         }
+        // Se não tiver phone na URL, permite envio mas sem telefone (backend vai gerar erro descritivo)
+
         
         // Mostrar preview do arquivo selecionado
         fileInput.addEventListener('change', function() {
@@ -312,16 +311,18 @@
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Validar telefone
-            const phone = document.getElementById('phone').value.replace(/\D/g, '');
-            if (!phone || phone.length < 10 || phone.length > 11) {
-                showMessage('❌ Link inválido. Por favor, use o link enviado pelo WhatsApp.', 'error');
-                return;
-            }
-            
             // Validar arquivo
             if (!fileInput.files || !fileInput.files[0]) {
                 showMessage('Por favor, selecione um arquivo!', 'error');
+                return;
+            }
+            
+            // Pegar telefone (da URL ou campo hidden)
+            const phone = document.getElementById('phone').value.replace(/\D/g, '');
+            
+            // Se não tiver telefone, mostrar erro descritivo
+            if (!phone || phone.length < 10 || phone.length > 11) {
+                showMessage('❌ Erro: Este link está incompleto. Por favor, use o link enviado pelo WhatsApp que contém seu número.', 'error');
                 return;
             }
             
@@ -360,7 +361,7 @@
                         }
                     }, 5000);
                 } else {
-                    showMessage('❌ Erro: ' + (result.message || 'Erro ao enviar receita.'), 'error');
+                    showMessage('❌ Erro: ' + (result.error || result.message || 'Erro ao enviar receita.'), 'error');
                 }
             } catch (error) {
                 console.error('Erro:', error);

@@ -1,4 +1,5 @@
 import os
+import random
 import logging
 from flask import Flask, request, jsonify, send_from_directory, render_template
 from dotenv import load_dotenv
@@ -669,10 +670,51 @@ PROCESSED_MESSAGE_TTL = 300  # Keep message IDs for 5 minutes (300 seconds)
 active_sending_sessions = {}  # {safe_sender_id: {'cancel': False, 'timestamp': time}}
 SENDING_SESSION_TTL = 60  # Keep session info for 1 minute
 
+
 # Customer form data collection
 # Stores customer information being collected before notifying attendants
 customer_forms = {}  # {safe_sender_id: {'step': str, 'data': {}, 'timestamp': time, 'reason': str}}
 CUSTOMER_FORM_TTL = 600  # Keep form data for 10 minutes
+
+# Token storage: {phone: token}
+customer_tokens = {}  # {phone: token}
+TOKEN_TTL = 600  # Token válido por 10 minutos
+
+def generate_token(phone):
+    """
+    Gera um token aleatório de 6 dígitos e armazena junto ao telefone.
+    """
+    token = str(random.randint(100000, 999999))
+    customer_tokens[phone] = {
+        'token': token,
+        'timestamp': time.time()
+    }
+    logger.info(f"Token gerado para {phone}: {token}")
+    return token
+
+def validate_token(phone, token):
+    """
+    Valida se o token informado é válido para o telefone.
+    """
+    entry = customer_tokens.get(phone)
+    if not entry:
+        return False
+    if entry['token'] != token:
+        return False
+    # Verifica validade
+    if time.time() - entry['timestamp'] > TOKEN_TTL:
+        del customer_tokens[phone]
+        return False
+    return True
+
+def cleanup_tokens():
+    """
+    Remove tokens expirados.
+    """
+    now = time.time()
+    expired = [phone for phone, entry in customer_tokens.items() if now - entry['timestamp'] > TOKEN_TTL]
+    for phone in expired:
+        del customer_tokens[phone]
 
 def cleanup_processed_messages():
     """Remove old message IDs from the processed messages cache."""
@@ -1105,10 +1147,21 @@ Tá tudo certo? 🤔
             prescription_info = "❌ Cliente informou que NÃO possui receita"
         
         elif message_text.lower().strip() in ['sim', 's', 'tenho', 'possuo']:
-            # Send link to upload form instead of asking for WhatsApp image
+            # Gera token e envia para o cliente
             phone_number = safe_sender_id.replace('_', '')  # Get clean phone number
+            token = generate_token(phone_number)
             upload_url = f"{CONFIG['WEBHOOK_BASE_URL']}/upload?phone={phone_number}"
-            
+
+            # Envia mensagem com token via WhatsApp
+            token_message = f"""
+🔒 *Código de segurança para envio da receita*
+
+Seu código é: *{token}*
+
+Guarde este código! Você vai precisar dele para enviar sua receita no formulário.
+"""
+            send_whatsapp_message(f"{phone_number}@s.whatsapp.net", token_message.strip(), message_type='text')
+
             return f"""
 Show! 📸
 
@@ -1121,7 +1174,8 @@ Pra garantir a melhor qualidade, vou te mandar um link pra você enviar a receit
 ✅ Pode ser foto ou PDF
 ✅ Super seguro
 
-*IMPORTANTE:* Depois que você enviar lá, eu te mando uma confirmação *automática* aqui no WhatsApp! Não precisa fazer mais nada! 😊
+*IMPORTANTE:* Você vai precisar do código de segurança enviado aqui no WhatsApp para concluir o envio!
+Depois que você enviar lá, eu te mando uma confirmação *automática* aqui no WhatsApp! Não precisa fazer mais nada! 😊
 """
         
         # NOTE: The "enviado" check is kept for backward compatibility,
