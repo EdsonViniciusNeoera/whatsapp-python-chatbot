@@ -169,11 +169,20 @@ def upload_prescription():
         
         # Clean phone number - remove any WhatsApp suffixes and non-digits
         phone_digits = ''.join(filter(str.isdigit, phone_number))
-        # Remove country code 55 if present at the beginning for display
+        
+        # Format for display and WhatsApp
         if phone_digits.startswith('55') and len(phone_digits) == 13:
-            display_phone = phone_digits[2:]  # Remove 55 prefix for display
+            # Phone already has country code 55
+            display_phone = phone_digits[2:]  # Remove 55 for local display
+            whatsapp_phone = phone_digits     # Keep 55 for WhatsApp
+        elif len(phone_digits) == 11:
+            # Phone without country code
+            display_phone = phone_digits      # Use as is for local display  
+            whatsapp_phone = "55" + phone_digits  # Add 55 for WhatsApp
         else:
+            # Other formats
             display_phone = phone_digits
+            whatsapp_phone = phone_digits if phone_digits.startswith('55') else "55" + phone_digits
         
         # Get customer name from form data if available
         # IMPORTANT: Use the same format as in the webhook handler
@@ -325,7 +334,7 @@ def upload_prescription():
 👤 *DADOS DO CLIENTE*
 • *Nome:* {form_data.get('name', customer_name)}
 • *Telefone:* {display_phone}
-• *WhatsApp:* 55{display_phone}
+• *WhatsApp:* {whatsapp_phone}
 • *CPF:* {form_data.get('cpf', 'Não informado')}
 
 💊 *RECEITA DE ÓCULOS*
