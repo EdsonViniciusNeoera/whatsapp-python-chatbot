@@ -159,25 +159,57 @@ def upload_prescription():
         file = request.files['prescription']
         
         # Validate token and get phone
-        phone_digits = validate_token(token)
-        if not phone_digits:
+        phone_number = validate_token(token)
+        if not phone_number:
             return jsonify({'error': 'Código inválido ou expirado! Solicite um novo código pelo WhatsApp.'}), 400
         
         # Remove token após validação bem-sucedida
         if token in customer_tokens:
             del customer_tokens[token]
         
+        # Clean phone number - remove any WhatsApp suffixes and non-digits
+        phone_digits = ''.join(filter(str.isdigit, phone_number))
+        # Remove country code 55 if present at the beginning for display
+        if phone_digits.startswith('55') and len(phone_digits) == 13:
+            display_phone = phone_digits[2:]  # Remove 55 prefix for display
+        else:
+            display_phone = phone_digits
+        
         # Get customer name from form data if available
-        safe_sender_id = phone_digits.replace('@s.whatsapp.net', '').replace('@g.us', '')
-        safe_sender_id = "".join(c if c.isalnum() else '_' for c in safe_sender_id)
+        # IMPORTANT: Use the same format as in the webhook handler
+        safe_sender_id = "".join(c if c.isalnum() else '_' for c in phone_number)
         
         form = get_customer_form(safe_sender_id)
         customer_name = "Cliente"
         if form and form.get('data', {}).get('name'):
             customer_name = form['data']['name']
-        
-        # Name validation is optional now (defaults to 'Cliente')
-        # Skip name length validation since it might be default value
+            logger.info(f"✅ Customer name from form: {customer_name}")
+        else:
+            logger.warning(f"⚠️ No customer name found in form for {safe_sender_id}")
+            
+            # Try alternative IDs to find customer name
+            possible_ids = [
+                phone_digits + "_s_whatsapp_net",
+                phone_digits,
+                display_phone + "_s_whatsapp_net", 
+                display_phone,
+            ]
+            
+            if phone_digits.startswith('55'):
+                alt_phone = phone_digits[2:]
+                possible_ids.extend([alt_phone + "_s_whatsapp_net", alt_phone])
+            else:
+                alt_phone = "55" + phone_digits  
+                possible_ids.extend([alt_phone + "_s_whatsapp_net", alt_phone])
+            
+            for try_id in possible_ids:
+                alt_form = get_customer_form(try_id)
+                if alt_form and alt_form.get('data', {}).get('name'):
+                    customer_name = alt_form['data']['name']
+                    logger.info(f"✅ Found customer name with ID {try_id}: {customer_name}")
+                    break
+            else:
+                logger.warning(f"⚠️ Could not find customer name for any ID variation, using default: {customer_name}")
         
         # Validate file
         if file.filename == '':
@@ -198,10 +230,6 @@ def upload_prescription():
         if file_ext not in allowed_extensions:
             return jsonify({'error': 'Invalid file type (use JPG, PNG, WEBP or PDF)'}), 400
         
-        # Create safe sender ID
-        safe_sender_id = phone_digits.replace('@s.whatsapp.net', '').replace('@g.us', '')
-        safe_sender_id = "".join(c if c.isalnum() else '_' for c in safe_sender_id)
-        
         # Generate unique filename
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         safe_name = "".join(c if c.isalnum() or c in (' ', '-', '_') else '' for c in customer_name)
@@ -213,19 +241,76 @@ def upload_prescription():
         # Save file
         file.save(filepath)
         logger.info(f"✅ Prescription uploaded via form: {filename} ({file_size} bytes)")
-        logger.info(f"   Customer: {customer_name} ({phone_digits})")
+        logger.info(f"   Customer: {customer_name} ({display_phone})")
         
         # Send notification to group if configured
         if CONFIG["NOTIFICATION_GROUP_ID"]:
             # Get form data for complete notification
             form_data = {}
             consultant_name = "Não especificado"
-            reason = "Upload de receita via formulário"
+            reason = "Upload de receita via formulário"  # Default fallback
+            
+            logger.info(f"🔍 Looking for form data for safe_sender_id: {safe_sender_id}")
+            logger.info(f"📊 Active forms count: {len(customer_forms)}")
+            for form_id, form_info in customer_forms.items():
+                logger.info(f"   📋 Active form: {form_id} - Step: {form_info.get('step')} - Reason: {form_info.get('reason')}")
             
             if form:
                 form_data = form.get('data', {})
                 consultant_name = form_data.get('consultant_name', 'Não especificado')
                 reason = form.get('reason', 'Upload de receita via formulário')
+                logger.info(f"📋 Form data found: {form_data}")
+                logger.info(f"👨‍💼 Consultant found: {consultant_name}")
+                logger.info(f"📝 Reason found: {reason}")
+            else:
+                logger.warning(f"⚠️ No form data found for {safe_sender_id}")
+                
+                # Try to find form with different ID formats
+                logger.info(f"🔍 Trying alternative formats...")
+                
+                # List all possible variations to try
+                possible_ids = [
+                    phone_digits + "_s_whatsapp_net",  # With WhatsApp suffix
+                    phone_digits,  # Just digits
+                    display_phone + "_s_whatsapp_net",  # Display phone with suffix
+                    display_phone,  # Just display phone
+                ]
+                
+                if phone_digits.startswith('55'):
+                    # Try without country code
+                    alt_phone = phone_digits[2:]
+                    possible_ids.extend([
+                        alt_phone + "_s_whatsapp_net",
+                        alt_phone
+                    ])
+                else:
+                    # Try with country code
+                    alt_phone = "55" + phone_digits
+                    possible_ids.extend([
+                        alt_phone + "_s_whatsapp_net",
+                        alt_phone
+                    ])
+                
+                logger.info(f"🔍 Will try these IDs: {possible_ids}")
+                
+                for try_id in possible_ids:
+                    alt_form = get_customer_form(try_id)
+                    if alt_form:
+                        logger.info(f"✅ Found form with ID: {try_id}")
+                        form_data = alt_form.get('data', {})
+                        consultant_name = form_data.get('consultant_name', 'Não especificado')
+                        reason = alt_form.get('reason', 'Upload de receita via formulário')
+                        
+                        # Update customer_name if we found it in this form
+                        if form_data.get('name') and customer_name == "Cliente":
+                            customer_name = form_data.get('name')
+                            logger.info(f"✅ Updated customer name from alternative form: {customer_name}")
+                        
+                        break
+                else:
+                    logger.error(f"❌ Could not find form for any ID variation!")
+            
+            logger.info(f"🎯 Final data used - Customer: {customer_name}, Consultant: {consultant_name}, Reason: {reason}")
             
             # Format complete message as caption
             complete_message = f"""
@@ -239,15 +324,12 @@ def upload_prescription():
 
 👤 *DADOS DO CLIENTE*
 • *Nome:* {form_data.get('name', customer_name)}
-• *Telefone:* {phone_digits}
-• *WhatsApp:* 55{phone_digits}
+• *Telefone:* {display_phone}
+• *WhatsApp:* 55{display_phone}
 • *CPF:* {form_data.get('cpf', 'Não informado')}
 
 💊 *RECEITA DE ÓCULOS*
 ✅ Cliente enviou {file_ext.upper()} da receita via FORMULÁRIO ONLINE
-
-📎 *Arquivo:* {file.filename}
-💾 *Tamanho:* {file_size / 1024:.1f} KB
 """
             
             try:
@@ -276,6 +358,8 @@ def upload_prescription():
         # **NEW: Send automatic confirmation to customer via WhatsApp**
         try:
             customer_whatsapp = f"{phone_digits}@s.whatsapp.net"
+            
+            # Use the customer name we found (either from original form or alternative search)
             confirmation_message = f"""
 ✅ *Receita recebida com sucesso!*
 
@@ -291,7 +375,7 @@ _Posso ajudar com mais alguma coisa?_
                 confirmation_message.strip(),
                 message_type='text'
             )
-            logger.info(f"✅ Automatic confirmation sent to customer {phone_digits}")
+            logger.info(f"✅ Automatic confirmation sent to customer {display_phone} ({customer_name})")
             
             # **NEW: Auto-advance customer form to next step**
             # Mark prescription as received and move to confirmation
@@ -869,9 +953,13 @@ def update_customer_form(safe_sender_id, step, data_key=None, data_value=None):
     if safe_sender_id in customer_forms:
         if data_key and data_value is not None:
             customer_forms[safe_sender_id]['data'][data_key] = data_value
+            logger.info(f"📝 Updated form data: {data_key} = {data_value} for {safe_sender_id}")
         customer_forms[safe_sender_id]['step'] = step
         customer_forms[safe_sender_id]['timestamp'] = time.time()
-        logger.info(f"Updated customer form for {safe_sender_id} - step: {step}")
+        logger.info(f"📋 Updated customer form for {safe_sender_id} - step: {step}")
+        logger.info(f"📋 Current form data: {customer_forms[safe_sender_id]['data']}")
+    else:
+        logger.warning(f"⚠️ Tried to update non-existent form for {safe_sender_id}")
 
 def cancel_customer_form(safe_sender_id):
     """
@@ -1097,6 +1185,8 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
         update_customer_form(safe_sender_id, 'name', 'consultant_name', consultant_name)
         update_customer_form(safe_sender_id, 'name', 'consultant_phone', consultant_phone)
         
+        logger.info(f"✅ Consultant saved: {consultant_name} for {safe_sender_id}")
+        
         return f"Perfeito! O *{consultant_name}* vai te atender! 😊\n\nAgora vou precisar de algumas informações suas...\n\n👤 Qual seu *nome completo*?"
     
     # Step 2: Collect name
@@ -1104,8 +1194,10 @@ def process_customer_form_step(safe_sender_id, sender_number, message_text, mess
         if len(message_text.strip()) < 2:
             return "Hmm, o nome ficou muito curto... 🤔\n\nMe diz seu nome completo aí!"
         
-        form_data['name'] = message_text.strip()
-        update_customer_form(safe_sender_id, 'phone', 'name', message_text.strip())
+        customer_name = message_text.strip()
+        form_data['name'] = customer_name
+        update_customer_form(safe_sender_id, 'phone', 'name', customer_name)
+        logger.info(f"✅ Customer name saved: '{customer_name}' for {safe_sender_id}")
         return "Beleza! 👍\n\nAgora me passa seu *telefone* de contato?\n\n_Só os números, pode mandar com ou sem DDD_"
     
     # Step 3: Collect phone
