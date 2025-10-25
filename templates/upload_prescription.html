@@ -241,6 +241,19 @@
             <input type="hidden" id="name" name="name" value="Cliente">
             
             <div class="form-group">
+                <label for="token">Código de Segurança <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="token" 
+                    name="token" 
+                    placeholder="Digite o código de 6 dígitos enviado pelo WhatsApp"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
                 <label for="prescription">Receita de Óculos <span class="required">*</span></label>
                 <div class="file-upload">
                     <input 
@@ -286,7 +299,7 @@
             document.getElementById('phone').value = phoneParam;
             document.getElementById('name').value = nameParam;
         }
-        // Se não tiver phone na URL, permite envio mas sem telefone (backend vai gerar erro descritivo)
+        // Permite envio independente dos parâmetros da URL
 
         
         // Mostrar preview do arquivo selecionado
@@ -319,10 +332,11 @@
             
             // Pegar telefone (da URL ou campo hidden)
             const phone = document.getElementById('phone').value.replace(/\D/g, '');
+            const token = document.getElementById('token').value.trim();
             
-            // Se não tiver telefone, mostrar erro descritivo
-            if (!phone || phone.length < 10 || phone.length > 11) {
-                showMessage('❌ Erro: Este link está incompleto. Por favor, use o link enviado pelo WhatsApp que contém seu número.', 'error');
+            // Validar token
+            if (!token || token.length !== 6) {
+                showMessage('Por favor, digite o código de 6 dígitos enviado pelo WhatsApp!', 'error');
                 return;
             }
             
@@ -334,6 +348,7 @@
             const formData = new FormData();
             formData.append('phone', phone);
             formData.append('name', document.getElementById('name').value);
+            formData.append('token', token);
             formData.append('prescription', fileInput.files[0]);
             
             try {

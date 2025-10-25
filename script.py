@@ -152,10 +152,14 @@ def upload_prescription():
         if 'phone' not in request.form:
             return jsonify({'error': 'Phone is required'}), 400
         
+        if 'token' not in request.form:
+            return jsonify({'error': 'Token is required'}), 400
+        
         if 'prescription' not in request.files:
             return jsonify({'error': 'Prescription file is required'}), 400
         
         phone = request.form['phone'].strip()
+        token = request.form['token'].strip()
         name = request.form.get('name', 'Cliente').strip()  # Default to 'Cliente' if not provided
         file = request.files['prescription']
         
@@ -163,6 +167,14 @@ def upload_prescription():
         phone_digits = ''.join(filter(str.isdigit, phone))
         if len(phone_digits) < 10 or len(phone_digits) > 11:
             return jsonify({'error': 'Invalid phone number format'}), 400
+        
+        # Validate token
+        if not validate_token(phone_digits, token):
+            return jsonify({'error': 'Código inválido ou expirado! Solicite um novo código pelo WhatsApp.'}), 400
+        
+        # Remove token após validação bem-sucedida
+        if phone_digits in customer_tokens:
+            del customer_tokens[phone_digits]
         
         # Name validation is optional now (defaults to 'Cliente')
         # Skip name length validation since it might be default value
@@ -689,22 +701,27 @@ def generate_token(phone):
         'token': token,
         'timestamp': time.time()
     }
-    logger.info(f"Token gerado para {phone}: {token}")
+    logger.info(f"✅ Token gerado para {phone}: {token}")
     return token
 
 def validate_token(phone, token):
     """
     Valida se o token informado é válido para o telefone.
     """
+    logger.info(f"🔍 Validando token {token} para telefone {phone}")
     entry = customer_tokens.get(phone)
     if not entry:
+        logger.warning(f"❌ Nenhum token encontrado para {phone}")
         return False
     if entry['token'] != token:
+        logger.warning(f"❌ Token incorreto para {phone}. Esperado: {entry['token']}, Recebido: {token}")
         return False
     # Verifica validade
     if time.time() - entry['timestamp'] > TOKEN_TTL:
+        logger.warning(f"❌ Token expirado para {phone}")
         del customer_tokens[phone]
         return False
+    logger.info(f"✅ Token válido para {phone}")
     return True
 
 def cleanup_tokens():
@@ -1147,23 +1164,15 @@ Tá tudo certo? 🤔
             prescription_info = "❌ Cliente informou que NÃO possui receita"
         
         elif message_text.lower().strip() in ['sim', 's', 'tenho', 'possuo']:
-            # Gera token e envia para o cliente
+            # Gera token para o cliente
             phone_number = safe_sender_id.replace('_', '')  # Get clean phone number
             token = generate_token(phone_number)
             upload_url = f"{CONFIG['WEBHOOK_BASE_URL']}/upload?phone={phone_number}"
 
-            # Envia mensagem com token via WhatsApp
-            token_message = f"""
-🔒 *Código de segurança para envio da receita*
-
-Seu código é: *{token}*
-
-Guarde este código! Você vai precisar dele para enviar sua receita no formulário.
-"""
-            send_whatsapp_message(f"{phone_number}@s.whatsapp.net", token_message.strip(), message_type='text')
-
             return f"""
 Show! 📸
+
+🔒 *Seu código de segurança:* *{token}*
 
 Pra garantir a melhor qualidade, vou te mandar um link pra você enviar a receita:
 
@@ -1174,8 +1183,8 @@ Pra garantir a melhor qualidade, vou te mandar um link pra você enviar a receit
 ✅ Pode ser foto ou PDF
 ✅ Super seguro
 
-*IMPORTANTE:* Você vai precisar do código de segurança enviado aqui no WhatsApp para concluir o envio!
-Depois que você enviar lá, eu te mando uma confirmação *automática* aqui no WhatsApp! Não precisa fazer mais nada! 😊
+*IMPORTANTE:* Use o código *{token}* no formulário para enviar sua receita!
+Depois que você enviar lá, eu te mando uma confirmação *automática* aqui no WhatsApp! 😊
 """
         
         # NOTE: The "enviado" check is kept for backward compatibility,
