@@ -217,21 +217,44 @@ def upload_prescription():
         
         # Send notification to group if configured
         if CONFIG["NOTIFICATION_GROUP_ID"]:
+            # Get form data for complete notification
+            form_data = {}
+            consultant_name = "Não especificado"
+            reason = "Upload de receita via formulário"
+            
+            if form:
+                form_data = form.get('data', {})
+                consultant_name = form_data.get('consultant_name', 'Não especificado')
+                reason = form.get('reason', 'Upload de receita via formulário')
+            
+            # Format notification with complete customer data
             notification_message = f"""
-🔔 *RECEITA ENVIADA VIA FORMULÁRIO*
+🆕 *NOVA SOLICITAÇÃO DE ATENDIMENTO*
 
-👤 *Cliente:* {customer_name}
-📱 *WhatsApp:* {phone_digits}
 ⏰ *Horário:* {datetime.now().strftime('%d/%m/%Y às %H:%M')}
+📋 *Motivo:* {reason}
+
+👨‍💼 *CONSULTOR SOLICITADO*
+• {consultant_name}
+
+👤 *DADOS DO CLIENTE*
+• *Nome:* {form_data.get('name', customer_name)}
+• *Telefone:* {phone_digits}
+• *WhatsApp:* 55{phone_digits}
+• *CPF:* {form_data.get('cpf', 'Não informado')}
+
+💊 *RECEITA DE ÓCULOS*
+✅ Cliente enviou {file_ext.upper()} da receita via FORMULÁRIO ONLINE
 
 📎 *Arquivo:* {file.filename}
 💾 *Tamanho:* {file_size / 1024:.1f} KB
 
 ---
-_Arquivo será enviado a seguir_
+_Receita será enviada a seguir_
 """
+            
             try:
-                # Send text notification
+                # Send text notification with complete data
                 send_whatsapp_message(
                     CONFIG["NOTIFICATION_GROUP_ID"],
                     notification_message.strip(),
@@ -244,19 +267,19 @@ _Arquivo será enviado a seguir_
                 if file_ext == 'pdf':
                     send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
-                        f"💊 *Receita de {customer_name}*",
+                        f"💊 *Receita de {form_data.get('name', customer_name)}*",
                         message_type='document',
                         media_url=public_url
                     )
                 else:
                     send_whatsapp_message(
                         CONFIG["NOTIFICATION_GROUP_ID"],
-                        f"💊 *Receita de {customer_name}*",
+                        f"💊 *Receita de {form_data.get('name', customer_name)}*",
                         message_type='image',
                         media_url=public_url
                     )
                 
-                logger.info(f"✅ Prescription notification sent to group")
+                logger.info(f"✅ Complete prescription notification sent to group")
             except Exception as e:
                 logger.error(f"❌ Error sending notification: {e}")
         
